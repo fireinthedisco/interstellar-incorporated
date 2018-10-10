@@ -1,0 +1,38 @@
+utility_component_template = {
+	key = "INTERSTELLARINC_FISSION_REACTOR"
+	size = small
+	icon = "GFX_ship_part_reactor_1"
+	icon_frame = 1
+	power = 75
+	cost = 20
+	
+	prerequisites = { "tech_fission_power" }
+	component_set = "power_core"
+	size_restriction = { interstellarinc_freighter interstellarinc_miner }
+	#upgrades_to = "AUTOMATED_TRADE_FUSION_REACTOR"
+	
+	ai_weight = {
+		weight = 1
+	}
+}
+
+utility_component_template = {
+	key = "INTERSTELLARINC_THRUSTER_1"
+	size = small
+	icon = "GFX_ship_part_thruster_1"
+	icon_frame = 1
+	power = -10
+	cost = 3
+	
+	modifier = {
+	}
+		
+	prerequisites = { "tech_thrusters_1" }
+	component_set = "thruster_components"
+	size_restriction = { interstellarinc_freighter interstellarinc_miner }
+	#upgrades_to = "INTERSTELLARINC_THRUSTER_2"
+	
+	ai_weight = {
+		weight = 1
+	}
+}
