@@ -1,0 +1,19 @@
+ship_section_template = {
+	key = "interstellarinc_freighter_section"
+	ship_size = interstellarinc_freighter
+	fits_on_slot = mid
+	entity = "cargo_transport_containers_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "interstellarinc_miner_section"
+	ship_size = interstellarinc_miner
+	fits_on_slot = mid
+	entity = "cargo_transport_containers_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	small_utility_slots = 3
+}

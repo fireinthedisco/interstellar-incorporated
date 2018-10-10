@@ -1,0 +1,12 @@
+﻿l_english:
+
+# Names
+INTERSTELLARINC_FREIGHTER:0 "Freighter"
+INTERSTELLARINC_MINER:0 "Miner"
+
+interstellarinc_freighter0"Freighter"
+interstellarinc_freighter_plural:0 "Freighters"
+interstellarinc_miner:0 "Miner"
+interstellarinc_miner_plural:0 "Miners"
+station_freighter_fleet:0 "[PREVPREV.GetName] Freighter"
+miner_fleet:0 "[PREV.GetName] Miner"

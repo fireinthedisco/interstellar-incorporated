@@ -1,0 +1,36 @@
+on_game_start = {
+	events = {
+		interstellar_inc.100
+		interstellar_inc.200
+	}
+}
+
+on_monthly_pulse = {
+	events = {
+		interstellar_inc.102
+		interstellar_inc.200
+		interstellar_inc.400
+		interstellar_inc.403
+		interstellar_inc.500
+		interstellar_inc.6000
+	}
+}
+
+# This = owner of fleet
+# From = fleet # And ship??
+# Only works if clear auto move on arrival is enabled
+on_fleet_auto_move_arrival = {
+	events = {
+		interstellar_inc.402
+		interstellar_inc.502
+	}
+}
+
+# Called when a Starbase changes owner
+# THIS = Ship (Starbase)
+# FROM = Former Owner (Country)
+on_starbase_transfer = {
+	events = {
+		interstellar_inc.420
+	}
+}
