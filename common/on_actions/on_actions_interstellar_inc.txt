@@ -23,6 +23,7 @@ on_fleet_auto_move_arrival = {
 	events = {
 		interstellar_inc.402
 		interstellar_inc.502
+		interstellar_inc.601
 	}
 }
 
@@ -32,5 +33,24 @@ on_fleet_auto_move_arrival = {
 on_starbase_transfer = {
 	events = {
 		interstellar_inc.420
+	}
+}
+
+# A pop has finished migrating to another planet
+# Root = pop
+# From = Tile on the new planet
+# FromFrom = Tile on the old planet
+on_pop_migration_end = {
+	events = {
+		interstellar_inc.600
+	}
+}
+
+# A pop has been resettled to another planet
+# Root = pop
+# From = Tile on the old planet
+on_pop_resettled = {
+	events = {
+
 	}
 }

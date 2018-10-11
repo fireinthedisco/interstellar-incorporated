@@ -797,6 +797,64 @@ fleet_event = {
     }
 }
 
+
+
+#########################################################
+############## 6xx. Migration Ship Events ###############
+#########################################################
+
+#triggered by on_pop_migration_end, from: tile on new planet, fromfrom: tile on old 
+pop_event = {
+    id = interstellar_inc.600
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        kill_pop = yes
+
+        FROMFROM = {
+            planet = {
+                owner = {
+                    random_country = {
+                        limit = { has_country_flag = civ_faction_of@PREV }
+                        save_event_target_as = civ_faction
+                    }
+                }
+                create_fleet = {
+                    name = migration_fleet
+                    effect = {
+                        set_owner = event_target:civ_faction
+                        create_ship = {
+                            name = random
+                            design = random_existing_design
+                            random_existing_design = interstellarinc_freighter
+                        }
+                        set_fleet_flag = migrating_pop@ROOT
+                        set_fleet_flag = destination_planet@FROM.planet
+                        set_location = PREV
+                    }
+                }
+                last_created_fleet = {
+                    auto_move_to_planet = { target = FROM.planet clear_auto_move_on_arrival = yes }
+                }
+            }
+        }
+    }
+}
+
+#triggered by auto move completion
+country_event = {
+    id = interstellar_inc.601
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        
+    }
+}
+
+
+
 event = {
     id = interstellar_inc.6000
     is_triggered_only = yes
