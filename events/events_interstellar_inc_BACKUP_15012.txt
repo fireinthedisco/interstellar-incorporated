@@ -797,6 +797,8 @@ fleet_event = {
     }
 }
 
+<<<<<<< HEAD
+=======
 
 
 #########################################################
@@ -855,6 +857,7 @@ country_event = {
 
 
 
+>>>>>>> github/master
 event = {
     id = interstellar_inc.6000
     is_triggered_only = yes

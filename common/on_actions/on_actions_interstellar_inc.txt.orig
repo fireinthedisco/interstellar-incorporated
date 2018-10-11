@@ -23,7 +23,10 @@ on_fleet_auto_move_arrival = {
 	events = {
 		interstellar_inc.402
 		interstellar_inc.502
+<<<<<<< HEAD
+=======
 		interstellar_inc.601
+>>>>>>> github/master
 	}
 }
 
@@ -34,6 +37,8 @@ on_starbase_transfer = {
 	events = {
 		interstellar_inc.420
 	}
+<<<<<<< HEAD
+=======
 }
 
 # A pop has finished migrating to another planet
@@ -53,4 +58,5 @@ on_pop_resettled = {
 	events = {
 
 	}
+>>>>>>> github/master
 }
