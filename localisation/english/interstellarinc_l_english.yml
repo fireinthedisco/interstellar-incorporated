@@ -4,7 +4,7 @@
 INTERSTELLARINC_FREIGHTER:0 "Freighter"
 INTERSTELLARINC_MINER:0 "Miner"
 
-interstellarinc_freighter0"Freighter"
+interstellarinc_freighter:0 "Freighter"
 interstellarinc_freighter_plural:0 "Freighters"
 interstellarinc_miner:0 "Miner"
 interstellarinc_miner_plural:0 "Miners"

@@ -1,0 +1,3 @@
+l_default:
+ miner_fleet: "[PREV.GetName] Miner"
+ station_freighter_fleet: "[PREVPREV.GetName] Freighter"

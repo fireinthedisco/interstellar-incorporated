@@ -26,7 +26,7 @@ interstellarinc_freighter = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = yes
+	is_civilian = no
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -65,7 +65,7 @@ interstellarinc_miner = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = yes
+	is_civilian = no
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport

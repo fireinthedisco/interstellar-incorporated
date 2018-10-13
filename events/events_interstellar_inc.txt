@@ -29,6 +29,9 @@ event = {
                 planet_event = {
                     id = interstellar_inc.101
                 }
+                # planet_event = {
+                #     id = interstellar_inc.103
+                # }
             }
             else = { #and take care of the rest over the course of the year
                 planet_event = {
@@ -78,28 +81,6 @@ planet_event = {
         }
         #log = "planet [THIS.GetName] has [THIS.min_resources_interstellar_inc_var] minerals"
 
-        random_system = {
-            limit = { PREV = { has_planet_flag = nearest_colony_system@PREV }}
-            PREV = { remove_planet_flag = nearest_colony_system@PREV }
-        }
-        if = {
-            limit = { exists = space_owner }
-            closest_system = { #also find the nearest colony
-                limit = {
-                    any_planet = {
-                        is_colony = yes
-                        exists = owner
-                        owner = {
-                            is_same_value = ROOT.space_owner
-                        }
-                    }
-                }
-                save_event_target_as = nearest_colony_system_scope
-                #log = "closest colony system to planet [PREV.GetName] is [THIS.GetName]"
-            }
-            set_planet_flag = nearest_colony_system@event_target:nearest_colony_system_scope
-        }
-
         planet_event = { #check both again a year from now (staggered across the year for different stations, since we triggered it staggered first time)
             id = interstellar_inc.101
             days = 360
@@ -130,6 +111,60 @@ event = {
     }
 }
 
+#finds closest system with a colony of whoever owns the system; called when starbase is built, when colonies in empire are created, when starbases change hands
+# planet_event = {
+#     id = interstellar_inc.103
+#     is_triggered_only = yes
+#     hide_window = yes
+
+#     immediate = {
+#         every_planet = { #every planet that has flag pointing to this event's planet's solar system
+#             limit = {
+#                 ROOT = {
+#                     solar_system = {
+#                         PREVPREV = { has_planet_flag = nearest_colony_system@PREV }
+#                     }
+#                 }
+#             }
+#             remove_planet_flag = nearest_colony_system@ROOT.solar_system
+#         }
+
+#         if = {
+#             limit = { exists = FROM }
+#             FROM = { save_event_target_as = colony_owner }
+#         }
+#         else = {
+#             owner = { save_event_target_as = colony_owner }
+#         }
+
+#         event_target:colony_owner = {
+#             every_system_within_border = {
+#             limit = { is_colony = no }
+#             random_system = {
+#                 limit = { PREV = { has_planet_flag = nearest_colony_system@PREV }}
+#                 PREV = { remove_planet_flag = nearest_colony_system@PREV }
+#             }
+#             if = {
+#                 limit = { exists = space_owner }
+#                 closest_system = { #also find the nearest colony
+#                     limit = {
+#                         any_planet = {
+#                             is_colony = yes
+#                             exists = owner
+#                             owner = {
+#                                 is_same_value = ROOT.space_owner
+#                             }
+#                         }
+#                     }
+#                     save_event_target_as = nearest_colony_system_scope
+#                     #log = "closest colony system to planet [PREV.GetName] is [THIS.GetName]"
+#                 }
+#                 set_planet_flag = nearest_colony_system@event_target:nearest_colony_system_scope
+#             }
+#         }
+#     }
+# }
+
 
 #########################################################
 ################ 2xx. Faction Spawning ##################
@@ -157,7 +192,8 @@ event = {
                 }
             }
 
-            
+            set_country_flag = Story7
+
             if = {
                 limit = {
                     is_synthetic_empire = yes
@@ -197,6 +233,7 @@ event = {
                     species = THIS
                 }
             }
+            establish_communications_no_message = last_created_country
 
             last_created_country = {
                 #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
@@ -210,7 +247,6 @@ event = {
                 set_country_flag = civ_faction_of@PREV
             }
             set_country_flag = civ_faction@last_created_country
-            #establish_communications_no_message = last_created_country
         }
 
         #reestablish vassalhood (important if parent country is vassalised and later becomes free, for example)
@@ -403,7 +439,7 @@ country_event = {
                 
                 if = {
                     limit = { has_fleet_flag = kill_switch }
-                    delete_fleet = yes
+                    delete_fleet = THIS
                 }
                 else = {
                     fleet_event = {
@@ -493,21 +529,6 @@ ship_event = {
     }
 
     immediate = {
-        closest_system = {
-            limit = {
-                any_planet = {
-                    is_colony = yes
-                    owner = FROM
-                }
-            }
-            random_system_planet = {
-                limit = {
-                    is_colony = yes
-                    owner = FROM
-                }
-                save_event_target_as = new_closest_colony
-            }
-        }
         solar_system = {
             every_system_planet = {
                 limit = { is_colony = yes }
@@ -521,6 +542,25 @@ ship_event = {
                                 has_fleet_flag = home_colony@event_target:former_colony
                                 has_fleet_flag = civilian_miner
                             }
+
+                            closest_system = {
+                                limit = {
+                                    any_planet = {
+                                        is_colony = yes
+                                        exists = owner
+                                        owner = { is_same_value = FROM }
+                                    }
+                                }
+                                random_system_planet = {
+                                    limit = {
+                                        is_colony = yes
+                                        exists = owner
+                                        owner = { is_same_value = FROM }
+                                    }
+                                    save_event_target_as = new_closest_colony
+                                }
+                            }
+
                             remove_fleet_flag = home_colony@event_target:former_colony
                             set_fleet_flag = home_colony@event_target:new_closest_colony
 
@@ -559,14 +599,15 @@ event = {
     immediate = {
         every_country = {
             limit = {
-                any_subject = { has_country_flag = civilian_country_interinc_flag }
+                any_country = { has_country_flag = civ_faction_of@PREV }
             }
-            random_subject = {
-                limit = { has_country_flag = civilian_country_interinc_flag }
+            random_country = {
+                limit = { has_country_flag = civ_faction_of@PREV }
                 save_event_target_as = civ_economy_country
             }
             every_mining_station = {
                 limit = { orbit = { orbital_deposit_tile = { has_resource = { type = minerals amount > 0 }}}}
+                save_event_target_as = my_station
                 orbit = {
                     if = {
                         limit = { check_variable = { which = station_freighters value = 0 }}
@@ -575,13 +616,10 @@ event = {
                 }
                 if = {
                     limit = {
-                        owner = {
-                            any_subject = {
-                                has_country_flag = civilian_country_interinc_flag
-                                count_owned_ships = {
-                                    limit = { has_ship_flag = home_station@PREVPREVPREV.orbit }
-                                    count < 1
-                                }
+                        event_target:civ_economy_country = {
+                            count_owned_ships = {
+                                limit = { has_ship_flag = home_station@PREVPREV.orbit }
+                                count < 1
                             }
                         }
                     }
@@ -602,8 +640,11 @@ event = {
                                             design = random_existing_design
                                             random_existing_design = interstellarinc_freighter
                                         }
-                                        last_created_ship = { set_ship_flag = home_station@PREVPREVPREVPREV }
-                                        set_fleet_flag = home_station@PREVPREVPREV
+                                        last_created_ship = {
+                                            set_ship_flag = home_station@event_target:my_station
+                                            set_ship_flag = civilian_station_freighter
+                                        }
+                                        set_fleet_flag = home_station@event_target:my_station
                                         set_fleet_flag = civilian_station_freighter
                                         set_location = PREV
                                     }
@@ -624,6 +665,7 @@ event = {
     }
 }
 
+#called by other freighter events; sends the freighter to station
 fleet_event = {
     id = interstellar_inc.501
     is_triggered_only = yes
@@ -641,6 +683,7 @@ fleet_event = {
     }
 }
 
+#called by auto move arrival
 country_event = {
     id = interstellar_inc.502
     is_triggered_only = yes
@@ -744,6 +787,30 @@ country_event = {
                         orbit = { owner = { add_minerals = 1 }}
                     }
                 }
+
+                if = {
+                    limit = { has_fleet_flag = add_freighter }
+                    create_ship = {
+                        name = random
+                        design = random_existing_design
+                        random_existing_design = interstellarinc_freighter
+                    }
+                    last_created_ship = {
+                        set_ship_flag = home_station@event_target:my_station
+                        set_ship_flag = civilian_station_freighter
+                    }
+                    remove_fleet_flag = add_freighter
+                }
+
+                if = {
+                    limit = { has_fleet_flag = remove_freighter }
+                    random_owned_ship = {
+                        limit = { has_ship_flag = civilian_station_freighter }
+                        delete_ship = THIS
+                    }
+                    remove_fleet_flag = remove_freighter
+                }
+
                 fleet_event = { #send it back to the station
                     id = interstellar_inc.501
                     days = 10
@@ -768,7 +835,7 @@ fleet_event = {
 
             if = {
                 limit = { orbit = { check_variable = { which = station_freighter_delay value = 0 }}}
-                orbit = { change_variable = { which = station_freighters value = 1 }}
+                set_fleet_flag = add_freighter
             }
             else = {
                 orbit = { change_variable = { which = station_freighter_delay value = -1 }} #if it filled all the way up, the freighter needs to make the trip faster
@@ -781,6 +848,21 @@ fleet_event = {
                 change_variable = { which = fleet_cargo value = 1 }
             }
             orbit = { change_variable = { which = station_freighter_delay value = 1 }} #if station can't fill the freighter, delay trips slightly
+            if = {
+                limit = {
+                    owner = {
+                        count_owned_ships = {
+                            limit = {
+                                fleet = ROOT
+                                has_ship_flag = civilian_station_freighter
+                            }
+                            count > 1
+                        }
+                    }
+                    orbit = { check_variable = { which = station_freighter_delay value > 6 }}
+                }
+                set_fleet_flag = remove_freighter
+            }
         }
         orbit = {
             random_system = {
@@ -797,7 +879,73 @@ fleet_event = {
     }
 }
 
+# #called by on_starbase_transfer; reassigns freighter to new stations/colonies; THIS = starbase ship scope, FROM = former owner
+# fleet_event = {
+#     id = interstellar_inc.520
+#     is_triggered_only = yes
+#     hide_window = yes
 
+# trigger = {
+#         solar_system = {
+#             any_planet = { is_colony = yes }
+#         }
+#         exists = FROM
+#     }
+
+#     immediate = {
+#         solar_system = {
+#             every_system_planet = {
+#                 limit = { is_colony = yes }
+#                 save_event_target_as = former_colony
+
+#                 FROM = {
+#                     random_country = {
+#                         limit = { has_country_flag = civ_faction_of@PREV }
+#                         every_owned_fleet = {
+#                             limit = {
+#                                 has_fleet_flag = home_colony@event_target:former_colony
+#                                 has_fleet_flag = civilian_miner
+#                             }
+
+#                             closest_system = {
+#                                 limit = {
+#                                     any_planet = {
+#                                         is_colony = yes
+#                                         owner = FROM
+#                                     }
+#                                 }
+#                                 random_system_planet = {
+#                                     limit = {
+#                                         is_colony = yes
+#                                         owner = FROM
+#                                     }
+#                                     save_event_target_as = new_closest_colony
+#                                 }
+#                             }
+                            
+#                             remove_fleet_flag = home_colony@event_target:former_colony
+#                             set_fleet_flag = home_colony@event_target:new_closest_colony
+
+#                             if = {
+#                                 limit = {
+#                                     event_target:new_closest_colony = {
+#                                         check_variable = { which = colony_miners value >= 3 }
+#                                     }
+#                                 }
+#                                 set_fleet_flag = kill_switch
+#                             }
+
+#                             remove_fleet_flag = enroute_to_mine
+#                             set_fleet_flag = enroute_to_home
+#                             remove_auto_move_target = yes
+#                             auto_move_to_planet = { target = event_target:new_closest_colony clear_auto_move_on_arrival = yes }
+#                         }
+#                     }
+#                 }
+#             }
+#         }
+#     }
+# }
 
 #########################################################
 ############## 6xx. Migration Ship Events ###############
@@ -810,7 +958,13 @@ pop_event = {
     hide_window = yes
 
     immediate = {
-        kill_pop = yes
+        create_country = {
+            name = random
+            type = pop_dummy
+            auto_delete = no
+            species = ROOT
+            ethos = ROOT
+        }
 
         FROMFROM = {
             planet = {
@@ -829,16 +983,19 @@ pop_event = {
                             design = random_existing_design
                             random_existing_design = interstellarinc_freighter
                         }
-                        set_fleet_flag = migrating_pop@ROOT
+                        set_fleet_flag = migrating_pop@last_created_country
                         set_fleet_flag = destination_planet@FROM.planet
                         set_location = PREV
                     }
                 }
+
                 last_created_fleet = {
                     auto_move_to_planet = { target = FROM.planet clear_auto_move_on_arrival = yes }
                 }
             }
         }
+        
+        kill_pop = yes
     }
 }
 

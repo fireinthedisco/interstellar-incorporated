@@ -1,7 +1,7 @@
 civilian_economy = {
     playable = no
-	show_in_contacts_list = no
-    government = yes
+	show_in_contacts_list = yes
+    government = no
 	sub_title = "Civilian"
 	needs_survey = yes
 	share_survey_data = no
@@ -55,4 +55,22 @@ civilian_corporation = {
 		} # Nothing is allowed, but we need this for relationships.
 		all_technology_module = {}
     }
+}
+
+pop_dummy = {
+	playable = no
+	show_in_contacts_list = yes
+	government = no
+	ai = {
+		enabled = no
+	}
+	faction = {
+		neutral = yes
+		hostile = no
+		generate_borders = no
+		needs_colony = no
+		auto_delete = no
+	}
+	modules = {
+	}
 }
