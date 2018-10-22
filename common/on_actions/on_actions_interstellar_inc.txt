@@ -11,6 +11,7 @@ on_monthly_pulse = {
 		interstellar_inc.200
 		interstellar_inc.400
 		interstellar_inc.403
+		interstellar_inc.405
 		interstellar_inc.500
 		interstellar_inc.6000
 	}

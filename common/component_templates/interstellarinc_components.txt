@@ -36,3 +36,20 @@ utility_component_template = {
 		weight = 1
 	}
 }
+
+utility_component_template = {
+	key = "INTERSTELLARINC_CIVILIAN_COMPUTER"
+	size = small
+	icon = "GFX_ship_part_computer_default"
+	icon_frame = 1
+	power = -5
+	cost = 5
+	ship_behavior = "swarm"
+	
+	size_restriction = { interstellarinc_freighter interstellarinc_miner }
+	component_set = "combat_computers"
+	
+	ai_weight = {
+		weight = 1
+	}
+}
