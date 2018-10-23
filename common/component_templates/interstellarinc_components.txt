@@ -50,6 +50,24 @@ utility_component_template = {
 	component_set = "combat_computers"
 	
 	ai_weight = {
-		weight = 1
+		weight = 6
 	}
+}
+
+utility_component_template = {
+	key = "INTERSTELLARINC_CIVILIAN_SENSOR"
+	size = medium
+	icon = "GFX_ship_part_sensor_1"
+	icon_frame = 1
+	power = -5
+	cost = 2
+	sensor_range = 1
+	hyperlane_range = 2
+	
+	size_restriction = { interstellarinc_freighter interstellarinc_miner }
+	component_set = "sensor_components"
+	
+	ai_weight = {
+		weight = 10000
+	}	
 }
