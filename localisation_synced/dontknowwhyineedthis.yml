@@ -1,4 +1,4 @@
 ﻿l_default:
  miner_fleet: "[THIS.GetName] Miner"
- station_freighter_fleet: "[THIS.event_target:my_station.orbit.GetName] Freight"
- migration_fleet: "[ROOT.GetSpeciesAdj] Migrant Fleet"
+ station_freighter_fleet: "[my_station.orbit.GetName] Freight"
+ migration_fleet: "[PREVPREVPREV.GetSpeciesAdj] Migrant Fleet"

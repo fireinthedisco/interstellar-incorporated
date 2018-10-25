@@ -388,8 +388,10 @@ event = {
                 # set_country_flag = day_0
                 # set_country_flag = radical_cult
                 set_country_flag = civ_faction_of@PREV
+                #log = "[THIS.GetName] is economy vassal of [PREV.GetName]"
             }
             set_country_flag = civ_faction@last_created_country
+            #log = "[THIS.GetName] is economy overlord of [last_created_country.GetName]"
         }
 
         #reestablish vassalhood (important if parent country is vassalised and later becomes free, for example)
@@ -450,7 +452,7 @@ event = {
                 limit = { has_country_flag = civ_faction@PREV }
                 every_owned_planet = {
                     limit = {
-                        owner = {
+                        PREVPREV = {
                             count_owned_ships = {
                                 limit = {
                                     fleet = {
@@ -505,28 +507,26 @@ fleet_event = {
         }
         random_planet = {
             limit = { PREV = { has_fleet_flag = home_colony@PREV }}
-            save_event_target_as = home_colony
-        }
-        random_planet = {
-            limit = {
-                solar_system = { has_star_flag = nearest_colony_system@event_target:home_colony.solar_system }
-                orbital_deposit_tile = { has_resource = { type = minerals amount > 0 }}
-                NOT = { has_mining_station = yes }
-                NOT = { has_planet_flag = being_mined }
-                NOT = { has_planet_flag = miner_enroute}
-                has_planet_flag = resources_set_interstellar_inc_flag
-                is_surveyed = { who = event_target:home_colony.owner status = yes }
+            
+            random_planet = {
+                limit = {
+                    solar_system = { has_star_flag = nearest_colony_system@PREV.solar_system }
+                    orbital_deposit_tile = { has_resource = { type = minerals amount > 0 }}
+                    NOT = { has_mining_station = yes }
+                    NOT = { has_planet_flag = being_mined }
+                    NOT = { has_planet_flag = miner_enroute}
+                    has_planet_flag = resources_set_interstellar_inc_flag
+                    is_surveyed = { who = PREV.owner status = yes }
+                }
+                set_timed_planet_flag = { flag = miner_enroute days = 90 }
+                ROOT = {
+                    set_fleet_flag = enroute_to_mine
+                    auto_move_to_planet = { target = PREV clear_auto_move_on_arrival = yes }
+                }
             }
-            set_timed_planet_flag = { flag = miner_enroute days = 90 }
-            save_event_target_as = destination_planet
-            #log = "Has destination planet at [THIS.GetName]"
         }
         if = {
-            limit = { exists = event_target:destination_planet }
-            set_fleet_flag = enroute_to_mine
-            auto_move_to_planet = { target = event_target:destination_planet clear_auto_move_on_arrival = yes }
-        }
-        else = {
+            limit = { NOT = { has_auto_move_target = yes }}
             set_fleet_flag = pending_mine_target
         }
     }
@@ -967,7 +967,7 @@ country_event = {
         FROM = {
             if = {
                 limit = { has_fleet_flag = enroute_to_station }
-                #the ship will stay at the station longer if the trip is shorter`
+                #the ship will stay at the station longer if the trip is shorter
                 orbit = { save_event_target_as = orbit_planet }
                 if = {
                     limit = { orbit = { check_variable = { which = station_freighter_delay value = 0 }}}
@@ -1112,6 +1112,8 @@ fleet_event = {
         }
         subtract_variable = { which = fleet_capacity value = fleet_cargo }
 
+        event_target:orbit_planet = { set_variable = { which = fleet_capacity value = PREV }}
+
         if = {
             limit = { event_target:orbit_planet = { check_variable = { which = station_stock_interinc_var value >= fleet_capacity }}}
             event_target:orbit_planet = { subtract_variable = { which = station_stock_interinc_var value = fleet_capacity }}
@@ -1124,6 +1126,8 @@ fleet_event = {
                 change_variable = { which = fleet_cargo value = 1 }
             }
         }
+
+        event_target:orbit_planet = { set_variable = { which = fleet_capacity value = 0 }}
 
         if = {
             limit = { event_target:orbit_planet = { check_variable = { which = station_stock_interinc_var value > 0 }}}
