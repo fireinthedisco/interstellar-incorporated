@@ -10,8 +10,8 @@ on_monthly_pulse = {
 		interstellar_inc.102
 		interstellar_inc.200
 		interstellar_inc.400
-		interstellar_inc.403
-		interstellar_inc.405
+		interstellar_inc.404
+		interstellar_inc.406
 		interstellar_inc.500
 		interstellar_inc.6000
 	}
@@ -22,7 +22,7 @@ on_monthly_pulse = {
 # Only works if clear auto move on arrival is enabled
 on_fleet_auto_move_arrival = {
 	events = {
-		interstellar_inc.402
+		interstellar_inc.403
 		interstellar_inc.502
 		interstellar_inc.601
 	}

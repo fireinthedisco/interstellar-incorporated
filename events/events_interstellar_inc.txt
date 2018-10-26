@@ -446,45 +446,65 @@ event = {
 
     immediate = {
         every_country = {
-            limit = { has_country_flag = civilian_country_interinc_flag }
-            #log = "[THIS.GetName] country selected"
-            random_country = {
-                limit = { has_country_flag = civ_faction@PREV }
-                every_owned_planet = {
-                    limit = {
-                        PREVPREV = {
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        has_fleet_flag = civilian_miner
-                                        has_fleet_flag = home_colony@PREVPREVPREV
-                                    }
-                                }
-                                count < 3
-                            }
-                        }
-                    }
-                    #log = "Picked [THIS.GetName] planet"
-                    create_fleet = {
-                        name = miner_fleet
-                        effect = {
-                            set_owner = PREVPREVPREV
-                            create_ship = {
-                                name = random
-                                design = random_existing_design
-                                random_existing_design = interstellarinc_miner
-                            }
-                            set_fleet_flag = civilian_miner
-                            set_location = PREV
-                            #log = "Created miner at [PREV.GetName]"
-                        }
-                    }
+            limit = {
+                any_country = {
+                    has_country_flag = civ_faction_of@PREV
+                }
+            }
+            every_owned_planet = {
+                planet_event = {
+                    id = interstellar_inc.401
+                    days = 1
+                    random = 29
+                }
+            }
+        }
+    }
+}
 
-                    last_created_fleet = {
-                        set_fleet_flag = home_colony@PREV
-                        fleet_event = {
-                            id = interstellar_inc.401
+planet_event = {
+    id = interstellar_inc.401
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        random_country = {
+            limit = {
+                has_country_flag = civ_faction_of@ROOT.owner
+            }
+            if = {
+                limit = {
+                    count_owned_ships = {
+                        limit = {
+                            fleet = {
+                                has_fleet_flag = civilian_miner
+                                has_fleet_flag = home_colony@ROOT
+                            }
                         }
+                        count < 2
+                    }
+                }
+                create_fleet = {
+                    name = miner_fleet
+                    effect = {
+                        set_owner = PREV
+                        create_ship = {
+                            name = random
+                            design = random_existing_design
+                            random_existing_design = interstellarinc_miner
+                        }
+                        set_fleet_flag = civilian_miner
+                        set_fleet_flag = home_colony@ROOT
+                        set_location = ROOT
+                        #log = "Created miner at [ROOT.GetName]"
+                    }
+                }
+    
+                last_created_fleet = {
+                    fleet_event = {
+                        id = interstellar_inc.402
+                        days = 3
+                        random = 7
                     }
                 }
             }
@@ -494,7 +514,7 @@ event = {
 
 #called by other autonomous miner events; miner decides which body to go mine
 fleet_event = {
-    id = interstellar_inc.401
+    id = interstellar_inc.402
     is_triggered_only = yes
     hide_window = yes
 
@@ -505,12 +525,14 @@ fleet_event = {
             flag = orders_received
             days = 120
         }
+        #if = { limit = { owner = { overlord = { is_ai = no }}} log = "miner event started" }
         random_planet = {
             limit = { PREV = { has_fleet_flag = home_colony@PREV }}
+            #if = { limit = { ROOT = { owner = { overlord = { is_ai = no }}}} log = "found home colony [THIS.GetName]" }
             
             random_planet = {
                 limit = {
-                    solar_system = { has_star_flag = nearest_colony_system@PREV.solar_system }
+                    solar_system = { has_star_flag = nearest_colony_system@PREVPREV.solar_system }
                     orbital_deposit_tile = { has_resource = { type = minerals amount > 0 }}
                     NOT = { has_mining_station = yes }
                     NOT = { has_planet_flag = being_mined }
@@ -518,10 +540,12 @@ fleet_event = {
                     has_planet_flag = resources_set_interstellar_inc_flag
                     is_surveyed = { who = PREV.owner status = yes }
                 }
+                #if = { limit = { ROOT = { owner = { overlord = { is_ai = no }}}} log = "found target planet [THIS.GetName]" }
                 set_timed_planet_flag = { flag = miner_enroute days = 90 }
                 ROOT = {
                     set_fleet_flag = enroute_to_mine
                     auto_move_to_planet = { target = PREV clear_auto_move_on_arrival = yes }
+                    #if = { limit = { owner = { overlord = { is_ai = no }}} log = "[THIS.GetName] enroute to [PREV.GetName]" }
                 }
             }
         }
@@ -534,7 +558,7 @@ fleet_event = {
 
 #called by on_fleet_auto_move_arrival; FROM is the fleet
 country_event = {
-    id = interstellar_inc.402
+    id = interstellar_inc.403
     is_triggered_only = yes
     hide_window = yes
 
@@ -550,11 +574,12 @@ country_event = {
                 if = {
                     limit = { orbit = { has_planet_flag = being_mined }}
                     fleet_event = {
-                        id = interstellar_inc.404
+                        id = interstellar_inc.402
+                        days = 2
                     }
                 }
                 else = {
-                    set_fleet_flag = mining_in_progress
+                    set_fleet_flag = mining_in_progress@orbit
                     orbit = {
                         set_timed_planet_flag = {
                             flag = being_mined
@@ -590,7 +615,7 @@ country_event = {
                 }
                 else = {
                     fleet_event = {
-                        id = interstellar_inc.401
+                        id = interstellar_inc.402
                         days = 10
                         random = 10
                     }
@@ -602,14 +627,28 @@ country_event = {
 
 #adds cargo to autonomous miners, sends them back to colony when full; triggered by on_monthly_pulse
 event = {
-    id = interstellar_inc.403
+    id = interstellar_inc.404
     is_triggered_only = yes
     hide_window = yes
 
     immediate = {
         every_country = {
+            limit = { has_country_flag = civilian_country_interinc_flag }
             every_owned_fleet = {
-                limit = { has_fleet_flag = mining_in_progress }
+                limit = {
+                    solar_system = {
+                        any_planet = {
+                            PREVPREV = { has_fleet_flag = mining_in_progress@PREV }
+                        }
+                    }
+                }
+
+                solar_system = {
+                    random_system_planet = {
+                        limit = { PREVPREV = { has_fleet_flag = mining_in_progress@PREV }}
+                    }
+                    save_event_target_as = mined_planet
+                }
 
                 set_variable = { which = min_resources_interstellar_inc_var value = orbit }
                 change_variable = { which = fleet_cargo value = min_resources_interstellar_inc_var }
@@ -623,12 +662,12 @@ event = {
                 if = {
                     limit = { check_variable = { which = fleet_cargo value = 10 }}
 
-                    remove_fleet_flag = mining_in_progress
-                    orbit = { remove_planet_flag = being_mined }
+                    remove_fleet_flag = mining_in_progress@event_target:mined_planet
+                    event_target:mined_planet = { remove_planet_flag = being_mined }
                     set_variable = { which = min_resources_interstellar_inc_var value = 0 }
 
                     fleet_event = {
-                        id = interstellar_inc.404
+                        id = interstellar_inc.405
                     }
                 }
                 else = {
@@ -636,7 +675,7 @@ event = {
                         flag = orders_received
                         days = 120
                     }
-                    orbit = {
+                    event_target:mined_planet = {
                         set_timed_planet_flag = {
                             flag = being_mined
                             days = 30
@@ -650,7 +689,7 @@ event = {
 
 #send the fleet back to home base
 fleet_event = {
-    id = interstellar_inc.404
+    id = interstellar_inc.405
     is_triggered_only = yes
     hide_window = yes
 
@@ -671,7 +710,7 @@ fleet_event = {
 
 #rerelays current destination in case ship ends up idle (runs for miners & freighters)
 event = {
-    id = interstellar_inc.405
+    id = interstellar_inc.406
     is_triggered_only = yes
     hide_window = yes
 
@@ -683,7 +722,7 @@ event = {
                 if = {
                     limit = { has_fleet_flag = enroute_to_home }
                     fleet_event = {
-                        id = interstellar_inc.404
+                        id = interstellar_inc.405
                         days = 1
                         random = 29
                     }
@@ -696,7 +735,7 @@ event = {
                         }
                     }
                     fleet_event = {
-                        id = interstellar_inc.401
+                        id = interstellar_inc.402
                         days = 1
                         random = 29
                     }
@@ -961,10 +1000,16 @@ country_event = {
     trigger = {
         FROM = {
             has_fleet_flag = civilian_station_freighter
+            NOT = { has_fleet_flag = auto_move_arrival }
         }
     }
     immediate = {
         FROM = {
+            set_timed_fleet_flag = {
+                flag = auto_move_arrival
+                days = 2
+            }
+            #if = { limit = { owner = { overlord = { is_ai = no }}} log = "[THIS.GetName] auto move completion at [orbit.GetName]" }
             if = {
                 limit = { has_fleet_flag = enroute_to_station }
                 #the ship will stay at the station longer if the trip is shorter
@@ -1099,6 +1144,7 @@ fleet_event = {
     hide_window = yes
 
     immediate = {
+        #if = { limit = { owner = { overlord = { is_ai = no }}} log = "mining station event called" }
         remove_fleet_flag = enroute_to_station
         set_variable = { which = fleet_capacity value = 0 }
         owner = {

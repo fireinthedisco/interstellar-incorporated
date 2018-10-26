@@ -2,7 +2,7 @@ ship_behavior = {
     name = "civilian_economy"
     preferred_attack_range = 180
     formation_distance = 200
-    return_to_formation_distance = 200
+    return_to_formation_distance = 400
 
     combat_target_anchor = root
 
