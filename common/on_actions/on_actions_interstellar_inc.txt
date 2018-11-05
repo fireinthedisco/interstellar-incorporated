@@ -7,6 +7,7 @@ on_game_start = {
 
 on_monthly_pulse = {
 	events = {
+		interstellar_inc.100
 		interstellar_inc.102
 		interstellar_inc.200
 		interstellar_inc.400
@@ -14,6 +15,15 @@ on_monthly_pulse = {
 		interstellar_inc.406
 		interstellar_inc.500
 		interstellar_inc.6000
+	}
+}
+
+# Executed right after country has established communications with another country
+# This = Country which established the communications
+# From = Country which communications were established with
+on_post_communications_established = {
+	events = {
+		interstellar_inc.201
 	}
 }
 
@@ -35,7 +45,17 @@ on_starbase_transfer = {
 	events = {
 		interstellar_inc.420
 		#interstellar_inc.520
-		interstellar_inc.105
+		interstellar_inc.112
+	}
+}
+
+# This = construction ship
+# From = planet it is built on
+# Fires when construction is complete,
+# immediately before station is created
+on_building_starbase_outpost = {
+	events = {
+		interstellar_inc.112
 	}
 }
 
@@ -64,7 +84,7 @@ on_pop_resettled = {
 # Scope = Planet
 on_colonized = {
 	events = {
-		interstellar_inc.103
+		interstellar_inc.110
 	}
 }
 
@@ -74,13 +94,23 @@ on_colonized = {
 #This = Planet scope
 on_planet_transfer = {
 	events = {
-		interstellar_inc.103
+		interstellar_inc.110
 	}
 }
 
 # A colony has been destroyed. Called just before owner and controller is cleared
 # Scope = Planet
 on_colony_destroyed = {
+	events = {
+		interstellar_inc.110
+	}
+}
+
+# This = owner of fleet 1 (destroyed)
+# From = owner of fleet 2 (combatant)
+# FromFrom = fleet 1
+# FromFromFrom = fleet 2
+on_fleet_destroyed_victim = {
 	events = {
 		interstellar_inc.103
 	}

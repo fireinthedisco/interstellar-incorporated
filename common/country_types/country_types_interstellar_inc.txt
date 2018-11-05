@@ -3,7 +3,7 @@ civilian_economy = {
 	show_in_contacts_list = yes
     government = no
 	sub_title = "Civilian"
-	needs_survey = no
+	needs_survey = yes
 	share_survey_data = no
 	ship_disengagement = yes
 	has_complete_sensor = no
@@ -22,7 +22,7 @@ civilian_economy = {
 		exclusive_diplomacy_module = {
 			contact_rule = script_only
 		} # Nothing is allowed, but we need this for relationships.
-		all_technology_module = {}
+		basic_technology_module = {}
 	}
 }
 
@@ -53,7 +53,7 @@ civilian_corporation = {
 		exclusive_diplomacy_module = {
 			contact_rule = script_only
 		} # Nothing is allowed, but we need this for relationships.
-		all_technology_module = {}
+		basic_technology_module = {}
     }
 }
 

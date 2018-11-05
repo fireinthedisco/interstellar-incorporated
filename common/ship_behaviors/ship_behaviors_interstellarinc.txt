@@ -1,5 +1,5 @@
 ship_behavior = {
-    name = "civilian_economy"
+    name = "iicso_civilian_behavior"
     preferred_attack_range = 180
     formation_distance = 200
     return_to_formation_distance = 400
@@ -10,7 +10,7 @@ ship_behavior = {
     collision_radius = 1.2                            #collision_radius is a multiplier on the radius specified in the ship size
     collision_strafe = 1.5                            #collision_strafe allows the ship to move in any direction while colliding with another
     attack_move_pattern = flee
-    passive_move_pattern = stationary
+    passive_move_pattern = flee
 
-    desc = "INTERSTELLARINC_CIVILIAN_BEHAVIOR_DESC"
+    desc = "IICSO_CIVILIAN_BEHAVIOR_DESC"
 }

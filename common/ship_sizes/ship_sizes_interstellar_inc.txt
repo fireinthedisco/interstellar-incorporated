@@ -1,6 +1,6 @@
 
 #Mining station freighter
-interstellarinc_freighter = {
+z_iicso_freighter = {
 	graphical_culture = no
 	entity = cargo_transport_containers_entity
 	
@@ -40,7 +40,7 @@ interstellarinc_freighter = {
 }
 
 #Autonomous miner
-interstellarinc_miner = {
+z_iicso_miner = {
 	graphical_culture = no
 	entity = cargo_transport_containers_entity
 	

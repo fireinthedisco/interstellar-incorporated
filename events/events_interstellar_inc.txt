@@ -14,53 +14,53 @@ event = {
 
     immediate = {
         #log = "initial event triggered"
-        every_planet = {
-            limit = { is_colony = no }
+        if = {
+            limit = { NOT = { has_global_flag = iicso_active }}
+            set_global_flag = iicso_active
 
-            if = { #immediately set up all planets in starting systems and their neighbors
+            every_planet = {
+                limit = { is_colony = no }
+    
+                if = { #immediately set up all planets inside of empires
+                    limit = { solar_system = { exists = space_owner }}
+                    planet_event = {
+                        id = interstellar_inc.101
+                        days = 1
+                        random = 29
+                    }
+                }
+                else = { #and take care of the rest over the course of the year
+                    planet_event = {
+                        id = interstellar_inc.101
+                        days = 1
+                        random = 359
+                    }
+                }
+            }
+            every_system = {
                 limit = {
-                    solar_system = {
-                        OR = {
-                            starting_system = yes
-                            any_neighbor_system = { starting_system = yes }
+                    any_system = {
+                        exists = space_owner
+                        distance = {
+                            source = PREV
+                            min_jumps = 0
+                            max_jumps = 2
+                            use_bypasses = yes
+                            bypass_empire = space_owner
                         }
                     }
                 }
-                planet_event = {
-                    id = interstellar_inc.101
-                }
-            }
-            else = { #and take care of the rest over the course of the year
-                planet_event = {
-                    id = interstellar_inc.101
-                    days = 1
-                    random = 359
-                }
-            }
-        }
-        every_system = {
-            limit = {
-                any_system = {
-                    exists = space_owner
-                    distance = {
-                        source = PREV
-                        min_jumps = 0
-                        max_jumps = 2
-                        use_bypasses = yes
-                        bypass_empire = space_owner
+                random_system_planet = {
+                    planet_event = {
+                        id = interstellar_inc.111
                     }
-                }
-            }
-            random_system_planet = {
-                planet_event = {
-                    id = interstellar_inc.104
                 }
             }
         }
     }
 }
 
-#determines closest colony system and number of resources on each planet; called again every year
+#determines number of resources on each planet; called again every year
 planet_event = {
     id = interstellar_inc.101
     is_triggered_only = yes
@@ -128,9 +128,74 @@ event = {
     }
 }
 
+#on mining station destroyed; this - owner of station, fromfrom - station
+country_event = {
+    id = interstellar_inc.103
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        FROMFROM = {
+            solar_system = {
+                any_ship_in_system = {
+                    is_ship_size = mining_station 
+                    fleet = { is_same_value = ROOT }
+                }
+            }
+        }
+    }
+    immediate = {
+        FROMFROM = {
+            orbit = {
+                set_variable = { which = station_freighter_delay value = 0 }
+                set_variable = { which = station_stock_interinc_var value = 0 }
+            }
+        }
+        random_country = {
+            limit = {
+                has_country_flag = civ_faction_of@ROOT
+            }
+            every_owned_fleet = {
+                limit = {
+                    has_fleet_flag = home_station@FROMFROM
+                    has_fleet_flag = civilian_station_freighter
+                }
+
+                remove_fleet_flag = home_station@FROMFROM
+                set_fleet_flag = pending_reassignment
+                closest_system = {
+                    limit = {
+                        any_planet = {
+                            is_colony = yes
+                            owner = { is_same_value = ROOT }
+                        }
+                    }
+                    random_system_planet = {
+                        limit = {
+                            is_colony = yes
+                            owner = { is_same_value = ROOT }
+                        }
+                        save_event_target_as = closest_colony
+                    }
+                }
+
+                set_timed_fleet_flag = {
+                    flag = orders_received
+                    days = 120
+                }
+                remove_fleet_flag = enroute_to_station
+                set_fleet_flag = enroute_to_colony
+                set_fleet_flag = enroute_to_colony@event_target:closest_colony
+                remove_auto_move_target = yes
+                auto_move_to_planet = { target = event_target:closest_colony clear_auto_move_on_arrival = yes }
+            }
+        }
+    }
+}
+
 #when colonies are created or change hands, relevant empires recalculate closest colonies for all of their systems
 planet_event = {
-    id = interstellar_inc.103
+    id = interstellar_inc.110
     is_triggered_only = yes
     hide_window = yes
 
@@ -176,7 +241,7 @@ planet_event = {
                     }
                     random_system_planet = {
                         planet_event = {
-                            id = interstellar_inc.104
+                            id = interstellar_inc.111
                             days = 3
                         }
                     }
@@ -202,7 +267,7 @@ planet_event = {
                     }
                     random_system_planet = {
                         planet_event = {
-                            id = interstellar_inc.104
+                            id = interstellar_inc.111
                             days = 3
                         }
                     }
@@ -214,7 +279,7 @@ planet_event = {
 
 #calculates closest colony for given system
 planet_event = {
-    id = interstellar_inc.104
+    id = interstellar_inc.111
     is_triggered_only = yes
     hide_window = yes
 
@@ -269,9 +334,9 @@ planet_event = {
     }
 }
 
-#called on starbase transfer or starbase being built, triggers 104 to calculate closest colony for system
+#called on starbase transfer or starbase being built, triggers 111 to calculate closest colony for system
 ship_event = {
-    id = interstellar_inc.105
+    id = interstellar_inc.112
     is_triggered_only = yes
     hide_window = yes
 
@@ -279,7 +344,7 @@ ship_event = {
         solar_system = {
             random_system_planet = {
                 planet_event = {
-                    id = interstellar_inc.104
+                    id = interstellar_inc.111
                     days = 3
                 }
             }
@@ -296,7 +361,7 @@ ship_event = {
                 }
                 random_system_planet = {
                     planet_event = {
-                        id = interstellar_inc.104
+                        id = interstellar_inc.111
                         days = 3
                     }
                 }
@@ -377,6 +442,7 @@ event = {
                 }
             }
             establish_communications_no_message = last_created_country
+            set_faction_hostility = { target = last_created_country set_hostile = no set_neutral = no set_friendly = yes }
 
             last_created_country = {
                 #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
@@ -384,10 +450,10 @@ event = {
                     who = PREV
                     subject_type = civilian_interstellar_inc
                 }
+                set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }
                 set_country_flag = civilian_country_interinc_flag
-                # set_country_flag = day_0
-                # set_country_flag = radical_cult
                 set_country_flag = civ_faction_of@PREV
+                copy_techs_from = { target = PREV }
                 #log = "[THIS.GetName] is economy vassal of [PREV.GetName]"
             }
             set_country_flag = civ_faction@last_created_country
@@ -402,6 +468,7 @@ event = {
                 limit = { has_country_flag = civ_faction@PREV }
                 save_event_target_as = parent_empire
             }
+            copy_techs_from = { target = event_target:parent_empire }
             if = {
                 limit = {
                     OR = {
@@ -429,6 +496,24 @@ event = {
                 destroy_country = yes
             }
 
+        }
+    }
+}
+
+#triggered by communications established with from; establishes communications with civilian empires
+country_event = {
+    id = interstellar_inc.201
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        random_country = {
+            limit = { has_country_flag = civ_faction_of@ROOT }
+            establish_communications_no_message = FROM
+        }
+        random_country = {
+            limit = { has_country_flag = civ_faction_of@FROM }
+            establish_communications_no_message = ROOT
         }
     }
 }
@@ -491,10 +576,14 @@ planet_event = {
                         create_ship = {
                             name = random
                             design = random_existing_design
-                            random_existing_design = interstellarinc_miner
+                            random_existing_design = z_iicso_miner
                         }
                         set_fleet_flag = civilian_miner
                         set_fleet_flag = home_colony@ROOT
+                        set_timed_fleet_flag = {
+                            flag = orders_received
+                            days = 120
+                        }
                         set_location = ROOT
                         #log = "Created miner at [ROOT.GetName]"
                     }
@@ -636,6 +725,7 @@ event = {
             limit = { has_country_flag = civilian_country_interinc_flag }
             every_owned_fleet = {
                 limit = {
+                    exists = solar_system
                     solar_system = {
                         any_planet = {
                             PREVPREV = { has_fleet_flag = mining_in_progress@PREV }
@@ -646,8 +736,8 @@ event = {
                 solar_system = {
                     random_system_planet = {
                         limit = { PREVPREV = { has_fleet_flag = mining_in_progress@PREV }}
+                        save_event_target_as = mined_planet
                     }
-                    save_event_target_as = mined_planet
                 }
 
                 set_variable = { which = min_resources_interstellar_inc_var value = orbit }
@@ -933,7 +1023,7 @@ event = {
                                             create_ship = {
                                                 name = random
                                                 design = random_existing_design
-                                                random_existing_design = interstellarinc_freighter
+                                                random_existing_design = z_iicso_freighter
                                             }
                                             last_created_ship = {
                                                 set_ship_flag = civilian_station_freighter
@@ -1101,7 +1191,7 @@ country_event = {
                     create_ship = {
                         name = random
                         design = random_existing_design
-                        random_existing_design = interstellarinc_freighter
+                        random_existing_design = z_iicso_freighter
                     }
                     last_created_ship = {
                         set_ship_flag = home_station@event_target:my_station.orbit
@@ -1377,7 +1467,7 @@ pop_event = {
                         create_ship = {
                             name = random
                             design = random_existing_design
-                            random_existing_design = interstellarinc_freighter
+                            random_existing_design = z_iicso_freighter
                         }
                         set_fleet_flag = migrating_pop@last_created_country
                         set_fleet_flag = destination_planet@FROM.planet
