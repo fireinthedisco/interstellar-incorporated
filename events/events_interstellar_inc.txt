@@ -112,6 +112,13 @@ event = {
 
     immediate = {
         every_country = {
+            limit = {
+                OR = {
+                    is_country_type = default
+                    is_country_type = fallen_empire
+                    is_country_type = awakened_fallen_empire
+                }
+            }
             every_mining_station = {
                 #log = "removing [THIS.orbit.min_resources_interstellar_inc_var] minerals from empire total"
                 set_variable = { which = min_resources_interstellar_inc_var value = orbit }
@@ -389,75 +396,77 @@ event = {
                     is_country_type = awakened_fallen_empire
                     is_country_type = fallen_empire
                 }
-                NOT = {
-                    any_country = {
-                        has_country_flag = civ_faction_of@PREV
-                        has_country_flag = civilian_country_interinc_flag
-                    }
-                }
-            }
-
-            set_timed_country_flag = { #should temporarily keep this empire from getting first contact event - i.e. when they meet their civilian empire
-                flag = Story7
-                days = 5
             }
 
             if = {
                 limit = {
-                    is_synthetic_empire = yes
+                    NOT = {
+                        any_country = {
+                            has_country_flag = civ_faction_of@PREV
+                            has_country_flag = civilian_country_interinc_flag
+                        }
+                    }
                 }
-                create_country = {
-                    name = "[THIS.GetAdj] Autonomous Transports"
-                    type = civilian_economy
-                    auto_delete = no
-    
-                    flag = THIS
-                    name_list = THIS
-                    species = THIS
+                set_timed_country_flag = { #should temporarily keep this empire from getting first contact event - i.e. when they meet their civilian empire
+                    flag = Story7
+                    days = 5
                 }
-            }
-            else_if = {
-                limit = {
-                    has_authority = auth_hive_mind
-                }
-                create_country = {
-                    name = "[THIS.GetAdj] Carrier Drones"
-                    type = civilian_economy
-                    auto_delete = no
-    
-                    flag = THIS
-                    name_list = THIS
-                    species = THIS
-                }
-            }
-            else = {
-                create_country = {
-                    name = "[THIS.GetAdj] Civilian Vessels"
-                    type = civilian_economy
-                    auto_delete = no
-    
-                    flag = THIS
-                    name_list = THIS
-                    species = THIS
-                }
-            }
-            establish_communications_no_message = last_created_country
-            set_faction_hostility = { target = last_created_country set_hostile = no set_neutral = no set_friendly = yes }
 
-            last_created_country = {
-                #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
-                set_subject_of = {
-                    who = PREV
-                    subject_type = civilian_interstellar_inc
+                if = {
+                    limit = {
+                        is_synthetic_empire = yes
+                    }
+                    create_country = {
+                        name = "[THIS.GetAdj] Autonomous Transports"
+                        type = civilian_economy
+                        auto_delete = no
+        
+                        flag = THIS
+                        name_list = THIS
+                        species = THIS
+                    }
                 }
-                set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }
-                set_country_flag = civilian_country_interinc_flag
-                set_country_flag = civ_faction_of@PREV
-                copy_techs_from = { target = PREV }
-                #log = "[THIS.GetName] is economy vassal of [PREV.GetName]"
+                else_if = {
+                    limit = {
+                        has_authority = auth_hive_mind
+                    }
+                    create_country = {
+                        name = "[THIS.GetAdj] Carrier Drones"
+                        type = civilian_economy
+                        auto_delete = no
+        
+                        flag = THIS
+                        name_list = THIS
+                        species = THIS
+                    }
+                }
+                else = {
+                    create_country = {
+                        name = "[THIS.GetAdj] Civilian Vessels"
+                        type = civilian_economy
+                        auto_delete = no
+        
+                        flag = THIS
+                        name_list = THIS
+                        species = THIS
+                    }
+                }
+                establish_communications_no_message = last_created_country
+
+                last_created_country = {
+                    #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
+                    set_subject_of = {
+                        who = PREV
+                        subject_type = civilian_interstellar_inc
+                    }
+                    set_country_flag = civilian_country_interinc_flag
+                    set_country_flag = civ_faction_of@PREV
+                    copy_techs_from = { target = PREV }
+                    #log = "[THIS.GetName] is economy vassal of [PREV.GetName]"
+                }
+                set_country_flag = civ_faction@last_created_country
+                #log = "[THIS.GetName] is economy overlord of [last_created_country.GetName]"
             }
-            set_country_flag = civ_faction@last_created_country
-            #log = "[THIS.GetName] is economy overlord of [last_created_country.GetName]"
         }
 
         #reestablish vassalhood (important if parent country is vassalised and later becomes free, for example)
@@ -466,6 +475,7 @@ event = {
 
             random_country = {
                 limit = { has_country_flag = civ_faction@PREV }
+                
                 save_event_target_as = parent_empire
             }
             copy_techs_from = { target = event_target:parent_empire }

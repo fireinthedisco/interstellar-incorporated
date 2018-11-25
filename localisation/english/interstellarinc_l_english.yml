@@ -10,3 +10,5 @@ z_iicso_miner:0 "Miner"
 z_iicso_miner_plural:0 "Miners"
 station_freighter_fleet:0 "[PREVPREV.GetName] Freighter"
 miner_fleet:0 "[PREV.GetName] Miner"
+
+IICSO_CIVILIAN_BEHAVIOR_DESC:0 "This ship is unarmed or poorly armed and will attempt to flee the battle."

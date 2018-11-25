@@ -1,4 +1,4 @@
-name="Interstellar Incorporated - A Civilian Space Odyssey v0.1"
+name="InterstelInterstellar Incorporated - A Civilian Space Odyssey v0.1.2 - ALPHA"
 path="mod/interstellarincorporated"
 tags={
 	"Economy"
