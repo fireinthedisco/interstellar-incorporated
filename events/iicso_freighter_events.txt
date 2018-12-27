@@ -1,0 +1,193 @@
+namespace = iicso
+
+country_event = {
+    id = iicso.500
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        #log = "iicso.500 triggered, sending event to mining stations"
+        every_planet = {
+            limit = {
+                NOT = { has_planet_flag = running_freighters }
+                OR = {
+                    AND = {
+                        has_mining_station = yes
+                        has_stockpile = yes
+                    }
+                    AND = {
+                        is_primary_star = yes
+                        solar_system = {
+                            exists = starbase
+                            any_planet = {
+                                has_mining_station = yes
+                                has_stockpile = yes
+                            }
+                        }
+                    }
+                }
+            }
+            planet_event = {
+                id = iicso.501
+                days = 1
+                random = 179
+            }
+        }
+    }
+}
+
+planet_event = {
+    id = iicso.501
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        #log = "system freighters triggered at [THIS.GetName] for empire [THIS.solar_system.space_owner.GetName]"
+
+        set_variable = { which = half_cargo_capacity value = @ship_cargo_capacity }
+        divide_variable = { which = half_cargo_capacity value = 2 }
+        if = {
+            limit = { has_sufficient_stockpile = yes }
+            random_country = {
+                limit = { has_country_flag = civ_faction_of@PREV.space_owner }
+
+                if = {
+                    limit = { ROOT = { is_primary_star = yes }}
+                    create_fleet = {
+                        name = system_freighter_fleet
+                        effect = {
+                            set_owner = PREV
+                            create_station_freighter_ships = yes
+                            set_location = PREVPREV
+                        }
+                    }
+                }
+                else = {
+                    create_fleet = {
+                        name = station_freighter_fleet
+                        effect = {
+                            set_owner = PREV
+                            create_station_freighter_ships = yes
+                            set_location = PREVPREV
+                        }
+                    }
+                }
+                last_created_fleet = {
+                    set_fleet_flag = civilian_station_freighter
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 90
+                    }
+                    if = {
+                        limit = { ROOT = { is_primary_star = yes }}
+                        fleet_event = {
+                            id = iicso.503
+                            days = 5
+                            random = 10
+                        }
+                    }
+                    else = {
+                        fleet_event = {
+                            id = iicso.502
+                            days = 5
+                            random = 10
+                        }
+                    }
+                }
+            }
+        }
+        set_variable = { which = half_cargo_capacity value = 0 }
+
+        set_timed_planet_flag = {
+            flag = running_freighters
+            days = 180
+        }
+        planet_event = {
+            id = iicso.501
+            days = 180
+        }
+    }
+}
+
+fleet_event = {
+    id = iicso.502
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        solar_system = {
+            if = {
+                limit = {
+                    any_planet = {
+                        is_colony = yes
+                    }
+                }
+                random_system_planet = {
+                    limit = { is_colony = yes }
+                    ROOT = {
+                        auto_move_to_planet = {
+                            target = PREV
+                            clear_auto_move_on_arrival = no
+                            arrival_effect = deposit_cargo_at_colony
+                        }
+                    }
+                }
+            }
+            else = {
+                random_system_planet = {
+                    limit = { is_primary_star = yes }
+                    ROOT = {
+                        auto_move_to_planet = {
+                            target = PREV
+                            clear_auto_move_on_arrival = no
+                            arrival_effect = deposit_cargo_at_starbase
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fleet_event = {
+    id = iicso.503
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        random_country = {
+            limit = { has_country_flag = civ_faction@ROOT.owner }
+            PREV = {
+                closest_system = {
+                    limit = {
+                        any_planet = {
+                            is_colony = yes
+                            exists = owner
+                            owner = { is_same_value = PREVPREVPREVPREV }
+                        }
+                    }
+                    random_system_planet = {
+                        limit = { is_colony = yes }
+                        ROOT = {
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_colony
+                            }
+                        }
+                    }
+                }   
+            }
+        }
+    }
+}
+
+fleet_event = {
+    id = iicso.504
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        delete_fleet = THIS
+    }
+}

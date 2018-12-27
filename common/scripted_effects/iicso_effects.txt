@@ -1,0 +1,373 @@
+deposit_cargo_at_colony = {
+    FROM = {
+        while = {
+            count = cargo_minerals
+            FROMFROM = { owner = { add_resource = { minerals = 1 }}}
+        }
+        set_variable = { which = cargo_minerals value = 0 }
+        while = {
+            count = cargo_alloys
+            FROMFROM = { owner = { add_resource = { alloys = 1 }}}
+        }
+        set_variable = { which = cargo_alloys value = 0 }
+        while = {
+            count = cargo_exotic_gases
+            FROMFROM = { owner = { add_resource = { exotic_gases = 1 }}}
+        }
+        set_variable = { which = cargo_exotic_gases value = 0 }
+        while = {
+            count = cargo_rare_crystals
+            FROMFROM = { owner = { add_resource = { rare_crystals = 1 }}}
+        }
+        set_variable = { which = cargo_rare_crystals value = 0 }
+        while = {
+            count = cargo_volatile_motes
+            FROMFROM = { owner = { add_resource = { volatile_motes = 1 }}}
+        }
+        set_variable = { which = cargo_volatile_motes value = 0 }
+        while = {
+            count = cargo_zro
+            FROMFROM = { owner = { add_resource = { sr_zro = 1 }}}
+        }
+        set_variable = { which = cargo_zro value = 0 }
+        while = {
+            count = cargo_dark_matter
+            FROMFROM = { owner = { add_resource = { sr_dark_matter = 1 }}}
+        }
+        set_variable = { which = cargo_dark_matter value = 0 }
+        while = {
+            count = cargo_living_metal
+            FROMFROM = { owner = { add_resource = { sr_living_metal = 1 }}}
+        }
+        set_variable = { which = cargo_living_metal value = 0 }
+
+        remove_fleet_flag = enroute_to_home
+        if = {
+            limit = {
+                OR = {
+                    has_fleet_flag = kill_switch
+                    has_fleet_flag = civilian_station_freighter
+                }
+            }
+            delete_fleet = THIS
+        }
+        else = {
+            fleet_event = {
+                id = iicso.402
+                days = 10
+                random = 10
+            }
+        }
+    }
+}
+
+calculate_empty_cargo = {
+    set_variable = { which = empty_cargo value = 0 }
+    owner = {
+        every_owned_ship = {
+            limit = {
+                fleet = { is_same_value = PREVPREVPREV }
+                OR = {
+                    has_ship_flag = civilian_station_freighter
+                    has_ship_flag = civilian_miner
+                }
+            }
+            PREVPREV = { change_variable = { which = empty_cargo value = @ship_cargo_capacity }}
+        }
+    }
+    subtract_variable = { which = empty_cargo value = cargo_minerals }
+    subtract_variable = { which = empty_cargo value = cargo_alloys }
+    subtract_variable = { which = empty_cargo value = cargo_exotic_gases }
+    subtract_variable = { which = empty_cargo value = cargo_rare_crystals }
+    subtract_variable = { which = empty_cargo value = cargo_volatile_motes }
+    subtract_variable = { which = empty_cargo value = cargo_zro }
+    subtract_variable = { which = empty_cargo value = cargo_dark_matter }
+    subtract_variable = { which = empty_cargo value = cargo_living_metal }
+}
+
+add_cargo_to_miner = {
+    set_variable = { which = iicso_orbital_minerals value = orbit }
+    set_variable = { which = iicso_orbital_alloys value = orbit }
+    set_variable = { which = iicso_orbital_exotic_gases value = orbit }
+    set_variable = { which = iicso_orbital_rare_crystals value = orbit }
+    set_variable = { which = iicso_orbital_volatile_motes value = orbit }
+    set_variable = { which = iicso_orbital_zro value = orbit }
+    set_variable = { which = iicso_orbital_dark_matter value = orbit }
+    set_variable = { which = iicso_orbital_living_metal value = orbit }
+
+    if = {
+        limit = { check_variable = { which = iicso_orbital_living_metal value > 0 }}
+        subtract_variable = { which = empty_cargo value = iicso_orbital_living_metal }
+        if = {
+            limit = { check_variable = { which = empty_cargo value < 0 }}
+            change_variable = { which = iicso_orbital_living_metal value = empty_cargo }
+            change_variable = { which = cargo_living_metal value = iicso_orbital_living_metal }
+            set_variable = { which = empty_cargo value = 0 }
+        }
+        else = {
+            change_variable = { which = cargo_living_metal value = iicso_orbital_living_metal }            
+        }
+    }
+    else_if = {
+        limit = { check_variable = { which = iicso_orbital_dark_matter value > 0 }}
+        subtract_variable = { which = empty_cargo value = iicso_orbital_dark_matter }
+        if = {
+            limit = { check_variable = { which = empty_cargo value < 0 }}
+            change_variable = { which = iicso_orbital_dark_matter value = empty_cargo }
+            change_variable = { which = cargo_dark_matter value = iicso_orbital_dark_matter }
+            set_variable = { which = empty_cargo value = 0 }
+        }
+        else = {
+            change_variable = { which = cargo_dark_matter value = iicso_orbital_dark_matter }            
+        }
+    }
+    else_if = {
+        limit = { check_variable = { which = iicso_orbital_zro value > 0 }}
+        subtract_variable = { which = empty_cargo value = iicso_orbital_zro }
+        if = {
+            limit = { check_variable = { which = empty_cargo value < 0 }}
+            change_variable = { which = iicso_orbital_zro value = empty_cargo }
+            change_variable = { which = cargo_zro value = iicso_orbital_zro }
+            set_variable = { which = empty_cargo value = 0 }
+        }
+        else = {
+            change_variable = { which = cargo_zro value = iicso_orbital_zro }            
+        }
+    }
+    else_if = {
+        limit = { check_variable = { which = iicso_orbital_volatile_motes value > 0 }}
+        subtract_variable = { which = empty_cargo value = iicso_orbital_volatile_motes }
+        if = {
+            limit = { check_variable = { which = empty_cargo value < 0 }}
+            change_variable = { which = iicso_orbital_volatile_motes value = empty_cargo }
+            change_variable = { which = cargo_volatile_motes value = iicso_orbital_volatile_motes }
+            set_variable = { which = empty_cargo value = 0 }
+        }
+        else = {
+            change_variable = { which = cargo_volatile_motes value = iicso_orbital_volatile_motes }            
+        }
+    }
+    else_if = {
+        limit = { check_variable = { which = iicso_orbital_rare_crystals value > 0 }}
+        subtract_variable = { which = empty_cargo value = iicso_orbital_rare_crystals }
+        if = {
+            limit = { check_variable = { which = empty_cargo value < 0 }}
+            change_variable = { which = iicso_orbital_rare_crystals value = empty_cargo }
+            change_variable = { which = cargo_rare_crystals value = iicso_orbital_rare_crystals }
+            set_variable = { which = empty_cargo value = 0 }
+        }
+        else = {
+            change_variable = { which = cargo_rare_crystals value = iicso_orbital_rare_crystals }            
+        }
+    }
+    else_if = {
+        limit = { check_variable = { which = iicso_orbital_exotic_gases value > 0 }}
+        subtract_variable = { which = empty_cargo value = iicso_orbital_exotic_gases }
+        if = {
+            limit = { check_variable = { which = empty_cargo value < 0 }}
+            change_variable = { which = iicso_orbital_exotic_gases value = empty_cargo }
+            change_variable = { which = cargo_exotic_gases value = iicso_orbital_exotic_gases }
+            set_variable = { which = empty_cargo value = 0 }
+        }
+        else = {
+            change_variable = { which = cargo_exotic_gases value = iicso_orbital_exotic_gases }            
+        }
+    }
+    else_if = {
+        limit = { check_variable = { which = iicso_orbital_alloys value > 0 }}
+        subtract_variable = { which = empty_cargo value = iicso_orbital_alloys }
+        if = {
+            limit = { check_variable = { which = empty_cargo value < 0 }}
+            change_variable = { which = iicso_orbital_alloys value = empty_cargo }
+            change_variable = { which = cargo_alloys value = iicso_orbital_alloys }
+            set_variable = { which = empty_cargo value = 0 }
+        }
+        else = {
+            change_variable = { which = cargo_alloys value = iicso_orbital_alloys }            
+        }
+    }
+    else_if = {
+        limit = { check_variable = { which = iicso_orbital_minerals value > 0 }}
+        subtract_variable = { which = empty_cargo value = iicso_orbital_minerals }
+        if = {
+            limit = { check_variable = { which = empty_cargo value < 0 }}
+            change_variable = { which = iicso_orbital_minerals value = empty_cargo }
+            change_variable = { which = cargo_minerals value = iicso_orbital_minerals }
+            set_variable = { which = empty_cargo value = 0 }
+        }
+        else = {
+            change_variable = { which = cargo_minerals value = iicso_orbital_minerals }            
+        }
+    }
+    
+    set_variable = { which = iicso_orbital_minerals value = 0 }
+    set_variable = { which = iicso_orbital_alloys value = 0 }
+    set_variable = { which = iicso_orbital_exotic_gases value = 0 }
+    set_variable = { which = iicso_orbital_rare_crystals value = 0 }
+    set_variable = { which = iicso_orbital_volatile_motes value = 0 }
+    set_variable = { which = iicso_orbital_zro value = 0 }
+    set_variable = { which = iicso_orbital_dark_matter value = 0 }
+    set_variable = { which = iicso_orbital_living_metal value = 0 }
+}
+
+create_station_freighter_ships = {
+    while = {
+        limit = {
+            PREVPREV = {
+                OR = {
+                    check_variable = { which = iicso_stockpile_minerals value > 0 }
+                    check_variable = { which = iicso_stockpile_alloys value > 0 }
+                    check_variable = { which = iicso_stockpile_exotic_gases value > 0 }
+                    check_variable = { which = iicso_stockpile_rare_crystals value > 0 }
+                    check_variable = { which = iicso_stockpile_volatile_motes value > 0 }
+                    check_variable = { which = iicso_stockpile_zro value > 0 }
+                    check_variable = { which = iicso_stockpile_dark_matter value > 0 }
+                    check_variable = { which = iicso_stockpile_living_metal value > 0 }
+                }
+            }
+        }
+        set_variable = { which = cargo_load value = @ship_cargo_capacity}
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_minerals value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_minerals value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_minerals value = -1 }}
+        }
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_alloys value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_alloys value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_alloys value = -1 }}
+        }
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_exotic_gases value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_exotic_gases value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_exotic_gases value = -1 }}
+        }
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_rare_crystals value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_rare_crystals value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_rare_crystals value = -1 }}
+        }
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_volatile_motes value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_volatile_motes value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_volatile_motes value = -1 }}
+        }
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_zro value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_zro value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_zro value = -1 }}
+        }
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_dark_matter value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_dark_matter value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_dark_matter value = -1 }}
+        }
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_living_metal value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_living_metal value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_living_metal value = -1 }}
+        }
+
+        set_variable = { which = cargo_load value = 0 }
+        
+        create_ship = {
+            name = random
+            design = random_existing_design
+            random_existing_design = z_iicso_freighter
+        }
+        last_created_ship = {
+            set_ship_flag = civilian_station_freighter
+        }
+    }
+}
+
+deposit_cargo_at_starbase = {
+    FROM = {
+        while = {
+            count = cargo_minerals
+            FROMFROM = { change_variable = { which = iicso_stockpile_minerals value = 1 }}
+        }
+        set_variable = { which = cargo_minerals value = 0 }
+        while = {
+            count = cargo_alloys
+            FROMFROM = { change_variable = { which = iicso_stockpile_alloys value = 1 }}
+        }
+        set_variable = { which = cargo_alloys value = 0 }
+        while = {
+            count = cargo_exotic_gases
+            FROMFROM = { change_variable = { which = iicso_stockpile_exotic_gases value = 1 }}
+        }
+        set_variable = { which = cargo_exotic_gases value = 0 }
+        while = {
+            count = cargo_rare_crystals
+            FROMFROM = { change_variable = { which = iicso_stockpile_rare_crystals value = 1 }}
+        }
+        set_variable = { which = cargo_rare_crystals value = 0 }
+        while = {
+            count = cargo_volatile_motes
+            FROMFROM = { change_variable = { which = iicso_stockpile_volatile_motes value = 1 }}
+        }
+        set_variable = { which = cargo_volatile_motes value = 0 }
+        while = {
+            count = cargo_zro
+            FROMFROM = { change_variable = { which = iicso_stockpile_zro value = 1 }}
+        }
+        set_variable = { which = cargo_zro value = 0 }
+        while = {
+            count = cargo_dark_matter
+            FROMFROM = { change_variable = { which = iicso_stockpile_dark_matter value = 1 }}
+        }
+        set_variable = { which = cargo_dark_matter value = 0 }
+        while = {
+            count = cargo_living_metal
+            FROMFROM = { change_variable = { which = iicso_stockpile_living_metal value = 1 }}
+        }
+        set_variable = { which = cargo_living_metal value = 0 }
+
+        fleet_event = {
+            id = iicso.504
+            days = 5
+            random = 10
+        }
+    }
+}

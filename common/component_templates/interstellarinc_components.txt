@@ -4,7 +4,16 @@ utility_component_template = {
 	icon = "GFX_ship_part_reactor_1"
 	icon_frame = 1
 	power = 75
-	cost = 20
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 10
+		}	
+		upkeep = {
+			energy = 0.10
+			alloys = 0.01
+		}
+	}
 	
 	prerequisites = { "tech_fission_power" }
 	component_set = "power_core"
@@ -22,7 +31,12 @@ utility_component_template = {
 	icon = "GFX_ship_part_thruster_1"
 	icon_frame = 1
 	power = -10
-	cost = 3
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 3
+		}
+	}
 	
 	modifier = {
 	}
@@ -43,7 +57,12 @@ utility_component_template = {
 	icon = "GFX_ship_part_computer_default"
 	icon_frame = 1
 	power = -5
-	cost = 5
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 5
+		}
+	}
 	ship_behavior = "iicso_civilian_behavior"
 	
 	size_restriction = { z_iicso_freighter z_iicso_miner }

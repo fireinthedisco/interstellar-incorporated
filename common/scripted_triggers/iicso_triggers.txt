@@ -1,0 +1,98 @@
+can_mine_planet = {
+    any_deposit = {
+        OR = {
+            is_deposit_type = d_minerals_1
+            is_deposit_type = d_minerals_2
+            is_deposit_type = d_minerals_3
+            is_deposit_type = d_minerals_4
+            is_deposit_type = d_minerals_5
+            is_deposit_type = d_minerals_6
+            is_deposit_type = d_minerals_7
+            is_deposit_type = d_minerals_8
+            is_deposit_type = d_minerals_9
+            is_deposit_type = d_minerals_10
+            is_deposit_type = d_alloys_1
+            is_deposit_type = d_alloys_2
+            is_deposit_type = d_alloys_3
+            is_deposit_type = d_alloys_4
+            is_deposit_type = d_alloys_5
+            AND = {
+                OR = {
+                    is_deposit_type = d_exotic_gases_1
+                    is_deposit_type = d_exotic_gases_2
+                    is_deposit_type = d_exotic_gases_3
+                    is_deposit_type = d_exotic_gases_4
+                    is_deposit_type = d_exotic_gases_5
+                }
+                ROOT = { owner = { has_technology = tech_mine_exotic_gases }}
+            }
+            AND = {
+                OR = {
+                    is_deposit_type = d_rare_crystals_1
+                    is_deposit_type = d_rare_crystals_2
+                    is_deposit_type = d_rare_crystals_3
+                    is_deposit_type = d_rare_crystals_4
+                    is_deposit_type = d_rare_crystals_5
+                }
+                ROOT = { owner = { has_technology = tech_mine_rare_crystals }}
+            }
+            AND = {
+                OR = {
+                    is_deposit_type = d_volatile_motes_1
+                    is_deposit_type = d_volatile_motes_2
+                    is_deposit_type = d_volatile_motes_3
+                    is_deposit_type = d_volatile_motes_4
+                    is_deposit_type = d_volatile_motes_5
+                }
+                ROOT = { owner = { has_technology = tech_mine_volatile_motes }}
+            }
+            AND = {
+               OR = { 
+                    is_deposit_type = d_zro_deposit_1
+                    is_deposit_type = d_zro_deposit_2
+                    is_deposit_type = d_zro_deposit_3
+               }
+               ROOT = { owner = { has_technology = tech_mine_zro }}
+            }
+            AND = {
+                OR = {
+                    is_deposit_type = d_dark_matter_deposit_1
+                    is_deposit_type = d_dark_matter_deposit_2
+                    is_deposit_type = d_dark_matter_deposit_3
+                }
+                ROOT = { owner = { has_technology = tech_mine_dark_matter }}
+            }
+            AND = {
+                is_deposit_type = d_living_metal_deposit
+                ROOT = { owner = { has_technology = tech_mine_living_metal }}
+            }
+        }
+    }
+}
+
+has_sufficient_stockpile = {
+    OR = {
+        check_variable = { which = iicso_stockpile_minerals value >= half_cargo_capacity }
+        check_variable = { which = iicso_stockpile_alloys value >= half_cargo_capacity }
+        check_variable = { which = iicso_stockpile_exotic_gases value >= half_cargo_capacity }
+        check_variable = { which = iicso_stockpile_rare_crystals value >= half_cargo_capacity }
+        check_variable = { which = iicso_stockpile_volatile_motes value >= half_cargo_capacity }
+        check_variable = { which = iicso_stockpile_zro value >= half_cargo_capacity }
+        check_variable = { which = iicso_stockpile_dark_matter value >= half_cargo_capacity }
+        check_variable = { which = iicso_stockpile_living_metal value >= half_cargo_capacity }
+    }
+}
+
+has_stockpile = {
+    OR = {
+        check_variable = { which = iicso_stockpile_minerals value > 0 }
+        check_variable = { which = iicso_stockpile_alloys value > 0 }
+        check_variable = { which = iicso_stockpile_exotic_gases value > 0 }
+        check_variable = { which = iicso_stockpile_rare_crystals value > 0 }
+        check_variable = { which = iicso_stockpile_volatile_motes value > 0 }
+        check_variable = { which = iicso_stockpile_zro value > 0 }
+        check_variable = { which = iicso_stockpile_dark_matter value > 0 }
+        check_variable = { which = iicso_stockpile_living_metal value > 0 }
+    }
+
+}
