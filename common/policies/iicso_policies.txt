@@ -1,0 +1,198 @@
+civilian_hostility = {
+
+	potential = {
+		OR = {
+			is_country_type = default
+			is_country_type = fallen_empire
+			is_country_type = awakened_fallen_empire
+		}
+	}
+	
+	allow = {
+		always = yes
+		#is_at_war = no # Not allowed to change policies in this group while at war
+	}
+	
+	option = {
+		name = "neutral_to_civilians"
+		
+		policy_flags = {
+			neutral_to_civilians
+		}
+
+		valid = {
+			NOR = {
+				has_ethic = "ethic_fanatic_militarist"
+				has_valid_civic = "civic_fanatic_purifiers"
+				has_valid_civic = "civic_hive_devouring_swarm"
+				has_valid_civic = "civic_machine_terminator"
+			}	
+		}
+
+		on_enabled = {
+			hidden_effect = {
+				every_country = {
+					limit = {
+						any_country = {
+							has_country_flag = civ_faction@PREV
+						}
+						has_communications = PREV
+						PREV = { NOT = { has_country_flag = civ_faction@PREV }}
+					}
+					PREV = {
+						set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no } 
+					}
+				}
+			}
+		}
+		
+		AI_weight = {
+			modifier = {
+				factor = 5
+				OR = {
+					has_ethic = "ethic_fanatic_pacifist"
+					has_ethic = "ethic_pacifist"
+					has_ai_personality = "honorbound_warriors"
+					has_ai_personality = "democratic_crusaders"
+					has_ai_personality = "federation_builders"
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "hostile_to_enemy_civilians"
+		
+		policy_flags = {
+			hostile_to_enemy_civilians
+		}
+		
+		valid = {
+			NOR = {
+				has_ethic = "ethic_fanatic_pacifist"
+				has_ethic = "ethic_pacifist"
+				has_valid_civic = "civic_fanatic_purifiers"
+			}
+		}
+
+		on_enabled = {
+			hidden_effect = {
+				every_country = {
+					limit = { is_at_war_with = PREV }
+					random_country = {
+						limit = { has_country_flag = civ_faction_of@PREV }
+						PREVPREV = {
+							set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+						}					
+					}
+				}
+			}
+		}
+
+		on_disabled = {
+			hidden_effect = {
+				every_country = {
+					limit = { is_at_war_with = PREV }
+					random_country = {
+						limit = { has_country_flag = civ_faction_of@PREV }
+						PREVPREV = {
+							set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+						}					
+					}
+				}
+			}
+		}
+		
+		AI_weight = {
+			modifier = {
+				factor = 2
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+			}
+			modifier = {
+				factor = 2
+				has_valid_ai_personality = yes
+				is_ai = yes
+			}
+		}
+	}
+	
+	option = {
+		name = "hostile_to_all_civilians"
+		
+		policy_flags = {
+			hostile_to_all_civilians
+		}
+		
+		valid = {
+			NOR = {
+				has_ethic = "ethic_pacifist"
+				has_ethic = "ethic_fanatic_pacifist"
+				has_valid_civic = "civic_inwards_perfection"
+			}
+		}
+
+		on_enabled = {
+			hidden_effect = {
+				every_country = {
+					limit = {
+						any_country = {
+							has_country_flag = civ_faction@PREV
+						}
+						has_communications = PREV
+						PREV = { NOT = { has_country_flag = civ_faction@PREV }}
+					}
+					PREV = {
+						set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no } 
+					}
+				}
+			}
+		}
+
+		on_disabled = {
+			hidden_effect = {
+				every_country = {
+					limit = {
+						any_country = {
+							has_country_flag = civ_faction@PREV
+						}
+						has_communications = PREV
+						PREV = { NOT = { has_country_flag = civ_faction@PREV }}
+					}
+					PREV = {
+						set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no } 
+					}
+				}
+			}
+		}
+		
+		AI_weight = {
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_civic = "civic_fanatic_purifiers"
+					has_valid_civic = "civic_hive_devouring_swarm"
+					has_valid_civic = "civic_machine_terminator"
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_ai_personality_behaviour = conqueror
+					has_ai_personality_behaviour = subjugator
+					has_ai_personality_behaviour = purger
+					has_ai_personality = "xenophobic_isolationists"
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = "ethic_pacifist"
+					has_ethic = "ethic_fanatic_pacifist"
+				}
+			}
+		}
+	}
+}

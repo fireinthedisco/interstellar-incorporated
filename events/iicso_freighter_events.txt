@@ -43,68 +43,73 @@ planet_event = {
 
     immediate = {
         #log = "system freighters triggered at [THIS.GetName] for empire [THIS.solar_system.space_owner.GetName]"
-
-        set_variable = { which = half_cargo_capacity value = @ship_cargo_capacity }
-        divide_variable = { which = half_cargo_capacity value = 2 }
         if = {
-            limit = { has_sufficient_stockpile = yes }
-            random_country = {
-                limit = { has_country_flag = civ_faction_of@PREV.space_owner }
-
-                if = {
-                    limit = { ROOT = { is_primary_star = yes }}
-                    create_fleet = {
-                        name = system_freighter_fleet
-                        effect = {
-                            set_owner = PREV
-                            create_station_freighter_ships = yes
-                            set_location = PREVPREV
-                        }
+            limit = {
+                solar_system = {
+                    starbase = {
+                        controller = { is_same_value = PREV.owner }
                     }
                 }
-                else = {
-                    create_fleet = {
-                        name = station_freighter_fleet
-                        effect = {
-                            set_owner = PREV
-                            create_station_freighter_ships = yes
-                            set_location = PREVPREV
-                        }
-                    }
-                }
-                last_created_fleet = {
-                    set_fleet_flag = civilian_station_freighter
-                    set_timed_fleet_flag = {
-                        flag = orders_received
-                        days = 90
-                    }
+            }
+            if = {
+                limit = { has_sufficient_stockpile = yes }
+                random_country = {
+                    limit = { has_country_flag = civ_faction_of@PREV.space_owner }
+    
                     if = {
                         limit = { ROOT = { is_primary_star = yes }}
-                        fleet_event = {
-                            id = iicso.503
-                            days = 5
-                            random = 10
+                        create_fleet = {
+                            name = system_freighter_fleet
+                            effect = {
+                                set_owner = PREV
+                                create_station_freighter_ships = yes
+                                set_location = PREVPREV
+                            }
                         }
                     }
                     else = {
-                        fleet_event = {
-                            id = iicso.502
-                            days = 5
-                            random = 10
+                        create_fleet = {
+                            name = station_freighter_fleet
+                            effect = {
+                                set_owner = PREV
+                                create_station_freighter_ships = yes
+                                set_location = PREVPREV
+                            }
+                        }
+                    }
+                    last_created_fleet = {
+                        set_fleet_flag = civilian_station_freighter
+                        set_timed_fleet_flag = {
+                            flag = orders_received
+                            days = 90
+                        }
+                        if = {
+                            limit = { ROOT = { is_primary_star = yes }}
+                            fleet_event = {
+                                id = iicso.503
+                                days = 5
+                                random = 10
+                            }
+                        }
+                        else = {
+                            fleet_event = {
+                                id = iicso.502
+                                days = 5
+                                random = 10
+                            }
                         }
                     }
                 }
             }
-        }
-        set_variable = { which = half_cargo_capacity value = 0 }
-
-        set_timed_planet_flag = {
-            flag = running_freighters
-            days = 180
-        }
-        planet_event = {
-            id = iicso.501
-            days = 180
+    
+            set_timed_planet_flag = {
+                flag = running_freighters
+                days = 180
+            }
+            planet_event = {
+                id = iicso.501
+                days = 180
+            }
         }
     }
 }
@@ -120,11 +125,23 @@ fleet_event = {
                 limit = {
                     any_planet = {
                         is_colony = yes
+                        controller = { is_same_value = PREV.owner }
+                        NOT = { has_orbital_bombardment = yes }
                     }
                 }
+                
                 random_system_planet = {
-                    limit = { is_colony = yes }
+                    limit = {
+                        is_colony = yes
+                        controller = { is_same_value = PREV.owner }
+                        NOT = { has_orbital_bombardment = yes }
+                    }
                     ROOT = {
+                        set_timed_fleet_flag = {
+                            flag = orders_received
+                            days = 120
+                        }
+                        set_fleet_flag = enroute_to_colony@PREV
                         auto_move_to_planet = {
                             target = PREV
                             clear_auto_move_on_arrival = no
@@ -137,6 +154,11 @@ fleet_event = {
                 random_system_planet = {
                     limit = { is_primary_star = yes }
                     ROOT = {
+                        set_timed_fleet_flag = {
+                            flag = orders_received
+                            days = 120
+                        }
+                        set_fleet_flag = enroute_to_starbase@PREV
                         auto_move_to_planet = {
                             target = PREV
                             clear_auto_move_on_arrival = no
@@ -154,6 +176,10 @@ fleet_event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = {
+        has_fleet_flag = civilian_station_freighter
+    }
+
     immediate = {
         random_country = {
             limit = { has_country_flag = civ_faction@ROOT.owner }
@@ -164,15 +190,47 @@ fleet_event = {
                             is_colony = yes
                             exists = owner
                             owner = { is_same_value = PREVPREVPREVPREV }
+                            NOT = { has_orbital_bombardment = yes }
+                            controller = { is_same_value = PREV.owner }
                         }
                     }
                     random_system_planet = {
-                        limit = { is_colony = yes }
+                        limit = {
+                            is_colony = yes
+                            exists = owner
+                            owner = { is_same_value = PREVPREVPREVPREV }
+                            NOT = { has_orbital_bombardment = yes }
+                            controller = { is_same_value = PREV.owner }
+                        }
                         ROOT = {
-                            auto_move_to_planet = {
-                                target = PREV
-                                clear_auto_move_on_arrival = no
-                                arrival_effect = deposit_cargo_at_colony
+                            set_timed_fleet_flag = {
+                                flag = orders_received
+                                days = 120
+                            }
+                            if = {
+                                limit = { NOT = { has_fleet_flag = enroute_to_colony@PREV }}
+                                if = {
+                                    limit = {
+                                        any_system = {
+                                            any_planet = { ROOT = { has_fleet_flag = enroute_to_colony@PREV }}
+                                        }
+                                    }
+                                    random_planet = {
+                                        limit = { ROOT = { has_fleet_flag = enroute_to_colony@PREV }}
+                                        ROOT = { remove_fleet_flag = enroute_to_colony@PREV }
+                                    }
+                                }
+                                set_fleet_flag = enroute_to_colony@PREV
+
+                                if = {
+                                    limit = { has_auto_move_target = yes }
+                                    remove_auto_move_target = yes
+                                }
+                                auto_move_to_planet = {
+                                    target = PREV
+                                    clear_auto_move_on_arrival = no
+                                    arrival_effect = deposit_cargo_at_colony
+                                }
                             }
                         }
                     }

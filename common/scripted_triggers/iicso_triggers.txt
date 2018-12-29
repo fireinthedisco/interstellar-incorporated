@@ -72,14 +72,14 @@ can_mine_planet = {
 
 has_sufficient_stockpile = {
     OR = {
-        check_variable = { which = iicso_stockpile_minerals value >= half_cargo_capacity }
-        check_variable = { which = iicso_stockpile_alloys value >= half_cargo_capacity }
-        check_variable = { which = iicso_stockpile_exotic_gases value >= half_cargo_capacity }
-        check_variable = { which = iicso_stockpile_rare_crystals value >= half_cargo_capacity }
-        check_variable = { which = iicso_stockpile_volatile_motes value >= half_cargo_capacity }
-        check_variable = { which = iicso_stockpile_zro value >= half_cargo_capacity }
-        check_variable = { which = iicso_stockpile_dark_matter value >= half_cargo_capacity }
-        check_variable = { which = iicso_stockpile_living_metal value >= half_cargo_capacity }
+        check_variable = { which = iicso_stockpile_minerals value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_alloys value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_exotic_gases value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_rare_crystals value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_volatile_motes value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_zro value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_dark_matter value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_living_metal value >= @half_ship_cargo_capacity }
     }
 }
 

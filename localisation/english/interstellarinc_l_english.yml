@@ -12,3 +12,18 @@ station_freighter_fleet:0 "[PREVPREV.GetName] Freighter"
 miner_fleet:0 "[PREV.GetName] Miner"
 
 IICSO_CIVILIAN_BEHAVIOR_DESC:0 "This ship is unarmed or poorly armed and will attempt to flee the battle."
+
+bombardment_blockade:0 "Blockade"
+bombardment_blockade_desc:1 "The planet will not be bombarded or attacked, but our ships will form an orbital blockade, disallowing all civilian traffic on or offworld."
+
+policy_civilian_hostility:0 "Civilian Hostility Policy"
+policy_civilian_hostility_desc:0 "We should decide what our policy will be when dealing with the civilian starships of other empires.\n"
+hostile_to_all_civilians:0 "Indiscriminate Civilian Hostility"
+hostile_to_all_civilians_name:0 "Hostile to all civilians"
+hostile_to_all_civilians_desc:1 "Any and all civilian starships with whom we cross paths will be attacked and destroyed."
+hostile_to_enemy_civilians:0 "Enemy Civilian Hostility"
+hostile_to_enemy_civilians_name:0 "Hostile to enemy civilians"
+hostile_to_enemy_civilians_desc:5 "We will only attack the civilians of those empires with whom we are in an established state of diplomatic war."
+neutral_to_civilians:0 "Civilian Neutrality"
+neutral_to_civilians_name:0 "Neutral to civilians"
+neutral_to_civilians_desc:1 "Civilians are non-combatants, and should not bear the consequences of their governments' follies. We will not attack civilian starships, even if we are at war with their empire."

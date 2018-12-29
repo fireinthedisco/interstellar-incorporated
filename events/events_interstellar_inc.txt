@@ -448,45 +448,45 @@ country_event = {
                 set_variable = { which = iicso_stockpile_living_metal value = 0 }
             }
         }
-        random_country = {
-            limit = {
-                has_country_flag = civ_faction_of@ROOT
-            }
-            every_owned_fleet = {
-                limit = {
-                    has_fleet_flag = home_station@FROMFROM
-                    has_fleet_flag = civilian_station_freighter
-                }
+        # random_country = {
+        #     limit = {
+        #         has_country_flag = civ_faction_of@ROOT
+        #     }
+        #     every_owned_fleet = {
+        #         limit = {
+        #             has_fleet_flag = home_station@FROMFROM
+        #             has_fleet_flag = civilian_station_freighter
+        #         }
 
-                remove_fleet_flag = home_station@FROMFROM
-                set_fleet_flag = pending_reassignment
-                closest_system = {
-                    limit = {
-                        any_planet = {
-                            is_colony = yes
-                            owner = { is_same_value = ROOT }
-                        }
-                    }
-                    random_system_planet = {
-                        limit = {
-                            is_colony = yes
-                            owner = { is_same_value = ROOT }
-                        }
-                        save_event_target_as = closest_colony
-                    }
-                }
+        #         remove_fleet_flag = home_station@FROMFROM
+        #         set_fleet_flag = pending_reassignment
+        #         closest_system = {
+        #             limit = {
+        #                 any_planet = {
+        #                     is_colony = yes
+        #                     owner = { is_same_value = ROOT }
+        #                 }
+        #             }
+        #             random_system_planet = {
+        #                 limit = {
+        #                     is_colony = yes
+        #                     owner = { is_same_value = ROOT }
+        #                 }
+        #                 save_event_target_as = closest_colony
+        #             }
+        #         }
 
-                set_timed_fleet_flag = {
-                    flag = orders_received
-                    days = 120
-                }
-                remove_fleet_flag = enroute_to_station
-                set_fleet_flag = enroute_to_colony
-                set_fleet_flag = enroute_to_colony@event_target:closest_colony
-                remove_auto_move_target = yes
-                auto_move_to_planet = { target = event_target:closest_colony clear_auto_move_on_arrival = yes }
-            }
-        }
+        #         set_timed_fleet_flag = {
+        #             flag = orders_received
+        #             days = 120
+        #         }
+        #         remove_fleet_flag = enroute_to_station
+        #         set_fleet_flag = enroute_to_colony
+        #         set_fleet_flag = enroute_to_colony@event_target:closest_colony
+        #         remove_auto_move_target = yes
+        #         auto_move_to_planet = { target = event_target:closest_colony clear_auto_move_on_arrival = yes }
+        #     }
+        # }
     }
 }
 
@@ -855,14 +855,123 @@ country_event = {
         random_country = {
             limit = { has_country_flag = civ_faction_of@ROOT }
             establish_communications_no_message = FROM
+            FROM = {
+                if = {
+                    limit = { has_policy_flag = hostile_to_all_civilians }
+                    set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+                }
+            }
         }
         random_country = {
             limit = { has_country_flag = civ_faction_of@FROM }
             establish_communications_no_message = ROOT
+            ROOT = {
+                if = {
+                    limit = { has_policy_flag = hostile_to_all_civilians }
+                    set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+                }
+            }
         }
     }
 }
 
+#sets country with appropriate policy hostile to enemy civilians on war start 
+country_event = {
+    id = iicso.210
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_policy_flag = hostile_to_enemy_civilians
+    }
+
+    immediate = {
+        every_country = {
+            limit = { is_at_war_with = PREV }
+            random_country = {
+                limit = { has_country_flag = civ_faction_of@PREV }
+                PREVPREV = {
+                    set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+                }
+            }
+        }
+    }
+}
+
+#on war end sets countries with appropriate policy back to neutral with former enemy civilian factions
+country_event = {
+    id = iicso.211
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        log = "a war has ended"
+
+        every_war_defender = {
+            enemy = FROM
+            limit = { has_policy_flag = hostile_to_enemy_civilians }
+            ROOT = {
+                every_war_attacker = {
+                    enemy = FROM
+                    random_country = {
+                        limit = { has_country_flag = civ_faction_of@PREV }
+                        PREVPREVPREV = {
+                            set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+                        }
+                    }
+                }
+            }
+        }
+
+        every_war_attacker = {
+            enemy = FROM
+            limit = { has_policy_flag = hostile_to_enemy_civilians }
+            ROOT = {
+                every_war_defender = {
+                    enemy = FROM
+                    random_country = {
+                        limit = { has_country_flag = civ_faction_of@PREV }
+                        PREVPREVPREV = {
+                            set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+                        }
+                    }
+                }
+            }
+        }
+
+        # every_country = {
+        #     limit = { has_policy_flag = hostile_to_enemy_civilians }
+        #     log = "war ended, [THIS.GetName] hostile only to enemy civilians"
+        #     every_country = {
+        #         limit = {
+        #             any_country = {
+        #                 has_country_flag = civ_faction@PREV
+        #                 NOT = { is_at_war_with = PREVPREV }
+        #             }
+        #             has_communications = PREV
+        #         }
+        #         log = "war ended, [THIS.GetName] is not at war with [PREV.GetName]"
+        #         PREV = { 
+        #             set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+        #         }
+        #     }
+        # }
+    }
+}
+
+#needs to trigger event after war has cleared out
+country_event = {
+    id= iicso.212
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        country_event = {
+            id = iicso.211
+            days = 5
+        }
+    }
+}
 
 #########################################################
 ############# 4xx. Autonomous Miner Events ##############
@@ -880,9 +989,11 @@ event = {
                 any_country = {
                     has_country_flag = civ_faction_of@PREV
                 }
+                NOT = { is_country_type = fallen_empire }
             }
             every_owned_planet = {
-                limit = { NOT = { is_under_colonization = yes }}
+                limit = { NOT = { is_under_colonization = yes }
+            }
                 planet_event = {
                     id = iicso.401
                     days = 1
@@ -905,6 +1016,13 @@ planet_event = {
             }
             if = {
                 limit = {
+                    ROOT.solar_system = {
+                        any_ship_in_system = {
+                            fleet = {
+                                owner = { NOT = { is_hostile = ROOT.owner }}
+                            }
+                        }
+                    }
                     count_owned_ships = {
                         limit = {
                             fleet = {
@@ -1117,7 +1235,7 @@ event = {
         every_country = {
             limit = { has_country_flag = civilian_country_interinc_flag }
             every_owned_fleet = {
-                limit = { NOT = { has_fleet_flag = orders_received } NOT = { has_fleet_flag = civilian_station_freighter}}
+                limit = { NOT = { has_fleet_flag = orders_received }}
                 if = {
                     limit = { has_fleet_flag = enroute_to_home }
 
@@ -1150,25 +1268,56 @@ event = {
                         random = 29
                     }
                 }
-                # else_if = {
-                #     limit = { has_fleet_flag = enroute_to_station }
-                #     fleet_event = {
-                #         id = iicso.501
-                #         days = 1
-                #         random = 29
-                #     }
-                # }
                 else_if = {
-                    limit = { has_fleet_flag = enroute_to_colony }
-                    random_planet = {
-                        limit = { PREV = { has_fleet_flag = enroute_to_colony@PREV }}
-                        save_event_target_as = home_colony
+                    limit = { 
+                        any_system ={
+                            any_planet = {
+                                PREVPREV = {
+                                    has_fleet_flag = enroute_to_starbase@PREV
+                                }
+                            }
+                        }
                     }
                     set_timed_fleet_flag = {
                         flag = orders_received
                         days = 120
                     }
-                    auto_move_to_planet = { target = event_target:home_colony clear_auto_move_on_arrival = yes }
+                    random_planet = {
+                        limit = { PREV = { has_fleet_flag = enroute_to_starbase@PREV }}
+                        PREV = {
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_starbase
+                            }
+                        }
+                        
+                    }
+                }
+                else_if = {
+                    limit = { 
+                        any_system ={
+                            any_planet = {
+                                PREVPREV = {
+                                    has_fleet_flag = enroute_to_colony@PREV
+                                }
+                            }
+                        }
+                    }
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 120
+                    }
+                    random_planet = {
+                        limit = { PREV = { has_fleet_flag = enroute_to_colony@PREV }}
+                        PREV = {
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_colony
+                            } 
+                        }
+                    }
                 }
                 else_if = {
                     limit = { NOT = { has_fleet_flag = pending_reassignment }}

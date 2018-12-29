@@ -235,6 +235,7 @@ create_station_freighter_ships = {
             }
             change_variable = { which = cargo_load value = -1 }
             change_variable = { which = cargo_minerals value = 1 }
+            change_variable = { which = ship_cargo_minerals value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_minerals value = -1 }}
         }
 
@@ -245,6 +246,7 @@ create_station_freighter_ships = {
             }
             change_variable = { which = cargo_load value = -1 }
             change_variable = { which = cargo_alloys value = 1 }
+            change_variable = { which = ship_cargo_alloys value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_alloys value = -1 }}
         }
 
@@ -255,6 +257,7 @@ create_station_freighter_ships = {
             }
             change_variable = { which = cargo_load value = -1 }
             change_variable = { which = cargo_exotic_gases value = 1 }
+            change_variable = { which = ship_cargo_exotic_gases value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_exotic_gases value = -1 }}
         }
 
@@ -265,6 +268,7 @@ create_station_freighter_ships = {
             }
             change_variable = { which = cargo_load value = -1 }
             change_variable = { which = cargo_rare_crystals value = 1 }
+            change_variable = { which = ship_cargo_rare_crystals value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_rare_crystals value = -1 }}
         }
 
@@ -275,6 +279,7 @@ create_station_freighter_ships = {
             }
             change_variable = { which = cargo_load value = -1 }
             change_variable = { which = cargo_volatile_motes value = 1 }
+            change_variable = { which = ship_cargo_volatile_motes value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_volatile_motes value = -1 }}
         }
 
@@ -285,6 +290,7 @@ create_station_freighter_ships = {
             }
             change_variable = { which = cargo_load value = -1 }
             change_variable = { which = cargo_zro value = 1 }
+            change_variable = { which = ship_cargo_zro value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_zro value = -1 }}
         }
 
@@ -295,6 +301,7 @@ create_station_freighter_ships = {
             }
             change_variable = { which = cargo_load value = -1 }
             change_variable = { which = cargo_dark_matter value = 1 }
+            change_variable = { which = ship_cargo_dark_matter value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_dark_matter value = -1 }}
         }
 
@@ -305,19 +312,240 @@ create_station_freighter_ships = {
             }
             change_variable = { which = cargo_load value = -1 }
             change_variable = { which = cargo_living_metal value = 1 }
+            change_variable = { which = ship_cargo_living_metal value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_living_metal value = -1 }}
         }
 
         set_variable = { which = cargo_load value = 0 }
-        
-        create_ship = {
-            name = random
-            design = random_existing_design
-            random_existing_design = z_iicso_freighter
+
+        if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_minerals value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value > 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                    }
+                }
+            }
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Mineral Transport"
+            }
         }
-        last_created_ship = {
-            set_ship_flag = civilian_station_freighter
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_alloys value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value > 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                    }
+                }
+            }
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Alloy Transport"
+            }
         }
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_exotic_gases value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value > 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                    }
+                }
+            }
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Exotic Gas Transport"
+            }
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_rare_crystals value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value > 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                    }
+                }
+            }
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Rare Crystal Transport"
+            }
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_volatile_motes value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value > 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                    }
+                }
+            }
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Volatile Mote Transport"
+            }
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_zro value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value > 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                    }
+                }
+            }
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Zro Transport"
+            }
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_dark_matter value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value > 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                    }
+                }
+            }
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Dark Matter Transport"
+            }
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_living_metal value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value > 0 }
+                    }
+                }
+            }
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Living Metal Transport"
+            }
+        }
+        else = {
+            create_ship = {
+                name = random
+                design = random_existing_design
+                random_existing_design = z_iicso_freighter
+            }
+            last_created_ship = {
+                set_ship_flag = civilian_station_freighter
+                set_name = "Mixed Cargo Freighter"
+            }
+        }
+
+        set_variable = { which = ship_cargo_minerals value = 0 }
+        set_variable = { which = ship_cargo_alloys value = 0 }
+        set_variable = { which = ship_cargo_exotic_gases value = 0 }
+        set_variable = { which = ship_cargo_rare_crystals value = 0 }
+        set_variable = { which = ship_cargo_volatile_motes value = 0 }
+        set_variable = { which = ship_cargo_zro value = 0 }
+        set_variable = { which = ship_cargo_dark_matter value = 0 }
+        set_variable = { which = ship_cargo_living_metal value = 0 }
     }
 }
 
@@ -364,10 +592,11 @@ deposit_cargo_at_starbase = {
         }
         set_variable = { which = cargo_living_metal value = 0 }
 
-        fleet_event = {
-            id = iicso.504
-            days = 5
-            random = 10
-        }
+        # fleet_event = {
+        #     id = iicso.504
+        #     days = 5
+        #     random = 10
+        # }
+        delete_fleet = THIS
     }
 }

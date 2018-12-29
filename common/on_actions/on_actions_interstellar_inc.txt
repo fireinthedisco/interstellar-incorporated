@@ -70,25 +70,6 @@ on_building_starbase_outpost = {
 	}
 }
 
-# A pop has finished migrating to another planet
-# Root = pop
-# From = Tile on the new planet
-# FromFrom = Tile on the old planet
-on_pop_migration_end = {
-	events = {
-		#iicso.700
-	}
-}
-
-# A pop has been resettled to another planet
-# Root = pop
-# From = Tile on the old planet
-on_pop_resettled = {
-	events = {
-
-	}
-}
-
 
 
 # A planet has been colonized.
@@ -124,5 +105,41 @@ on_colony_destroyed = {
 on_fleet_destroyed_victim = {
 	events = {
 		iicso.103
+	}
+}
+
+# A war is beginning, executed for every country in the war.
+# Root = Country
+# From = War
+on_war_beginning = {
+	events = {
+		iicso.210 #set hostile to civilians for those with appropriate policy
+	}
+}
+
+# This = country
+# From = opponent war leader
+on_entering_war = {
+	events = {
+		iicso.210
+	}
+}
+
+# A war has ended
+# Root = Loser
+# From = Main Winner
+on_war_ended = {
+	events = {
+		iicso.211 #unset hostile to civilians for those with appropriate policy
+	}
+}
+
+# A fleet has entered a system
+# Scope = Fleet
+# From = System
+on_entering_system_fleet = {
+	events = {
+		iicso.503 #civilians recheck closest valid destination colony
+		#civilian ships flee if enemies present
 	}
 }

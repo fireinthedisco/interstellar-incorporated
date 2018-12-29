@@ -8,7 +8,7 @@ civilian_interstellar_inc = {
         always = no
     }
 
-    joins_overlord_wars = yes
+    joins_overlord_wars = no
 	calls_overlord_to_war = yes
 	can_do_diplomacy = no
 }
