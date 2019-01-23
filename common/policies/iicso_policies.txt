@@ -196,3 +196,152 @@ civilian_hostility = {
 		}
 	}
 }
+
+civilian_armament = {
+
+	potential = {
+		OR = {
+			is_country_type = default
+			is_country_type = fallen_empire
+			is_country_type = awakened_fallen_empire
+		}
+	}
+	
+	allow = {
+		always = yes
+		#is_at_war = no # Not allowed to change policies in this group while at war
+	}
+	
+	option = {
+		name = "unrestricted_armament"
+		
+		policy_flags = {
+			unrestricted_armament
+		}
+
+		valid = {
+			always = yes
+			# NOR = {
+			# 	has_ethic = "ethic_fanatic_militarist"
+			# 	has_valid_civic = "civic_fanatic_purifiers"
+			# 	has_valid_civic = "civic_hive_devouring_swarm"
+			# 	has_valid_civic = "civic_machine_terminator"
+			# }	
+		}
+
+		modifier = {
+			planet_stability_add = -5
+		}
+
+		on_enabled = {
+			random_country = {
+				limit = { has_country_flag = civ_faction_of@PREV }
+				add_modifier = { modifier = unrestricted_armament_double_suppression days = -1 }
+			}
+		}
+
+		on_disabled = {
+			random_country = {
+				limit = { has_country_flag = civ_faction_of@PREV }
+				remove_modifier = unrestricted_armament_double_suppression
+			}
+		}
+		
+		AI_weight = {
+			modifier = {
+				factor = 5
+				OR = {
+					has_ethic = "ethic_fanatic_pacifist"
+					has_ethic = "ethic_pacifist"
+					has_ai_personality = "honorbound_warriors"
+					has_ai_personality = "democratic_crusaders"
+					has_ai_personality = "federation_builders"
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "limited_armament"
+		
+		policy_flags = {
+			limited_armament
+		}
+		
+		valid = {
+			always = yes
+		}
+		
+		AI_weight = {
+			modifier = {
+				factor = 2
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+			}
+			modifier = {
+				factor = 2
+				has_valid_ai_personality = yes
+				is_ai = yes
+			}
+		}
+	}
+	
+	option = {
+		name = "banned_armament"
+		
+		policy_flags = {
+			banned_armament
+		}
+		
+		valid = {
+			always = yes
+		}
+
+		modifier = {
+			planet_stability_add = 5
+		}
+
+		on_enabled = {
+			random_country = {
+				limit = { has_country_flag = civ_faction_of@PREV }
+				add_modifier = { modifier = banned_armament_no_suppression days = -1 }
+			}
+		}
+
+		on_disabled = {
+			random_country = {
+				limit = { has_country_flag = civ_faction_of@PREV }
+				remove_modifier = banned_armament_no_suppression
+			}
+		}
+		
+		AI_weight = {
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_civic = "civic_fanatic_purifiers"
+					has_valid_civic = "civic_hive_devouring_swarm"
+					has_valid_civic = "civic_machine_terminator"
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_ai_personality_behaviour = conqueror
+					has_ai_personality_behaviour = subjugator
+					has_ai_personality_behaviour = purger
+					has_ai_personality = "xenophobic_isolationists"
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = "ethic_pacifist"
+					has_ethic = "ethic_fanatic_pacifist"
+				}
+			}
+		}
+	}
+}

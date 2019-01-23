@@ -41,12 +41,25 @@ deposit_cargo_at_colony = {
         }
         set_variable = { which = cargo_living_metal value = 0 }
 
+        while = {
+            count = cargo_food
+            FROMFROM = { owner = { add_resource = { food = 1 }}}
+        }
+        set_variable = { which = cargo_food value = 0 }
+        while = {
+            count = cargo_consumer_goods
+            FROMFROM = { owner = { add_resource = { consumer_goods = 1 }}}
+        }
+        set_variable = { which = cargo_consumer_goods value = 0 }
+
         remove_fleet_flag = enroute_to_home
         if = {
             limit = {
                 OR = {
                     has_fleet_flag = kill_switch
-                    has_fleet_flag = civilian_station_freighter
+                    has_fleet_flag = station_freighter
+                    has_fleet_flag = system_freighter
+                    has_fleet_flag = hub_freighter
                 }
             }
             delete_fleet = THIS
@@ -68,7 +81,7 @@ calculate_empty_cargo = {
             limit = {
                 fleet = { is_same_value = PREVPREVPREV }
                 OR = {
-                    has_ship_flag = civilian_station_freighter
+                    has_ship_flag = freighter_ship
                     has_ship_flag = civilian_miner
                 }
             }
@@ -83,6 +96,9 @@ calculate_empty_cargo = {
     subtract_variable = { which = empty_cargo value = cargo_zro }
     subtract_variable = { which = empty_cargo value = cargo_dark_matter }
     subtract_variable = { which = empty_cargo value = cargo_living_metal }
+
+    subtract_variable = { which = empty_cargo value = cargo_food }
+    subtract_variable = { which = empty_cargo value = cargo_consumer_goods }
 }
 
 add_cargo_to_miner = {
@@ -223,6 +239,9 @@ create_station_freighter_ships = {
                     check_variable = { which = iicso_stockpile_zro value > 0 }
                     check_variable = { which = iicso_stockpile_dark_matter value > 0 }
                     check_variable = { which = iicso_stockpile_living_metal value > 0 }
+                    
+                    check_variable = { which = iicso_stockpile_food value > 0 }
+                    check_variable = { which = iicso_stockpile_consumer_goods value > 0 }
                 }
             }
         }
@@ -316,7 +335,40 @@ create_station_freighter_ships = {
             PREVPREV = { change_variable = { which = iicso_stockpile_living_metal value = -1 }}
         }
 
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_food value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_food value = 1 }
+            change_variable = { which = ship_cargo_food value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_food value = -1 }}
+        }
+
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_consumer_goods value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_consumer_goods value = 1 }
+            change_variable = { which = ship_cargo_consumer_goods value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_consumer_goods value = -1 }}
+        }
+
         set_variable = { which = cargo_load value = 0 }
+        
+        if = {
+            limit = { ROOT = { space_owner = { has_policy_flag = banned_armament }}}
+            create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_unarmed }
+        } else_if = {
+            limit = { ROOT = { space_owner = { has_policy_flag = limited_armament }}}
+            create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter }
+        } else_if = {
+            limit = { ROOT = { space_owner = { has_policy_flag = unrestricted_armament }}}
+            create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_armed }
+        }
 
         if = {
             limit = {
@@ -331,16 +383,14 @@ create_station_freighter_ships = {
                         check_variable = { which = ship_cargo_zro value = 0 }
                         check_variable = { which = ship_cargo_dark_matter value = 0 }
                         check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
                     }
                 }
             }
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
-            }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
                 set_name = "Mineral Transport"
             }
         }
@@ -357,16 +407,14 @@ create_station_freighter_ships = {
                         check_variable = { which = ship_cargo_zro value = 0 }
                         check_variable = { which = ship_cargo_dark_matter value = 0 }
                         check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
                     }
                 }
             }
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
-            }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
                 set_name = "Alloy Transport"
             }
         }
@@ -383,16 +431,14 @@ create_station_freighter_ships = {
                         check_variable = { which = ship_cargo_zro value = 0 }
                         check_variable = { which = ship_cargo_dark_matter value = 0 }
                         check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
                     }
                 }
             }
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
-            }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
                 set_name = "Exotic Gas Transport"
             }
         }
@@ -409,16 +455,14 @@ create_station_freighter_ships = {
                         check_variable = { which = ship_cargo_zro value = 0 }
                         check_variable = { which = ship_cargo_dark_matter value = 0 }
                         check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
                     }
                 }
             }
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
-            }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
                 set_name = "Rare Crystal Transport"
             }
         }
@@ -435,16 +479,14 @@ create_station_freighter_ships = {
                         check_variable = { which = ship_cargo_zro value = 0 }
                         check_variable = { which = ship_cargo_dark_matter value = 0 }
                         check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
                     }
                 }
             }
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
-            }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
                 set_name = "Volatile Mote Transport"
             }
         }
@@ -461,16 +503,14 @@ create_station_freighter_ships = {
                         check_variable = { which = ship_cargo_zro value > 0 }
                         check_variable = { which = ship_cargo_dark_matter value = 0 }
                         check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
                     }
                 }
             }
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
-            }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
                 set_name = "Zro Transport"
             }
         }
@@ -487,16 +527,14 @@ create_station_freighter_ships = {
                         check_variable = { which = ship_cargo_zro value = 0 }
                         check_variable = { which = ship_cargo_dark_matter value > 0 }
                         check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
                     }
                 }
             }
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
-            }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
                 set_name = "Dark Matter Transport"
             }
         }
@@ -513,27 +551,68 @@ create_station_freighter_ships = {
                         check_variable = { which = ship_cargo_zro value = 0 }
                         check_variable = { which = ship_cargo_dark_matter value = 0 }
                         check_variable = { which = ship_cargo_living_metal value > 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
                     }
                 }
             }
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
-            }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
                 set_name = "Living Metal Transport"
             }
         }
-        else = {
-            create_ship = {
-                name = random
-                design = random_existing_design
-                random_existing_design = z_iicso_freighter
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_food value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value > 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                    }
+                }
             }
             last_created_ship = {
-                set_ship_flag = civilian_station_freighter
+                set_ship_flag = freighter_ship
+                set_name = "Food Transport"
+            }
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    check_variable = { which = ship_cargo_consumer_goods value > @half_ship_cargo_capacity }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_zro value = 0 }
+                        check_variable = { which = ship_cargo_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value > 0 }
+                    }
+                }
+            }
+            last_created_ship = {
+                set_ship_flag = freighter_ship
+                set_name = "Consumer Goods Transport"
+            }
+        }
+        else = {
+            last_created_ship = {
+                set_ship_flag = freighter_ship
                 set_name = "Mixed Cargo Freighter"
             }
         }
@@ -546,6 +625,8 @@ create_station_freighter_ships = {
         set_variable = { which = ship_cargo_zro value = 0 }
         set_variable = { which = ship_cargo_dark_matter value = 0 }
         set_variable = { which = ship_cargo_living_metal value = 0 }
+        set_variable = { which = ship_cargo_food value = 0 }
+        set_variable = { which = ship_cargo_consumer_goods value = 0 }
     }
 }
 
@@ -591,6 +672,16 @@ deposit_cargo_at_starbase = {
             FROMFROM = { change_variable = { which = iicso_stockpile_living_metal value = 1 }}
         }
         set_variable = { which = cargo_living_metal value = 0 }
+        while = {
+            count = cargo_food
+            FROMFROM = { change_variable = { which = iicso_stockpile_food value = 1 }}
+        }
+        set_variable = { which = cargo_food value = 0 }
+        while = {
+            count = cargo_consumer_goods
+            FROMFROM = { change_variable = { which = iicso_stockpile_consumer_goods value = 1 }}
+        }
+        set_variable = { which = cargo_consumer_goods value = 0 }
 
         # fleet_event = {
         #     id = iicso.504

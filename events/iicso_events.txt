@@ -279,7 +279,7 @@ event = {
 
                 while = {
                     count = iicso_orbital_minerals
-                    owner = {add_resource = { minerals = -1 }}
+                    owner = { add_resource = { minerals = -1 }}
                     orbit = {
                         change_variable = { which = iicso_stockpile_minerals value = 1 }
                     }
@@ -287,7 +287,7 @@ event = {
                 set_variable = { which = iicso_orbital_minerals value = 0 }
                 while = {
                     count = iicso_orbital_alloys
-                    owner = {add_resource = { alloys = -1 }}
+                    owner = { add_resource = { alloys = -1 }}
                     orbit = {
                         change_variable = { which = iicso_stockpile_alloys value = 1 }
                     }
@@ -295,7 +295,7 @@ event = {
                 set_variable = { which = iicso_orbital_alloys value = 0 }
                 while = {
                     count = iicso_orbital_exotic_gases
-                    owner = {add_resource = { exotic_gases = -1 }}
+                    owner = { add_resource = { exotic_gases = -1 }}
                     orbit = {
                         change_variable = { which = iicso_stockpile_exotic_gases value = 1 }
                     }
@@ -303,7 +303,7 @@ event = {
                 set_variable = { which = iicso_orbital_exotic_gases value = 0 }
                 while = {
                     count = iicso_orbital_rare_crystals
-                    owner = {add_resource = { rare_crystals = -1 }}
+                    owner = { add_resource = { rare_crystals = -1 }}
                     orbit = {
                         change_variable = { which = iicso_stockpile_rare_crystals value = 1 }
                     }
@@ -311,7 +311,7 @@ event = {
                 set_variable = { which = iicso_orbital_rare_crystals value = 0 }
                 while = {
                     count = iicso_orbital_volatile_motes
-                    owner = {add_resource = { volatile_motes = -1 }}
+                    owner = { add_resource = { volatile_motes = -1 }}
                     orbit = {
                         change_variable = { which = iicso_stockpile_volatile_motes value = 1 }
                     }
@@ -319,7 +319,7 @@ event = {
                 set_variable = { which = iicso_orbital_volatile_motes value = 0 }
                 while = {
                     count = iicso_orbital_zro
-                    owner = {add_resource = { sr_zro = -1 }}
+                    owner = { add_resource = { sr_zro = -1 }}
                     orbit = {
                         change_variable = { which = iicso_stockpile_zro value = 1 }
                     }
@@ -327,7 +327,7 @@ event = {
                 set_variable = { which = iicso_orbital_zro value = 0 }
                 while = {
                     count = iicso_orbital_dark_matter
-                    owner = {add_resource = { sr_dark_matter = -1 }}
+                    owner = { add_resource = { sr_dark_matter = -1 }}
                     orbit = {
                         change_variable = { which = iicso_stockpile_dark_matter value = 1 }
                     }
@@ -335,88 +335,40 @@ event = {
                 set_variable = { which = iicso_orbital_dark_matter value = 0 }
                 while = {
                     count = iicso_orbital_living_metal
-                    owner = {add_resource = { sr_living_metal = -1 }}
+                    owner = { add_resource = { sr_living_metal = -1 }}
                     orbit = {
                         change_variable = { which = iicso_stockpile_living_metal value = 1 }
                     }
                 }
                 set_variable = { which = iicso_orbital_living_metal value = 0 }
             }
-            # every_owned_planet = {
-            #     limit = { is_capital = no }
-            #     set_variable = { which = planet_mineral_output value = 0 }
-            #     every_tile = {
-            #         if = {
-            #             limit = {
-            #                 has_pop = yes
-            #                 pop = { NOT = { is_growing = yes }}
-            #             }
-
-            #             if = {
-            #                 limit = { has_resource = { type = minerals amount = 1 }}
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 1 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_resource = { type = minerals amount = 2 }}
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 2 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_resource = { type = minerals amount = 3 }}
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 3 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_resource = { type = minerals amount > 3 }}
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 4 }}
-            #             }
-
-            #             if = {
-            #                 limit = { has_building = building_mining_network_1 }
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 2 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_building = building_mining_network_2 }
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 3 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_building = building_mining_network_3 }
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 4 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_building = building_mining_network_4 }
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 5 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_building = building_mining_network_5 }
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 7 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_building = building_mineral_processing_plant_1 }
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 2 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_building = building_mineral_processing_plant_2 }
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 4 }}
-            #             }
-            #             else_if = {
-            #                 limit = { has_building = building_slave_processing }
-            #                 PREV = { change_variable = { which = tile_mineral_output value = 2 }}
-            #             }
-
-            #             PREV = {
-            #                 change_variable = { which = planet_mineral_output value = tile_mineral_output }
-            #                 set_variable = { which = tile_mineral_output value = 0 }
-            #             }
-            #         }
-            #     }
-            #     while = {
-            #         count = planet_mineral_output
-            #         owner = { add_minerals = -1 }
-            #         change_variable = { which = planet_mineral_stockpile value = 1 }
-            #     }
-            # }
+            every_owned_starbase = {
+                if = {
+                    limit = { has_starbase_building = hydroponics_bay }
+                    owner = { add_resource = { food = -3 }}
+                    solar_system = {
+                        random_system_planet = {
+                            limit = { is_primary_star = yes }
+                            change_variable = { which = iicso_stockpile_food value = 3 }
+                        }
+                    }
+                }
+                if = {
+                    limit = { has_starbase_building = nebula_refinery }
+                    owner = { add_resource = { minerals = -6 }}
+                    solar_system = {
+                        random_system_planet = {
+                            limit = { is_primary_star = yes }
+                            change_variable = { which = iicso_stockpile_minerals value = 6 }
+                        }
+                    }
+                }
+            }
         }
     }
 }
+
+
 
 #on mining station destroyed; this - owner of station, fromfrom - station
 country_event = {
@@ -446,6 +398,8 @@ country_event = {
                 set_variable = { which = iicso_stockpile_zro value = 0 }
                 set_variable = { which = iicso_stockpile_dark_matter value = 0 }
                 set_variable = { which = iicso_stockpile_living_metal value = 0 }
+                set_variable = { which = iicso_stockpile_food value = 0 }
+                set_variable = { which = iicso_stockpile_consumer_goods value = 0 }
             }
         }
         # random_country = {
@@ -738,13 +692,15 @@ event = {
                     NOT = {
                         any_country = {
                             has_country_flag = civ_faction_of@PREV
-                            has_country_flag = civilian_country_interinc_flag
+                            has_country_flag = iicso_civilian_country
                         }
                     }
                 }
-                set_timed_country_flag = { #should temporarily keep this empire from getting first contact event - i.e. when they meet their civilian empire
-                    flag = Story7
-                    days = 5
+
+                if = {
+                    limit = { NOT = { has_country_flag = Story7 }}
+                    set_country_flag = Story7
+                    set_country_flag = avoiding_first_contact
                 }
 
                 if = {
@@ -787,6 +743,7 @@ event = {
                     }
                 }
                 establish_communications_no_message = last_created_country
+                set_country_flag = civ_faction@last_created_country
 
                 last_created_country = {
                     #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
@@ -794,19 +751,49 @@ event = {
                         who = PREV
                         subject_type = civilian_interstellar_inc
                     }
-                    set_country_flag = civilian_country_interinc_flag
+                    set_country_flag = iicso_civilian_country
                     set_country_flag = civ_faction_of@PREV
                     copy_techs_from = { target = PREV }
                     #log = "[THIS.GetName] is economy vassal of [PREV.GetName]"
+
+                    every_country = {
+                        limit = {
+                            OR = {
+                                is_country_type = default
+                                is_country_type = fallen_empire
+                                is_country_type = awakened_fallen_empire
+                            }
+                            has_communications = PREVPREV
+                            NOT = { has_country_flag = civ_faction@PREV }
+                        }
+                        establish_communications_no_message = PREV
+                        if = {
+                            limit = {
+                                OR = {
+                                    has_policy_flag = hostile_to_all_civilians
+                                    AND = {
+                                        has_policy_flag = hostile_to_enemy_civilians
+                                        is_at_war_with = PREVPREV
+                                    }
+                                }
+                            }
+                            set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+                        }
+                    }
                 }
-                set_country_flag = civ_faction@last_created_country
                 #log = "[THIS.GetName] is economy overlord of [last_created_country.GetName]"
+
+                if = {
+                    limit = { has_country_flag = avoiding_first_contact }
+                    remove_country_flag = Story7
+                    remove_country_flag = avoiding_first_contact
+                }
             }
         }
 
         #reestablish vassalhood (important if parent country is vassalised and later becomes free, for example)
         every_country = {
-            limit = { has_country_flag = civilian_country_interinc_flag }
+            limit = { has_country_flag = iicso_civilian_country }
 
             random_country = {
                 limit = { has_country_flag = civ_faction@PREV }
@@ -905,7 +892,7 @@ country_event = {
     hide_window = yes
 
     immediate = {
-        log = "a war has ended"
+        #log = "a war has ended"
 
         every_war_defender = {
             enemy = FROM
@@ -1159,7 +1146,7 @@ event = {
 
     immediate = {
         every_country = {
-            limit = { has_country_flag = civilian_country_interinc_flag }
+            limit = { has_country_flag = iicso_civilian_country }
             every_owned_fleet = {
                 limit = {
                     exists = solar_system
@@ -1233,7 +1220,7 @@ event = {
 
     immediate = {
         every_country = {
-            limit = { has_country_flag = civilian_country_interinc_flag }
+            limit = { has_country_flag = iicso_civilian_country }
             every_owned_fleet = {
                 limit = { NOT = { has_fleet_flag = orders_received }}
                 if = {
@@ -2171,7 +2158,7 @@ ship_event = {
 #             set_variable = { which = civilian_ship_count value = 0 }
 #         }
 #         every_country = {
-#             limit = { has_country_flag = civilian_country_interinc_flag }
+#             limit = { has_country_flag = iicso_civilian_country }
 #             every_owned_ship = {
 #                 event_target:player_country = { change_variable = { which = civilian_ship_count value = 1 }}
 #             }

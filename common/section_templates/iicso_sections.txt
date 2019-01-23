@@ -1,0 +1,104 @@
+ship_section_template = {
+	key = "z_iicso_freighter_section_unarmed"
+	ship_size = z_iicso_freighter_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_containers_entity_iicso"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_freighter_section"
+	ship_size = z_iicso_freighter
+	fits_on_slot = mid
+	entity = "cargo_transport_containers_entity_iicso"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_freighter_section_armed"
+	ship_size = z_iicso_freighter_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_containers_entity_iicso"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_miner_section"
+	ship_size = z_iicso_miner
+	fits_on_slot = mid
+	entity = "cargo_transport_containers_entity_iicso"
+	icon = "GFX_ship_part_core_mid"
+	
+	small_utility_slots = 3
+}

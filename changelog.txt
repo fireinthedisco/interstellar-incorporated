@@ -1,11 +1,7 @@
-#Added full list of reactors/thrusters for IICSO ships so those components should now actually upgrade on civilian ships as your tech increases (could do some weird things with ships in games in progress, since I changed the names of the two components which had already been in)
-#Added blockade bombardment stance - currently AI won't use it, though. Might want to do something where it's more likely to be used in trade conflicts, for example
-#Freighters don't spawn if their solar system is occupied
-#Freighters now check if their target planet is being bombarded/occupied for it to be valid
-#Freighters now also check for the closest valid colony every time they enter a new system, and redirect there if it's different from current destination
-#Freighters now get named according to the most populous resource they're filled with - rudimentary indication of fleet cargo
-#Added edict to choose if you're hostile to all civilians, enemy civilians, or no civilians
-#Added associated on actions - on war start, on war end, for setting hostility for those with policy hostile to enemy civilians
-#Unawakened fallen empires no longer spawn autonomous miner ships
-#Miners also don't spawn if there's a hostile fleet in the system
-#Tweaked civilian ship computer - they now won't flee eternally into the void of space (trapping the attacking fleet in combat), they retreat to a distance and then hold their range. I want to find a way to just make them emergency FTL as soon as possible, even if not taking damage.
+#Increased distance civilian ships will retreat to before staying at range
+#Starbases with hydroponics bays or nebula refineries will now produce those resources into a local stockpile to be transported, instead of to empire total.
+#System freighters now seek out the nearest colony OR nearest starbase with a trade hub. This allows some freighters which are not near a colony to take a shorter trip (and thus despawn faster), before the trade hub sends its own single hub freighter fleet on to the nearest colony.
+#Fixes for establishing communications and setting faction hostility with your own and other empires' civilian countries when starting mod midway through a game
+#(In progress) Adding policy to decide how armed your civilian ships are, affects unrest and piracy suppression
+#(In progress) Adding ship models with different load sizes
+#(In progress) Resource calc (iicso.1000)

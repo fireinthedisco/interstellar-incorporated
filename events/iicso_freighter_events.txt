@@ -17,13 +17,8 @@ country_event = {
                     }
                     AND = {
                         is_primary_star = yes
-                        solar_system = {
-                            exists = starbase
-                            any_planet = {
-                                has_mining_station = yes
-                                has_stockpile = yes
-                            }
-                        }
+                        has_stockpile = yes
+                        solar_system = { exists = starbase }
                     }
                 }
             }
@@ -57,6 +52,25 @@ planet_event = {
                     limit = { has_country_flag = civ_faction_of@PREV.space_owner }
     
                     if = {
+                        limit = {
+                            ROOT = {
+                                is_primary_star = yes
+                                solar_system = {
+                                    starbase = { has_starbase_module = trading_hub }
+                                }
+                            }
+                        }
+                        create_fleet = {
+                            name = hub_freighter_fleet
+                            effect = {
+                                set_owner = PREV
+                                create_station_freighter_ships = yes
+                                set_location = PREVPREV
+                                set_fleet_flag = hub_freighter
+                            }
+                        }
+                    }
+                    else_if = {
                         limit = { ROOT = { is_primary_star = yes }}
                         create_fleet = {
                             name = system_freighter_fleet
@@ -64,6 +78,7 @@ planet_event = {
                                 set_owner = PREV
                                 create_station_freighter_ships = yes
                                 set_location = PREVPREV
+                                set_fleet_flag = system_freighter
                             }
                         }
                     }
@@ -74,11 +89,11 @@ planet_event = {
                                 set_owner = PREV
                                 create_station_freighter_ships = yes
                                 set_location = PREVPREV
+                                set_fleet_flag = station_freighter
                             }
                         }
                     }
                     last_created_fleet = {
-                        set_fleet_flag = civilian_station_freighter
                         set_timed_fleet_flag = {
                             flag = orders_received
                             days = 90
@@ -177,30 +192,84 @@ fleet_event = {
     hide_window = yes
 
     trigger = {
-        has_fleet_flag = civilian_station_freighter
+        OR = {
+            has_fleet_flag = hub_freighter
+            has_fleet_flag = system_freighter
+            has_fleet_flag = station_freighter
+        }
+        OR = {
+            NOT = { has_fleet_flag = calculated_destination }
+            solar_system = { any_planet = { PREVPREV = { has_fleet_flag = enroute_to_colony@PREV }}}
+            solar_system = { any_planet = { PREVPREV = { has_fleet_flag = enroute_to_starbase@PREV }}}
+        }
     }
 
     immediate = {
+        set_timed_fleet_flag = {
+            flag = calculated_destination
+            days = 120
+        }
         random_country = {
             limit = { has_country_flag = civ_faction@ROOT.owner }
             PREV = {
                 closest_system = {
                     limit = {
-                        any_planet = {
-                            is_colony = yes
-                            exists = owner
-                            owner = { is_same_value = PREVPREVPREVPREV }
-                            NOT = { has_orbital_bombardment = yes }
-                            controller = { is_same_value = PREV.owner }
+                        exists = space_owner
+                        space_owner = { is_same_value = PREVPREVPREV }
+                        OR = {
+                            any_planet = {
+                                is_colony = yes
+                                exists = owner
+                                owner = { is_same_value = PREVPREVPREVPREV }
+                                NOT = { has_orbital_bombardment = yes }
+                                controller = { is_same_value = PREV.owner }
+                            }
+                            AND = {
+                                ROOT = { NOT = { has_fleet_flag = hub_freighter }}
+                                exists = starbase
+                                starbase = {
+                                    has_starbase_module = trading_hub
+                                    exists = owner
+                                    owner = { is_same_value = PREVPREVPREVPREV }
+                                    controller = { is_same_value = PREV.owner }
+                                }
+                            }
                         }
                     }
                     random_system_planet = {
                         limit = {
-                            is_colony = yes
-                            exists = owner
-                            owner = { is_same_value = PREVPREVPREVPREV }
-                            NOT = { has_orbital_bombardment = yes }
-                            controller = { is_same_value = PREV.owner }
+                            OR = {
+                                AND = {
+                                    is_colony = yes
+                                    NOT = { has_orbital_bombardment = yes }
+                                    controller = { is_same_value = PREV.owner }
+                                }
+                                AND = {
+                                    is_primary_star = yes
+                                    solar_system = {
+                                        starbase = {
+                                            has_starbase_module = trading_hub
+                                            controller = { is_same_value = PREV.owner }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        weights = {
+                            base = 1
+                            modifier = {
+                                mult = 0
+                                is_primary_star = yes
+                                solar_system = {
+                                    any_planet = {
+                                        is_colony = yes
+                                        exists = owner
+                                        owner = { is_same_value = PREVPREVPREVPREV }
+                                        NOT = { has_orbital_bombardment = yes }
+                                        controller = { is_same_value = PREV.owner }
+                                    }
+                                }
+                            }
                         }
                         ROOT = {
                             set_timed_fleet_flag = {
@@ -208,28 +277,65 @@ fleet_event = {
                                 days = 120
                             }
                             if = {
-                                limit = { NOT = { has_fleet_flag = enroute_to_colony@PREV }}
+                                limit = {
+                                    NOR = {
+                                        has_fleet_flag = enroute_to_colony@PREV
+                                        has_fleet_flag = enroute_to_starbase@PREV
+                                    }
+                                }
                                 if = {
                                     limit = {
                                         any_system = {
-                                            any_planet = { ROOT = { has_fleet_flag = enroute_to_colony@PREV }}
+                                            any_planet = {
+                                                ROOT = {
+                                                    OR = {
+                                                        has_fleet_flag = enroute_to_colony@PREV
+                                                        has_fleet_flag = enroute_to_starbase@PREV
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                     random_planet = {
-                                        limit = { ROOT = { has_fleet_flag = enroute_to_colony@PREV }}
-                                        ROOT = { remove_fleet_flag = enroute_to_colony@PREV }
+                                        limit = {
+                                            ROOT = {
+                                                OR = {
+                                                    has_fleet_flag = enroute_to_colony@PREV
+                                                    has_fleet_flag = enroute_to_starbase@PREV
+                                                }
+                                            }
+                                        }
+                                        ROOT = {
+                                            remove_fleet_flag = enroute_to_colony@PREV
+                                            remove_fleet_flag = enroute_to_starbase@PREV
+                                        }
                                     }
                                 }
-                                set_fleet_flag = enroute_to_colony@PREV
+                                
 
                                 if = {
                                     limit = { has_auto_move_target = yes }
                                     remove_auto_move_target = yes
                                 }
-                                auto_move_to_planet = {
-                                    target = PREV
-                                    clear_auto_move_on_arrival = no
-                                    arrival_effect = deposit_cargo_at_colony
+
+                                if = {
+                                    limit = {
+                                        PREV = { is_primary_star = yes }
+                                    }
+                                    set_fleet_flag = enroute_to_starbase@PREV
+                                    auto_move_to_planet = {
+                                        target = PREV
+                                        clear_auto_move_on_arrival = no
+                                        arrival_effect = deposit_cargo_at_starbase
+                                    }
+                                }
+                                else = {
+                                    set_fleet_flag = enroute_to_colony@PREV
+                                    auto_move_to_planet = {
+                                        target = PREV
+                                        clear_auto_move_on_arrival = no
+                                        arrival_effect = deposit_cargo_at_colony
+                                    }
                                 }
                             }
                         }

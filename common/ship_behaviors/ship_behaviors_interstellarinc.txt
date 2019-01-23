@@ -2,7 +2,7 @@ ship_behavior = {
     name = "iicso_civilian_behavior"
     preferred_attack_range = 180
     formation_distance = 200
-    return_to_formation_distance = 400
+    return_to_formation_distance = 600
 
     combat_target_anchor = root
 

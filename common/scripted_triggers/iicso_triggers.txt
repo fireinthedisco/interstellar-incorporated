@@ -80,6 +80,9 @@ has_sufficient_stockpile = {
         check_variable = { which = iicso_stockpile_zro value >= @half_ship_cargo_capacity }
         check_variable = { which = iicso_stockpile_dark_matter value >= @half_ship_cargo_capacity }
         check_variable = { which = iicso_stockpile_living_metal value >= @half_ship_cargo_capacity }
+
+        check_variable = { which = iicso_stockpile_food value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_consumer_goods value >= @half_ship_cargo_capacity }
     }
 }
 
@@ -93,6 +96,9 @@ has_stockpile = {
         check_variable = { which = iicso_stockpile_zro value > 0 }
         check_variable = { which = iicso_stockpile_dark_matter value > 0 }
         check_variable = { which = iicso_stockpile_living_metal value > 0 }
+
+        check_variable = { which = iicso_stockpile_food value > 0 }
+        check_variable = { which = iicso_stockpile_consumer_goods value > 0 }
     }
 
 }
