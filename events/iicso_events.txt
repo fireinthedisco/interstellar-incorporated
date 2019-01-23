@@ -416,7 +416,7 @@ country_event = {
         #         set_fleet_flag = pending_reassignment
         #         closest_system = {
         #             limit = {
-        #                 any_planet = {
+        #                 any_system_planet = {
         #                     is_colony = yes
         #                     owner = { is_same_value = ROOT }
         #                 }
@@ -544,7 +544,7 @@ planet_event = {
                 limit = { exists = space_owner }
                 closest_system = {
                     limit = {
-                        any_planet = {
+                        any_system_planet = {
                             is_colony = yes
                             exists = owner
                             owner = { is_same_value = ROOT.space_owner }
@@ -570,7 +570,7 @@ planet_event = {
                     PREV = {
                         closest_system = {
                             limit = {
-                                any_planet = {
+                                any_system_planet = {
                                     is_colony = yes
                                     exists = owner
                                     owner = { is_same_value = event_target:border_country }
@@ -1151,7 +1151,7 @@ event = {
                 limit = {
                     exists = solar_system
                     solar_system = {
-                        any_planet = {
+                        any_system_planet = {
                             PREVPREV = { has_fleet_flag = mining_in_progress@PREV }
                         }
                     }
@@ -1258,7 +1258,7 @@ event = {
                 else_if = {
                     limit = { 
                         any_system ={
-                            any_planet = {
+                            any_system_planet = {
                                 PREVPREV = {
                                     has_fleet_flag = enroute_to_starbase@PREV
                                 }
@@ -1284,7 +1284,7 @@ event = {
                 else_if = {
                     limit = { 
                         any_system ={
-                            any_planet = {
+                            any_system_planet = {
                                 PREVPREV = {
                                     has_fleet_flag = enroute_to_colony@PREV
                                 }
@@ -1324,7 +1324,7 @@ ship_event = {
 
     trigger = {
         solar_system = {
-            any_planet = { is_colony = yes }
+            any_system_planet = { is_colony = yes }
         }
         exists = FROM
     }
@@ -1346,7 +1346,7 @@ ship_event = {
 
                             closest_system = {
                                 limit = {
-                                    any_planet = {
+                                    any_system_planet = {
                                         is_colony = yes
                                         exists = owner
                                         owner = { is_same_value = FROM }
@@ -1784,7 +1784,7 @@ ship_event = {
 
 #     trigger = {
 #         solar_system = {
-#             any_planet = {
+#             any_system_planet = {
 #                 OR = {
 #                     is_colony = yes
 #                     has_mining_station = yes
@@ -1820,7 +1820,7 @@ ship_event = {
 #                                 set_fleet_flag = pending_reassignment
 #                                 closest_system = {
 #                                     limit = {
-#                                         any_planet = {
+#                                         any_system_planet = {
 #                                             is_colony = yes
 #                                             owner = { is_same_value = FROM }
 #                                         }
@@ -1856,7 +1856,7 @@ ship_event = {
 
 #                                 closest_system = {
 #                                     limit = {
-#                                         any_planet = {
+#                                         any_system_planet = {
 #                                             is_colony = yes
 #                                             owner = { is_same_value = FROM }
 #                                         }

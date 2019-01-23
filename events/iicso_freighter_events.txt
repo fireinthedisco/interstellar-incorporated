@@ -138,7 +138,7 @@ fleet_event = {
         solar_system = {
             if = {
                 limit = {
-                    any_planet = {
+                    any_system_planet = {
                         is_colony = yes
                         controller = { is_same_value = PREV.owner }
                         NOT = { has_orbital_bombardment = yes }
@@ -199,8 +199,8 @@ fleet_event = {
         }
         OR = {
             NOT = { has_fleet_flag = calculated_destination }
-            solar_system = { any_planet = { PREVPREV = { has_fleet_flag = enroute_to_colony@PREV }}}
-            solar_system = { any_planet = { PREVPREV = { has_fleet_flag = enroute_to_starbase@PREV }}}
+            solar_system = { any_system_planet = { PREVPREV = { has_fleet_flag = enroute_to_colony@PREV }}}
+            solar_system = { any_system_planet = { PREVPREV = { has_fleet_flag = enroute_to_starbase@PREV }}}
         }
     }
 
@@ -217,7 +217,7 @@ fleet_event = {
                         exists = space_owner
                         space_owner = { is_same_value = PREVPREVPREV }
                         OR = {
-                            any_planet = {
+                            any_system_planet = {
                                 is_colony = yes
                                 exists = owner
                                 owner = { is_same_value = PREVPREVPREVPREV }
@@ -261,7 +261,7 @@ fleet_event = {
                                 mult = 0
                                 is_primary_star = yes
                                 solar_system = {
-                                    any_planet = {
+                                    any_system_planet = {
                                         is_colony = yes
                                         exists = owner
                                         owner = { is_same_value = PREVPREVPREVPREV }
@@ -286,7 +286,7 @@ fleet_event = {
                                 if = {
                                     limit = {
                                         any_system = {
-                                            any_planet = {
+                                            any_system_planet = {
                                                 ROOT = {
                                                     OR = {
                                                         has_fleet_flag = enroute_to_colony@PREV
