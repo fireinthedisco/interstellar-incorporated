@@ -9,49 +9,50 @@ event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = {
+        NOT = { has_global_flag = iicso_active }
+    }
+
     immediate = {
         #log = "initial event triggered"
-        if = {
-            limit = { NOT = { has_global_flag = iicso_active }}
-            set_global_flag = iicso_active
+        set_global_flag = iicso_active
 
-            every_planet = {
-                limit = { is_colony = no }
-    
-                if = { #immediately set up all planets inside of empires
-                    limit = { solar_system = { exists = space_owner }}
-                    set_planet_flag = initialsetup_ownedsystem
-                    planet_event = {
-                        id = iicso.101
-                        days = 1
-                        random = 29
-                    }
+        every_planet = {
+            limit = { is_colony = no }
+
+            if = { #immediately set up all planets inside of empires
+                limit = { solar_system = { exists = space_owner }}
+                set_planet_flag = initialsetup_ownedsystem
+                planet_event = {
+                    id = iicso.101
+                    days = 1
+                    random = 29
                 }
-                else = { #and take care of the rest over the course of the year
-                    planet_event = {
-                        id = iicso.101
-                        days = 1
-                        random = 359
+            }
+            else = { #and take care of the rest over the course of the year
+                planet_event = {
+                    id = iicso.101
+                    days = 1
+                    random = 359
+                }
+            }
+        }
+        every_system = {
+            limit = {
+                any_system = {
+                    exists = space_owner
+                    distance = {
+                        source = PREV
+                        min_jumps = 0
+                        max_jumps = 2
+                        use_bypasses = yes
+                        bypass_empire = space_owner
                     }
                 }
             }
-            every_system = {
-                limit = {
-                    any_system = {
-                        exists = space_owner
-                        distance = {
-                            source = PREV
-                            min_jumps = 0
-                            max_jumps = 2
-                            use_bypasses = yes
-                            bypass_empire = space_owner
-                        }
-                    }
-                }
-                random_system_planet = {
-                    planet_event = {
-                        id = iicso.111
-                    }
+            random_system_planet = {
+                planet_event = {
+                    id = iicso.111
                 }
             }
         }
@@ -67,169 +68,7 @@ planet_event = {
     immediate = {
         #log = "mineral count triggered on planet [THIS.GetName] in empire [THIS.solar_system.space_owner.GetName]"
         #first find how many resources the mining station produces
-        if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_1 }}
-            set_variable = { which = iicso_orbital_minerals value = 1 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_2 }}
-            set_variable = { which = iicso_orbital_minerals value = 2 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_3 }}
-            set_variable = { which = iicso_orbital_minerals value = 3 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_4 }}
-            set_variable = { which = iicso_orbital_minerals value = 4 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_5 }}
-            set_variable = { which = iicso_orbital_minerals value = 5 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_6 }}
-            set_variable = { which = iicso_orbital_minerals value = 6 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_7 }}
-            set_variable = { which = iicso_orbital_minerals value = 7 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_8 }}
-            set_variable = { which = iicso_orbital_minerals value = 8 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_9 }}
-            set_variable = { which = iicso_orbital_minerals value = 9 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_minerals_10 }}
-            set_variable = { which = iicso_orbital_minerals value = 10 }
-        }
-
-
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_alloys_1 }}
-            set_variable = { which = iicso_orbital_alloys value = 1 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_alloys_2 }}
-            set_variable = { which = iicso_orbital_alloys value = 2 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_alloys_3 }}
-            set_variable = { which = iicso_orbital_alloys value = 3 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_alloys_4 }}
-            set_variable = { which = iicso_orbital_alloys value = 4 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_alloys_5 }}
-            set_variable = { which = iicso_orbital_alloys value = 5 }
-        }
-
-
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_exotic_gases_1 }}
-            set_variable = { which = iicso_orbital_exotic_gases value = 1 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_exotic_gases_2 }}
-            set_variable = { which = iicso_orbital_exotic_gases value = 2 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_exotic_gases_3 }}
-            set_variable = { which = iicso_orbital_exotic_gases value = 3 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_exotic_gases_4 }}
-            set_variable = { which = iicso_orbital_exotic_gases value = 4 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_exotic_gases_5 }}
-            set_variable = { which = iicso_orbital_exotic_gases value = 5 }
-        }
-
-        
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_rare_crystals_1 }}
-            set_variable = { which = iicso_orbital_rare_crystals value = 1 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_rare_crystals_2 }}
-            set_variable = { which = iicso_orbital_rare_crystals value = 2 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_rare_crystals_3 }}
-            set_variable = { which = iicso_orbital_rare_crystals value = 3 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_rare_crystals_4 }}
-            set_variable = { which = iicso_orbital_rare_crystals value = 4 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_rare_crystals_5 }}
-            set_variable = { which = iicso_orbital_rare_crystals value = 5 }
-        }
-
-        
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_volatile_motes_1 }}
-            set_variable = { which = iicso_orbital_volatile_motes value = 1 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_volatile_motes_2 }}
-            set_variable = { which = iicso_orbital_volatile_motes value = 2 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_volatile_motes_3 }}
-            set_variable = { which = iicso_orbital_volatile_motes value = 3 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_volatile_motes_4 }}
-            set_variable = { which = iicso_orbital_volatile_motes value = 4 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_volatile_motes_5 }}
-            set_variable = { which = iicso_orbital_volatile_motes value = 5 }
-        }
-
-        
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_zro_deposit_1 }}
-            set_variable = { which = iicso_orbital_zro value = 1 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_zro_deposit_2 }}
-            set_variable = { which = iicso_orbital_zro value = 2 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_zro_deposit_3 }}
-            set_variable = { which = iicso_orbital_zro value = 3 }
-        }
-
-        
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_dark_matter_deposit_1 }}
-            set_variable = { which = iicso_orbital_dark_matter value = 1 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_dark_matter_deposit_2 }}
-            set_variable = { which = iicso_orbital_dark_matter value = 2 }
-        }
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_dark_matter_deposit_3 }}
-            set_variable = { which = iicso_orbital_dark_matter value = 3 }
-        }
-
-        
-        else_if = {
-            limit = { any_deposit = { is_deposit_type = d_living_metal_deposit }}
-            set_variable = { which = iicso_orbital_living_metal value = 1 }
-        }
-
+        set_planet_resources = yes
         set_planet_flag = iicso_resources_set
         #log = "planet [THIS.GetName] has [THIS.iicso_orbital_minerals] minerals"
 
@@ -266,104 +105,8 @@ event = {
                     is_country_type = awakened_fallen_empire
                 }
             }
-            every_mining_station = {
-                #log = "removing [THIS.orbit.iicso_orbital_minerals] minerals from empire total"
-                set_variable = { which = iicso_orbital_minerals value = orbit }
-                set_variable = { which = iicso_orbital_alloys value = orbit }
-                set_variable = { which = iicso_orbital_exotic_gases value = orbit }
-                set_variable = { which = iicso_orbital_rare_crystals value = orbit }
-                set_variable = { which = iicso_orbital_volatile_motes value = orbit }
-                set_variable = { which = iicso_orbital_zro value = orbit }
-                set_variable = { which = iicso_orbital_dark_matter value = orbit }
-                set_variable = { which = iicso_orbital_living_metal value = orbit }
-
-                while = {
-                    count = iicso_orbital_minerals
-                    owner = { add_resource = { minerals = -1 }}
-                    orbit = {
-                        change_variable = { which = iicso_stockpile_minerals value = 1 }
-                    }
-                }
-                set_variable = { which = iicso_orbital_minerals value = 0 }
-                while = {
-                    count = iicso_orbital_alloys
-                    owner = { add_resource = { alloys = -1 }}
-                    orbit = {
-                        change_variable = { which = iicso_stockpile_alloys value = 1 }
-                    }
-                }
-                set_variable = { which = iicso_orbital_alloys value = 0 }
-                while = {
-                    count = iicso_orbital_exotic_gases
-                    owner = { add_resource = { exotic_gases = -1 }}
-                    orbit = {
-                        change_variable = { which = iicso_stockpile_exotic_gases value = 1 }
-                    }
-                }
-                set_variable = { which = iicso_orbital_exotic_gases value = 0 }
-                while = {
-                    count = iicso_orbital_rare_crystals
-                    owner = { add_resource = { rare_crystals = -1 }}
-                    orbit = {
-                        change_variable = { which = iicso_stockpile_rare_crystals value = 1 }
-                    }
-                }
-                set_variable = { which = iicso_orbital_rare_crystals value = 0 }
-                while = {
-                    count = iicso_orbital_volatile_motes
-                    owner = { add_resource = { volatile_motes = -1 }}
-                    orbit = {
-                        change_variable = { which = iicso_stockpile_volatile_motes value = 1 }
-                    }
-                }
-                set_variable = { which = iicso_orbital_volatile_motes value = 0 }
-                while = {
-                    count = iicso_orbital_zro
-                    owner = { add_resource = { sr_zro = -1 }}
-                    orbit = {
-                        change_variable = { which = iicso_stockpile_zro value = 1 }
-                    }
-                }
-                set_variable = { which = iicso_orbital_zro value = 0 }
-                while = {
-                    count = iicso_orbital_dark_matter
-                    owner = { add_resource = { sr_dark_matter = -1 }}
-                    orbit = {
-                        change_variable = { which = iicso_stockpile_dark_matter value = 1 }
-                    }
-                }
-                set_variable = { which = iicso_orbital_dark_matter value = 0 }
-                while = {
-                    count = iicso_orbital_living_metal
-                    owner = { add_resource = { sr_living_metal = -1 }}
-                    orbit = {
-                        change_variable = { which = iicso_stockpile_living_metal value = 1 }
-                    }
-                }
-                set_variable = { which = iicso_orbital_living_metal value = 0 }
-            }
-            every_owned_starbase = {
-                if = {
-                    limit = { has_starbase_building = hydroponics_bay }
-                    owner = { add_resource = { food = -3 }}
-                    solar_system = {
-                        random_system_planet = {
-                            limit = { is_primary_star = yes }
-                            change_variable = { which = iicso_stockpile_food value = 3 }
-                        }
-                    }
-                }
-                if = {
-                    limit = { has_starbase_building = nebula_refinery }
-                    owner = { add_resource = { minerals = -6 }}
-                    solar_system = {
-                        random_system_planet = {
-                            limit = { is_primary_star = yes }
-                            change_variable = { which = iicso_stockpile_minerals value = 6 }
-                        }
-                    }
-                }
-            }
+            remove_mining_station_income = yes
+            remove_starbase_income = yes            
         }
     }
 }
@@ -973,18 +716,17 @@ event = {
     immediate = {
         every_country = {
             limit = {
-                any_country = {
-                    has_country_flag = civ_faction_of@PREV
+                OR = {
+                    is_country_type = default
+                    is_country_type = awakened_fallen_empire
                 }
-                NOT = { is_country_type = fallen_empire }
             }
             every_owned_planet = {
-                limit = { NOT = { is_under_colonization = yes }
-            }
+                limit = { NOT = { is_under_colonization = yes }}
                 planet_event = {
                     id = iicso.401
                     days = 1
-                    random = 89
+                    random = 359
                 }
             }
         }
@@ -1060,6 +802,10 @@ fleet_event = {
     id = iicso.402
     is_triggered_only = yes
     hide_window = yes
+
+    trigger = {
+        exists = FROM
+    }
 
     immediate = {
         remove_fleet_flag = enroute_to_mine
@@ -1149,6 +895,7 @@ event = {
             limit = { has_country_flag = iicso_civilian_country }
             every_owned_fleet = {
                 limit = {
+                    has_fleet_flag = civilian_miner
                     exists = solar_system
                     solar_system = {
                         any_system_planet = {

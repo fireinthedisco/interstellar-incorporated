@@ -1,4 +1,4 @@
-name="Interstellar Incorporated - A Civilian Space Odyssey v0.2.3 - LE GUIN 2.2.3 COMPATIBLE (alpha)"
+name="Interstellar Incorporated - A Civilian Space Odyssey v0.2.4 dev version"
 path="mod/interstellarincorporated"
 tags={
 	"Economy"

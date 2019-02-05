@@ -1,7 +1,7 @@
-#Increased distance civilian ships will retreat to before staying at range
-#Starbases with hydroponics bays or nebula refineries will now produce those resources into a local stockpile to be transported, instead of to empire total.
-#System freighters now seek out the nearest colony OR nearest starbase with a trade hub. This allows some freighters which are not near a colony to take a shorter trip (and thus despawn faster), before the trade hub sends its own single hub freighter fleet on to the nearest colony.
-#Fixes for establishing communications and setting faction hostility with your own and other empires' civilian countries when starting mod midway through a game
-#(In progress) Adding policy to decide how armed your civilian ships are, affects unrest and piracy suppression
-#(In progress) Adding ship models with different load sizes
-#(In progress) Resource calc (iicso.1000)
+#Bug fixed where army transports show up with the freighter ship model
+#Localisation added for civilian armament policy
+#Localisation added for different ship sizes
+#Ships should now spawn correctly as different sizes (amount of cargo) and tanker/freighter/mixed models
+#Civilian ship pirate suppression now entirely driven by suppression on the different ship types themselves (with different levels of armament), not by modifier applied by your policy
+#Planet stockpiles should hopefully be working - but everyone just sends their goods on to the capital, at which point it's added into the empire stockpile. Planets don't receive shipments back to address their deficits yet
+#Calculating planet orbital resources and removal of mining station and starbase resources and adding to their stockpiles moved into effects

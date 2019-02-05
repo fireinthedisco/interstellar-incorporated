@@ -93,6 +93,797 @@ ship_section_template = {
 	small_utility_slots = 3
 }
 
+
+
+
+ship_section_template = {
+	key = "z_iicso_double_freighter_section_unarmed"
+	ship_size = z_iicso_double_freighter_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_double_containers_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_double_freighter_section"
+	ship_size = z_iicso_double_freighter
+	fits_on_slot = mid
+	entity = "cargo_transport_double_containers_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_double_freighter_section_armed"
+	ship_size = z_iicso_double_freighter_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_double_containers_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+
+
+
+ship_section_template = {
+	key = "z_iicso_half_freighter_section_unarmed"
+	ship_size = z_iicso_half_freighter_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_half_containers_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_half_freighter_section"
+	ship_size = z_iicso_half_freighter
+	fits_on_slot = mid
+	entity = "cargo_transport_half_containers_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_half_freighter_section_armed"
+	ship_size = z_iicso_half_freighter_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_half_containers_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+
+
+
+
+ship_section_template = {
+	key = "z_iicso_tankerfreighter_section_unarmed"
+	ship_size = z_iicso_tankerfreighter_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_tankerfreighter_section"
+	ship_size = z_iicso_tankerfreighter
+	fits_on_slot = mid
+	entity = "cargo_transport_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_tankerfreighter_section_armed"
+	ship_size = z_iicso_tankerfreighter_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+
+
+
+ship_section_template = {
+	key = "z_iicso_double_tankerfreighter_section_unarmed"
+	ship_size = z_iicso_double_tankerfreighter_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_double_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_double_tankerfreighter_section"
+	ship_size = z_iicso_double_tankerfreighter
+	fits_on_slot = mid
+	entity = "cargo_transport_double_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_double_tankerfreighter_section_armed"
+	ship_size = z_iicso_double_tankerfreighter_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_double_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+
+
+
+ship_section_template = {
+	key = "z_iicso_half_tankerfreighter_section_unarmed"
+	ship_size = z_iicso_half_tankerfreighter_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_half_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_half_tankerfreighter_section"
+	ship_size = z_iicso_half_tankerfreighter
+	fits_on_slot = mid
+	entity = "cargo_transport_half_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_half_tankerfreighter_section_armed"
+	ship_size = z_iicso_half_tankerfreighter_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_half_mixed_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+
+
+
+
+
+ship_section_template = {
+	key = "z_iicso_tanker_section_unarmed"
+	ship_size = z_iicso_tanker_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_tanks_entity_iicso"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_tanker_section"
+	ship_size = z_iicso_tanker
+	fits_on_slot = mid
+	entity = "cargo_transport_tanks_entity_iicso"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_tanker_section_armed"
+	ship_size = z_iicso_tanker_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_tanks_entity_iicso"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+
+
+
+ship_section_template = {
+	key = "z_iicso_double_tanker_section_unarmed"
+	ship_size = z_iicso_double_tanker_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_double_tanks_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_double_tanker_section"
+	ship_size = z_iicso_double_tanker
+	fits_on_slot = mid
+	entity = "cargo_transport_double_tanks_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_double_tanker_section_armed"
+	ship_size = z_iicso_double_tanker_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_double_tanks_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+
+
+
+ship_section_template = {
+	key = "z_iicso_half_tanker_section_unarmed"
+	ship_size = z_iicso_half_tanker_unarmed
+	fits_on_slot = mid
+	entity = "cargo_transport_half_tanks_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = banned_armament }
+			}
+		}		
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_half_tanker_section"
+	ship_size = z_iicso_half_tanker
+	fits_on_slot = mid
+	entity = "cargo_transport_half_tanks_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = limited_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	small_utility_slots = 3
+}
+
+ship_section_template = {
+	key = "z_iicso_half_tanker_section_armed"
+	ship_size = z_iicso_half_tanker_armed
+	fits_on_slot = mid
+	entity = "cargo_transport_half_tanks_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	ai_weight = {
+		modifier = {
+			factor = 0
+			any_country = {
+				has_country_flag = civ_faction@PREV
+				NOT = { has_policy_flag = unrestricted_armament }
+			}
+		}		
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_01"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_01"
+	}
+	
+	component_slot = {
+		name = "SMALL_GUN_02"
+		slot_size = small
+		slot_type = weapon
+		locatorname = "turret_muzzle_02"
+	}
+	
+	component_slot = {
+		name = "MEDIUM_GUN_01"
+		slot_size = medium
+		slot_type = weapon
+		locatorname = "turret_muzzle_03"
+	}
+	
+	small_utility_slots = 3
+}
+
+
+
+
+
 ship_section_template = {
 	key = "z_iicso_miner_section"
 	ship_size = z_iicso_miner

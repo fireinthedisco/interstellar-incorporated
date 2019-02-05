@@ -1,7 +1,0 @@
-banned_armament_no_suppression = {
-    piracy_suppression_mult = -1
-}
-
-unrestricted_armament_double_suppression = {
-    piracy_suppression_mult = 1
-}

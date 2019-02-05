@@ -1,0 +1,341 @@
+#Reactors
+
+utility_component_template = {
+	key = "IICSO_FISSION_REACTOR"
+	size = small
+	icon = "GFX_ship_part_reactor_1"
+	icon_frame = 1
+	power = 75
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 10
+		}	
+		upkeep = {
+			energy = 0.10
+			alloys = 0.01
+		}
+	}
+	
+	prerequisites = { "tech_fission_power" }
+	component_set = "power_core"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_FUSION_REACTOR"
+	
+	ai_weight = {
+		weight = 1
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_FUSION_REACTOR"
+	size = small
+	icon = "GFX_ship_part_reactor_2"
+	icon_frame = 1
+	power = 100
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 13
+		}	
+		upkeep = {
+			energy = 0.13
+			alloys = 0.013
+		}
+	}
+	
+	prerequisites = { "tech_fusion_power" }
+	component_set = "power_core"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_COLD_FUSION_REACTOR"
+	
+	ai_weight = {
+		weight = 2
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_COLD_FUSION_REACTOR"
+	size = small
+	icon = "GFX_ship_part_reactor_3"
+	icon_frame = 1
+	power = 130
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 17
+		}	
+		upkeep = {
+			energy = 0.17
+			alloys = 0.017
+		}
+	}
+	
+	prerequisites = { "tech_cold_fusion_power" }
+	component_set = "power_core"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_ANTIMATTER_REACTOR"
+	
+	ai_weight = {
+		weight = 3
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_ANTIMATTER_REACTOR"
+	size = small
+	icon = "GFX_ship_part_reactor_4"
+	icon_frame = 1
+	power = 170
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 22
+		}	
+		upkeep = {
+			energy = 0.22
+			alloys = 0.022
+		}
+	}
+	
+	prerequisites = { "tech_antimatter_power" }
+	component_set = "power_core"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_ZERO_POINT_REACTOR"
+	
+	ai_weight = {
+		weight = 4
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_ZERO_POINT_REACTOR"
+	size = small
+	icon = "GFX_ship_part_reactor_5"
+	icon_frame = 1
+	power = 220
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 28
+		}
+		upkeep = {
+			energy = 0.28
+			alloys = 0.028
+		}
+	}
+	
+	prerequisites = { "tech_zero_point_power" }
+	component_set = "power_core"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_DARK_MATTER_REACTOR"
+	
+	ai_weight = {
+		weight = 5
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_DARK_MATTER_REACTOR"
+	size = small
+	icon = "GFX_ship_part_dark_matter_power_core"
+	icon_frame = 1
+	power = 285
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 37
+			sr_dark_matter = 1
+		}
+		upkeep = {
+			energy = 0.37
+			alloys = 0.037
+		}
+	}
+	
+	prerequisites = { "tech_dark_matter_power_core" }
+	component_set = "power_core"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	
+	ai_weight = {
+		weight = 6
+		modifier = {
+			factor = 0.0
+			has_monthly_income = { resource = sr_dark_matter value <= 0 }
+		}
+	}
+}
+
+
+
+
+
+
+#Thrusters
+
+utility_component_template = {
+	key = "IICSO_THRUSTER_1"
+	size = small
+	icon = "GFX_ship_part_thruster_1"
+	icon_frame = 1
+	power = -10
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 3
+		}
+	}
+	
+	modifier = {
+	}
+		
+	prerequisites = { "tech_thrusters_1" }
+	component_set = "thruster_components"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_SHIP_THRUSTER_2"
+	
+	ai_weight = {
+		weight = 1
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_SHIP_THRUSTER_2"
+	size = small
+	icon = "GFX_ship_part_thruster_2"
+	icon_frame = 1
+	power = -15
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 6
+		}
+	}
+	modifier = {
+		ship_base_speed_mult = 0.25
+		ship_evasion_add = 5
+	}
+
+	prerequisites = { "tech_thrusters_2" }
+	component_set = "thruster_components"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_SHIP_THRUSTER_3"
+	
+	ai_weight = {
+		weight = 2
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_SHIP_THRUSTER_3"
+	size = small
+	icon = "GFX_ship_part_thruster_3"
+	icon_frame = 1
+	power = -20
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 9
+		}
+	}
+	modifier = {
+		ship_base_speed_mult = 0.50
+		ship_evasion_add = 10
+	}
+
+	prerequisites = { "tech_thrusters_3" }
+	component_set = "thruster_components"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_SHIP_THRUSTER_4"
+	
+	ai_weight = {
+		weight = 3
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_SHIP_THRUSTER_4"
+	size = small
+	icon = "GFX_ship_part_thruster_4"
+	icon_frame = 1
+	power = -25
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 12
+		}
+	}
+	modifier = {
+		ship_base_speed_mult = 0.75
+		ship_evasion_add = 15
+	}
+
+	prerequisites = { "tech_thrusters_4" }
+	component_set = "thruster_components"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	upgrades_to = "IICSO_SHIP_THRUSTER_5"
+	
+	ai_weight = {
+		weight = 4
+	}
+}
+
+utility_component_template = {
+	key = "IICSO_SHIP_THRUSTER_5"
+	size = small
+	icon = "GFX_ship_part_thruster_5"
+	icon_frame = 1
+	power = -30
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 12
+			sr_dark_matter = 1
+		}
+	}
+	modifier = {
+		ship_base_speed_mult = 1.25
+		ship_evasion_add = 20
+	}
+
+	prerequisites = { "tech_dark_matter_propulsion" }
+	component_set = "thruster_components"
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	
+	ai_weight = {
+		weight = 5
+		modifier = {
+			factor = 0.0
+			has_monthly_income = { resource = sr_dark_matter value <= 0 }
+		}
+	}
+}
+
+
+
+
+
+
+#Combat computer
+
+utility_component_template = {
+	key = "INTERSTELLARINC_CIVILIAN_COMPUTER"
+	size = small
+	icon = "GFX_ship_part_computer_default"
+	icon_frame = 1
+	power = -5
+	resources = {
+		category = ship_components
+		cost = {
+			alloys = 5
+		}
+	}
+	ship_behavior = "iicso_civilian_behavior"
+	
+	size_restriction = { z_iicso_freighter z_iicso_freighter_armed z_iicso_freighter_unarmed z_iicso_double_freighter z_iicso_double_freighter_armed z_iicso_double_freighter_unarmed z_iicso_half_freighter z_iicso_half_freighter_armed z_iicso_half_freighter_unarmed z_iicso_tanker z_iicso_tanker_armed z_iicso_tanker_unarmed z_iicso_double_tanker z_iicso_double_tanker_armed z_iicso_double_tanker_unarmed z_iicso_half_tanker z_iicso_half_tanker_armed z_iicso_half_tanker_unarmed z_iicso_tankerfreighter z_iicso_tankerfreighter_armed z_iicso_tankerfreighter_unarmed z_iicso_double_tankerfreighter z_iicso_double_tankerfreighter_armed z_iicso_double_tankerfreighter_unarmed z_iicso_half_tankerfreighter z_iicso_half_tankerfreighter_armed z_iicso_half_tankerfreighter_unarmed z_iicso_miner }
+	component_set = "combat_computers"
+	
+	ai_weight = {
+		weight = 6
+	}
+}

@@ -1,57 +1,122 @@
 deposit_cargo_at_colony = {
     FROM = {
-        while = {
-            count = cargo_minerals
-            FROMFROM = { owner = { add_resource = { minerals = 1 }}}
+        if = {
+            limit = {
+                any_system = {
+                    any_system_planet = {
+                        FROM = { has_fleet_flag = enroute_to_capital@PREV }
+                        any_country = {
+                            has_country_flag = civ_faction@FROM.owner
+                            capital_scope = { is_same_value = PREVPREV }
+                        }
+                    }
+                }
+            }
+            while = {
+                count = cargo_minerals
+                FROMFROM = { owner = { add_resource = { minerals = 1 }}}
+            }
+            set_variable = { which = cargo_minerals value = 0 }
+            while = {
+                count = cargo_alloys
+                FROMFROM = { owner = { add_resource = { alloys = 1 }}}
+            }
+            set_variable = { which = cargo_alloys value = 0 }
+            while = {
+                count = cargo_exotic_gases
+                FROMFROM = { owner = { add_resource = { exotic_gases = 1 }}}
+            }
+            set_variable = { which = cargo_exotic_gases value = 0 }
+            while = {
+                count = cargo_rare_crystals
+                FROMFROM = { owner = { add_resource = { rare_crystals = 1 }}}
+            }
+            set_variable = { which = cargo_rare_crystals value = 0 }
+            while = {
+                count = cargo_volatile_motes
+                FROMFROM = { owner = { add_resource = { volatile_motes = 1 }}}
+            }
+            set_variable = { which = cargo_volatile_motes value = 0 }
+            while = {
+                count = cargo_zro
+                FROMFROM = { owner = { add_resource = { sr_zro = 1 }}}
+            }
+            set_variable = { which = cargo_zro value = 0 }
+            while = {
+                count = cargo_dark_matter
+                FROMFROM = { owner = { add_resource = { sr_dark_matter = 1 }}}
+            }
+            set_variable = { which = cargo_dark_matter value = 0 }
+            while = {
+                count = cargo_living_metal
+                FROMFROM = { owner = { add_resource = { sr_living_metal = 1 }}}
+            }
+            set_variable = { which = cargo_living_metal value = 0 }
+    
+            while = {
+                count = cargo_food
+                FROMFROM = { owner = { add_resource = { food = 1 }}}
+            }
+            set_variable = { which = cargo_food value = 0 }
+            while = {
+                count = cargo_consumer_goods
+                FROMFROM = { owner = { add_resource = { consumer_goods = 1 }}}
+            }
+            set_variable = { which = cargo_consumer_goods value = 0 }    
         }
-        set_variable = { which = cargo_minerals value = 0 }
-        while = {
-            count = cargo_alloys
-            FROMFROM = { owner = { add_resource = { alloys = 1 }}}
+        else = {
+            while = {
+                count = cargo_minerals
+                FROMFROM = { change_variable = { which = iicso_stockpile_minerals value = 1 }}
+            }
+            set_variable = { which = cargo_minerals value = 0 }
+            while = {
+                count = cargo_alloys
+                FROMFROM = { change_variable = { which = iicso_stockpile_alloys value = 1 }}
+            }
+            set_variable = { which = cargo_alloys value = 0 }
+            while = {
+                count = cargo_exotic_gases
+                FROMFROM = { change_variable = { which = iicso_stockpile_exotic_gases value = 1 }}
+            }
+            set_variable = { which = cargo_exotic_gases value = 0 }
+            while = {
+                count = cargo_rare_crystals
+                FROMFROM = { change_variable = { which = iicso_stockpile_rare_crystals value = 1 }}
+            }
+            set_variable = { which = cargo_rare_crystals value = 0 }
+            while = {
+                count = cargo_volatile_motes
+                FROMFROM = { change_variable = { which = iicso_stockpile_volatile_motes value = 1 }}
+            }
+            set_variable = { which = cargo_volatile_motes value = 0 }
+            while = {
+                count = cargo_zro
+                FROMFROM = { change_variable = { which = iicso_stockpile_zro value = 1 }}
+            }
+            set_variable = { which = cargo_zro value = 0 }
+            while = {
+                count = cargo_dark_matter
+                FROMFROM = { change_variable = { which = iicso_stockpile_dark_matter value = 1 }}
+            }
+            set_variable = { which = cargo_dark_matter value = 0 }
+            while = {
+                count = cargo_living_metal
+                FROMFROM = { change_variable = { which = iicso_stockpile_living_metal value = 1 }}
+            }
+            set_variable = { which = cargo_living_metal value = 0 }
+    
+            while = {
+                count = cargo_food
+                FROMFROM = { change_variable = { which = iicso_stockpile_food value = 1 }}
+            }
+            set_variable = { which = cargo_food value = 0 }
+            while = {
+                count = cargo_consumer_goods
+                FROMFROM = { change_variable = { which = iicso_stockpile_consumer_goods value = 1 }}
+            }
+            set_variable = { which = cargo_consumer_goods value = 0 }
         }
-        set_variable = { which = cargo_alloys value = 0 }
-        while = {
-            count = cargo_exotic_gases
-            FROMFROM = { owner = { add_resource = { exotic_gases = 1 }}}
-        }
-        set_variable = { which = cargo_exotic_gases value = 0 }
-        while = {
-            count = cargo_rare_crystals
-            FROMFROM = { owner = { add_resource = { rare_crystals = 1 }}}
-        }
-        set_variable = { which = cargo_rare_crystals value = 0 }
-        while = {
-            count = cargo_volatile_motes
-            FROMFROM = { owner = { add_resource = { volatile_motes = 1 }}}
-        }
-        set_variable = { which = cargo_volatile_motes value = 0 }
-        while = {
-            count = cargo_zro
-            FROMFROM = { owner = { add_resource = { sr_zro = 1 }}}
-        }
-        set_variable = { which = cargo_zro value = 0 }
-        while = {
-            count = cargo_dark_matter
-            FROMFROM = { owner = { add_resource = { sr_dark_matter = 1 }}}
-        }
-        set_variable = { which = cargo_dark_matter value = 0 }
-        while = {
-            count = cargo_living_metal
-            FROMFROM = { owner = { add_resource = { sr_living_metal = 1 }}}
-        }
-        set_variable = { which = cargo_living_metal value = 0 }
-
-        while = {
-            count = cargo_food
-            FROMFROM = { owner = { add_resource = { food = 1 }}}
-        }
-        set_variable = { which = cargo_food value = 0 }
-        while = {
-            count = cargo_consumer_goods
-            FROMFROM = { owner = { add_resource = { consumer_goods = 1 }}}
-        }
-        set_variable = { which = cargo_consumer_goods value = 0 }
-
         remove_fleet_flag = enroute_to_home
         if = {
             limit = {
@@ -60,9 +125,14 @@ deposit_cargo_at_colony = {
                     has_fleet_flag = station_freighter
                     has_fleet_flag = system_freighter
                     has_fleet_flag = hub_freighter
+                    has_fleet_flag = colony_freighter
                 }
             }
-            delete_fleet = THIS
+            fleet_event = {
+                id = iicso.504
+                days = 5
+                random = 10
+            }
         }
         else = {
             fleet_event = {
@@ -81,11 +151,22 @@ calculate_empty_cargo = {
             limit = {
                 fleet = { is_same_value = PREVPREVPREV }
                 OR = {
-                    has_ship_flag = freighter_ship
+                    has_ship_flag = large_cargo_ship
+                    has_ship_flag = medium_cargo_ship
+                    has_ship_flag = small_cargo_ship
                     has_ship_flag = civilian_miner
                 }
             }
-            PREVPREV = { change_variable = { which = empty_cargo value = @ship_cargo_capacity }}
+            if = {
+                limit = { has_ship_flag = large_cargo_ship }
+                PREVPREV = { change_variable = { which = empty_cargo value = @large_cargo_capacity }}
+            } else_if = {
+                limit = { OR = { has_ship_flag = medium_cargo_ship has_ship_flag = civilian_miner }}
+                PREVPREV = { change_variable = { which = empty_cargo value = @medium_cargo_capacity }}
+            } else_if = {
+                limit = { has_ship_flag = small_cargo_ship }
+                PREVPREV = { change_variable = { which = empty_cargo value = @small_cargo_capacity }}
+            }
         }
     }
     subtract_variable = { which = empty_cargo value = cargo_minerals }
@@ -227,6 +308,19 @@ add_cargo_to_miner = {
 }
 
 create_station_freighter_ships = {
+    PREVPREV = {
+        set_variable = { which = total_stockpile value = 0 }
+        change_variable = { which = total_stockpile value = iicso_stockpile_minerals }
+        change_variable = { which = total_stockpile value = iicso_stockpile_alloys }
+        change_variable = { which = total_stockpile value = iicso_stockpile_exotic_gases }
+        change_variable = { which = total_stockpile value = iicso_stockpile_rare_crystals }
+        change_variable = { which = total_stockpile value = iicso_stockpile_volatile_motes }
+        change_variable = { which = total_stockpile value = iicso_stockpile_zro }
+        change_variable = { which = total_stockpile value = iicso_stockpile_dark_matter }
+        change_variable = { which = total_stockpile value = iicso_stockpile_living_metal }
+        change_variable = { which = total_stockpile value = iicso_stockpile_food }
+        change_variable = { which = total_stockpile value = iicso_stockpile_consumer_goods }
+    }
     while = {
         limit = {
             PREVPREV = {
@@ -245,7 +339,18 @@ create_station_freighter_ships = {
                 }
             }
         }
-        set_variable = { which = cargo_load value = @ship_cargo_capacity}
+        if = {
+            limit = { PREVPREV = { check_variable = { which = total_stockpile value >= @min_large_cargo_capacity }}}
+            set_fleet_flag = large_cargo_ship
+            set_variable = { which = cargo_load value = @large_cargo_capacity }
+        } else_if = {
+            limit = { PREVPREV = { check_variable = { which = total_stockpile value >= @min_medium_cargo_capacity }}}
+            set_fleet_flag = medium_cargo_ship
+            set_variable = { which = cargo_load value = @medium_cargo_capacity }
+        } else = {
+            set_fleet_flag = small_cargo_ship
+            set_variable = { which = cargo_load value = @small_cargo_capacity}
+        }
 
         while = {
             limit = {
@@ -256,6 +361,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_minerals value = 1 }
             change_variable = { which = ship_cargo_minerals value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_minerals value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -267,6 +373,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_alloys value = 1 }
             change_variable = { which = ship_cargo_alloys value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_alloys value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -278,6 +385,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_exotic_gases value = 1 }
             change_variable = { which = ship_cargo_exotic_gases value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_exotic_gases value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -289,6 +397,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_rare_crystals value = 1 }
             change_variable = { which = ship_cargo_rare_crystals value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_rare_crystals value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -300,6 +409,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_volatile_motes value = 1 }
             change_variable = { which = ship_cargo_volatile_motes value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_volatile_motes value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -311,6 +421,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_zro value = 1 }
             change_variable = { which = ship_cargo_zro value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_zro value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -322,6 +433,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_dark_matter value = 1 }
             change_variable = { which = ship_cargo_dark_matter value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_dark_matter value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -333,6 +445,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_living_metal value = 1 }
             change_variable = { which = ship_cargo_living_metal value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_living_metal value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -344,6 +457,7 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_food value = 1 }
             change_variable = { which = ship_cargo_food value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_food value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         while = {
@@ -355,25 +469,24 @@ create_station_freighter_ships = {
             change_variable = { which = cargo_consumer_goods value = 1 }
             change_variable = { which = ship_cargo_consumer_goods value = 1 }
             PREVPREV = { change_variable = { which = iicso_stockpile_consumer_goods value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
         set_variable = { which = cargo_load value = 0 }
-        
-        if = {
-            limit = { ROOT = { space_owner = { has_policy_flag = banned_armament }}}
-            create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_unarmed }
-        } else_if = {
-            limit = { ROOT = { space_owner = { has_policy_flag = limited_armament }}}
-            create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter }
-        } else_if = {
-            limit = { ROOT = { space_owner = { has_policy_flag = unrestricted_armament }}}
-            create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_armed }
-        }
 
         if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_minerals value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_minerals value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_minerals value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_minerals value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value > 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -389,15 +502,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Mineral Transport"
-            }
+            set_fleet_flag = minerals_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_alloys value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_alloys value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_alloys value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_alloys value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value > 0 }
@@ -413,15 +532,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Alloy Transport"
-            }
+            set_fleet_flag = alloys_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_exotic_gases value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_exotic_gases value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_exotic_gases value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_exotic_gases value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -437,15 +562,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Exotic Gas Transport"
-            }
+            set_fleet_flag = exotic_gases_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_rare_crystals value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_rare_crystals value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_rare_crystals value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_rare_crystals value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -461,15 +592,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Rare Crystal Transport"
-            }
+            set_fleet_flag = rare_crystals_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_volatile_motes value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_volatile_motes value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_volatile_motes value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_volatile_motes value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -485,15 +622,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Volatile Mote Transport"
-            }
+            set_fleet_flag = volatile_motes_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_zro value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_zro value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_zro value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_zro value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -509,15 +652,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Zro Transport"
-            }
+            set_fleet_flag = zro_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_dark_matter value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_dark_matter value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_dark_matter value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_dark_matter value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -533,15 +682,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Dark Matter Transport"
-            }
+            set_fleet_flag = dark_matter_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_living_metal value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_living_metal value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_living_metal value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_living_metal value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -557,15 +712,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Living Metal Transport"
-            }
+            set_fleet_flag = living_metal_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_food value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_food value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_food value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_food value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -581,15 +742,21 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Food Transport"
-            }
+            set_fleet_flag = food_ship
         }
         else_if = {
             limit = {
                 OR = {
-                    check_variable = { which = ship_cargo_consumer_goods value > @half_ship_cargo_capacity }
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_consumer_goods value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_consumer_goods value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_consumer_goods value > @min_small_cargo_capacity }
+                    }
                     AND = {
                         check_variable = { which = ship_cargo_minerals value = 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
@@ -605,17 +772,162 @@ create_station_freighter_ships = {
                     }
                 }
             }
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Consumer Goods Transport"
-            }
+            set_fleet_flag = consumer_goods_ship
         }
         else = {
-            last_created_ship = {
-                set_ship_flag = freighter_ship
-                set_name = "Mixed Cargo Freighter"
+            set_fleet_flag = mixed_cargo_ship
+        }
+
+        if = {
+            limit = { ROOT = { space_owner = { has_policy_flag = banned_armament }}}
+            if = {
+                limit = { has_fleet_flag = large_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_freighter_unarmed }
+            } else_if = {
+                limit = { has_fleet_flag = large_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_tanker_unarmed }
+            } else_if = {
+                limit = { has_fleet_flag = large_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_tankerfreighter_unarmed }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_unarmed }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_tanker_unarmed }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_tankerfreighter_unarmed }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_freighter_unarmed }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_tanker_unarmed }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_tankerfreighter_unarmed }
+            }
+        } else_if = {
+            limit = { ROOT = { space_owner = { has_policy_flag = limited_armament }}}
+            if = {
+                limit = { has_fleet_flag = large_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_freighter }
+            } else_if = {
+                limit = { has_fleet_flag = large_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_tanker }
+            } else_if = {
+                limit = { has_fleet_flag = large_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_tankerfreighter }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_tanker }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_tankerfreighter }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_freighter }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_tanker }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_tankerfreighter }
+            }
+        } else_if = {
+            limit = { ROOT = { space_owner = { has_policy_flag = unrestricted_armament }}}
+            if = {
+                limit = { has_fleet_flag = large_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_freighter_armed }
+            } else_if = {
+                limit = { has_fleet_flag = large_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_tanker_armed }
+            } else_if = {
+                limit = { has_fleet_flag = large_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_double_tankerfreighter_armed }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_armed }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_tanker_armed }
+            } else_if = {
+                limit = { has_fleet_flag = medium_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_tankerfreighter_armed }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship is_container_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_freighter_armed }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship is_tanker_type = yes }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_tanker_armed }
+            } else_if = {
+                limit = { has_fleet_flag = small_cargo_ship has_fleet_flag = mixed_cargo_ship }
+                create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_half_tankerfreighter_armed }
             }
         }
+
+
+        if = {
+            limit = { has_fleet_flag = minerals_ship }
+            last_created_ship = { set_name = "Minerals Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = alloys_ship }
+            last_created_ship = { set_name = "Alloys Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = exotic_gases_ship }
+            last_created_ship = { set_name = "Exotic Gases Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = rare_crystals_ship }
+            last_created_ship = { set_name = "Rare Crystals Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = zro_ship }
+            last_created_ship = { set_name = "Zro Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = dark_matter_ship }
+            last_created_ship = { set_name = "Dark Matter Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = living_metal_ship }
+            last_created_ship = { set_name = "Living Metal Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = food_ship }
+            last_created_ship = { set_name = "Food Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = consumer_goods_ship }
+            last_created_ship = { set_name = "Consumer Goods Transport" }
+        } else_if = {
+            limit = { has_fleet_flag = mixed_cargo_ship }
+            last_created_ship = { set_name = "Mixed Cargo Transport" }
+        }
+
+        if = {
+            limit = { has_fleet_flag = large_cargo_ship }
+            last_created_ship = { set_ship_flag = large_cargo_ship }
+        } else_if = {
+            limit = { has_fleet_flag = medium_cargo_ship }
+            last_created_ship = { set_ship_flag = medium_cargo_ship }
+        } else_if = {
+            limit = { has_fleet_flag = small_cargo_ship }
+            last_created_ship = { set_ship_flag = small_cargo_ship }
+        }
+
+        remove_fleet_flag = minerals_ship
+        remove_fleet_flag = alloys_ship
+        remove_fleet_flag = rare_crystals_ship
+        remove_fleet_flag = exotic_gases_ship
+        remove_fleet_flag = volatile_motes_ship
+        remove_fleet_flag = zro_ship
+        remove_fleet_flag = dark_matter_ship
+        remove_fleet_flag = living_metal_ship
+        remove_fleet_flag = food_ship
+        remove_fleet_flag = consumer_goods_ship
+
+        remove_fleet_flag = large_cargo_ship
+        remove_fleet_flag = medium_cargo_ship
+        remove_fleet_flag = small_cargo_ship
 
         set_variable = { which = ship_cargo_minerals value = 0 }
         set_variable = { which = ship_cargo_alloys value = 0 }
@@ -689,5 +1001,277 @@ deposit_cargo_at_starbase = {
         #     random = 10
         # }
         delete_fleet = THIS
+    }
+}
+
+set_planet_resources = {
+    if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_1 }}
+        set_variable = { which = iicso_orbital_minerals value = 1 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_2 }}
+        set_variable = { which = iicso_orbital_minerals value = 2 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_3 }}
+        set_variable = { which = iicso_orbital_minerals value = 3 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_4 }}
+        set_variable = { which = iicso_orbital_minerals value = 4 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_5 }}
+        set_variable = { which = iicso_orbital_minerals value = 5 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_6 }}
+        set_variable = { which = iicso_orbital_minerals value = 6 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_7 }}
+        set_variable = { which = iicso_orbital_minerals value = 7 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_8 }}
+        set_variable = { which = iicso_orbital_minerals value = 8 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_9 }}
+        set_variable = { which = iicso_orbital_minerals value = 9 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_minerals_10 }}
+        set_variable = { which = iicso_orbital_minerals value = 10 }
+    }
+
+
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_alloys_1 }}
+        set_variable = { which = iicso_orbital_alloys value = 1 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_alloys_2 }}
+        set_variable = { which = iicso_orbital_alloys value = 2 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_alloys_3 }}
+        set_variable = { which = iicso_orbital_alloys value = 3 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_alloys_4 }}
+        set_variable = { which = iicso_orbital_alloys value = 4 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_alloys_5 }}
+        set_variable = { which = iicso_orbital_alloys value = 5 }
+    }
+
+
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_exotic_gases_1 }}
+        set_variable = { which = iicso_orbital_exotic_gases value = 1 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_exotic_gases_2 }}
+        set_variable = { which = iicso_orbital_exotic_gases value = 2 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_exotic_gases_3 }}
+        set_variable = { which = iicso_orbital_exotic_gases value = 3 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_exotic_gases_4 }}
+        set_variable = { which = iicso_orbital_exotic_gases value = 4 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_exotic_gases_5 }}
+        set_variable = { which = iicso_orbital_exotic_gases value = 5 }
+    }
+
+    
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_rare_crystals_1 }}
+        set_variable = { which = iicso_orbital_rare_crystals value = 1 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_rare_crystals_2 }}
+        set_variable = { which = iicso_orbital_rare_crystals value = 2 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_rare_crystals_3 }}
+        set_variable = { which = iicso_orbital_rare_crystals value = 3 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_rare_crystals_4 }}
+        set_variable = { which = iicso_orbital_rare_crystals value = 4 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_rare_crystals_5 }}
+        set_variable = { which = iicso_orbital_rare_crystals value = 5 }
+    }
+
+    
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_volatile_motes_1 }}
+        set_variable = { which = iicso_orbital_volatile_motes value = 1 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_volatile_motes_2 }}
+        set_variable = { which = iicso_orbital_volatile_motes value = 2 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_volatile_motes_3 }}
+        set_variable = { which = iicso_orbital_volatile_motes value = 3 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_volatile_motes_4 }}
+        set_variable = { which = iicso_orbital_volatile_motes value = 4 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_volatile_motes_5 }}
+        set_variable = { which = iicso_orbital_volatile_motes value = 5 }
+    }
+
+    
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_zro_deposit_1 }}
+        set_variable = { which = iicso_orbital_zro value = 1 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_zro_deposit_2 }}
+        set_variable = { which = iicso_orbital_zro value = 2 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_zro_deposit_3 }}
+        set_variable = { which = iicso_orbital_zro value = 3 }
+    }
+
+    
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_dark_matter_deposit_1 }}
+        set_variable = { which = iicso_orbital_dark_matter value = 1 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_dark_matter_deposit_2 }}
+        set_variable = { which = iicso_orbital_dark_matter value = 2 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_dark_matter_deposit_3 }}
+        set_variable = { which = iicso_orbital_dark_matter value = 3 }
+    }
+
+    
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_living_metal_deposit }}
+        set_variable = { which = iicso_orbital_living_metal value = 1 }
+    }
+}
+
+
+#THIS = country
+remove_mining_station_income = {
+    every_mining_station = {
+        #log = "removing [THIS.orbit.iicso_orbital_minerals] minerals from empire total"
+        set_variable = { which = iicso_orbital_minerals value = orbit }
+        set_variable = { which = iicso_orbital_alloys value = orbit }
+        set_variable = { which = iicso_orbital_exotic_gases value = orbit }
+        set_variable = { which = iicso_orbital_rare_crystals value = orbit }
+        set_variable = { which = iicso_orbital_volatile_motes value = orbit }
+        set_variable = { which = iicso_orbital_zro value = orbit }
+        set_variable = { which = iicso_orbital_dark_matter value = orbit }
+        set_variable = { which = iicso_orbital_living_metal value = orbit }
+
+        while = {
+            count = iicso_orbital_minerals
+            owner = { add_resource = { minerals = -1 }}
+            orbit = {
+                change_variable = { which = iicso_stockpile_minerals value = 1 }
+            }
+        }
+        set_variable = { which = iicso_orbital_minerals value = 0 }
+        while = {
+            count = iicso_orbital_alloys
+            owner = { add_resource = { alloys = -1 }}
+            orbit = {
+                change_variable = { which = iicso_stockpile_alloys value = 1 }
+            }
+        }
+        set_variable = { which = iicso_orbital_alloys value = 0 }
+        while = {
+            count = iicso_orbital_exotic_gases
+            owner = { add_resource = { exotic_gases = -1 }}
+            orbit = {
+                change_variable = { which = iicso_stockpile_exotic_gases value = 1 }
+            }
+        }
+        set_variable = { which = iicso_orbital_exotic_gases value = 0 }
+        while = {
+            count = iicso_orbital_rare_crystals
+            owner = { add_resource = { rare_crystals = -1 }}
+            orbit = {
+                change_variable = { which = iicso_stockpile_rare_crystals value = 1 }
+            }
+        }
+        set_variable = { which = iicso_orbital_rare_crystals value = 0 }
+        while = {
+            count = iicso_orbital_volatile_motes
+            owner = { add_resource = { volatile_motes = -1 }}
+            orbit = {
+                change_variable = { which = iicso_stockpile_volatile_motes value = 1 }
+            }
+        }
+        set_variable = { which = iicso_orbital_volatile_motes value = 0 }
+        while = {
+            count = iicso_orbital_zro
+            owner = { add_resource = { sr_zro = -1 }}
+            orbit = {
+                change_variable = { which = iicso_stockpile_zro value = 1 }
+            }
+        }
+        set_variable = { which = iicso_orbital_zro value = 0 }
+        while = {
+            count = iicso_orbital_dark_matter
+            owner = { add_resource = { sr_dark_matter = -1 }}
+            orbit = {
+                change_variable = { which = iicso_stockpile_dark_matter value = 1 }
+            }
+        }
+        set_variable = { which = iicso_orbital_dark_matter value = 0 }
+        while = {
+            count = iicso_orbital_living_metal
+            owner = { add_resource = { sr_living_metal = -1 }}
+            orbit = {
+                change_variable = { which = iicso_stockpile_living_metal value = 1 }
+            }
+        }
+        set_variable = { which = iicso_orbital_living_metal value = 0 }
+    }
+}
+
+#THIS = country
+remove_starbase_income = {
+    every_owned_starbase = {
+        if = {
+            limit = { has_starbase_building = hydroponics_bay }
+            owner = { add_resource = { food = -3 }}
+            solar_system = {
+                random_system_planet = {
+                    limit = { is_primary_star = yes }
+                    change_variable = { which = iicso_stockpile_food value = 3 }
+                }
+            }
+        }
+        if = {
+            limit = { has_starbase_building = nebula_refinery }
+            owner = { add_resource = { minerals = -6 }}
+            solar_system = {
+                random_system_planet = {
+                    limit = { is_primary_star = yes }
+                    change_variable = { which = iicso_stockpile_minerals value = 6 }
+                }
+            }
+        }
     }
 }

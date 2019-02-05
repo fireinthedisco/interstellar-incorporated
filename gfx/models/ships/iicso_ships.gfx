@@ -56,8 +56,8 @@ objectTypes = {
 	}
 	
 	pdxmesh = {
-		name = "cargo_transport_mixed_mesh"
-		file = "gfx/models/ships/cargo_transport_mixed.mesh"
+		name = "cargo_transport_mixed_containers_wide_mesh"
+		file = "gfx/models/ships/cargo_transport_mixed_containers_wide.mesh"
 		
 		meshsettings = {
 			shader = "PdxMeshShip"
@@ -70,8 +70,8 @@ objectTypes = {
 	}
 	
 	pdxmesh = {
-		name = "cargo_transport_mixed_wide_mesh"
-		file = "gfx/models/ships/cargo_transport_mixed_wide.mesh"
+		name = "cargo_transport_mixed_containers_half_mesh"
+		file = "gfx/models/ships/cargo_transport_mixed_containers_half.mesh"
 		
 		meshsettings = {
 			shader = "PdxMeshShip"
@@ -84,8 +84,22 @@ objectTypes = {
 	}
 	
 	pdxmesh = {
-		name = "cargo_transport_mixed_half_mesh"
-		file = "gfx/models/ships/cargo_transport_mixed_half.mesh"
+		name = "cargo_transport_mixed_tanks_wide_mesh"
+		file = "gfx/models/ships/cargo_transport_mixed_tanks_wide.mesh"
+		
+		meshsettings = {
+			shader = "PdxMeshShip"
+			texture_diffuse = "cargo_transport_diffuse.dds"
+			texture_specular = "cargo_transport_specular.dds"
+			texture_normal = "cargo_transport_normal.dds"
+		}
+		
+		scale = 1.0
+	}
+	
+	pdxmesh = {
+		name = "cargo_transport_mixed_tanks_half_mesh"
+		file = "gfx/models/ships/cargo_transport_mixed_tanks_half.mesh"
 		
 		meshsettings = {
 			shader = "PdxMeshShip"

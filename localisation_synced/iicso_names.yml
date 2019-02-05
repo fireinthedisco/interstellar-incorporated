@@ -3,5 +3,5 @@
  station_freighter_fleet: "[PREV.GetName] Station Freight"
  system_freighter_fleet: "[PREV.GetName] System Freight"
  hub_freighter_fleet: "[PREV.GetName] Hub Freight"
- intercolonial_freighter_fleet: "[THIS.GetName]-[THIS.owner.capital_scope.GetName] Intercolonial Freight"
+ colony_freighter_fleet: "[PREV.GetName]-[PREV.owner.capital_scope.GetName] Intercolonial Freight"
  migration_fleet: "[PREVPREVPREV.GetSpeciesAdj] Migrant Fleet"

@@ -72,17 +72,17 @@ can_mine_planet = {
 
 has_sufficient_stockpile = {
     OR = {
-        check_variable = { which = iicso_stockpile_minerals value >= @half_ship_cargo_capacity }
-        check_variable = { which = iicso_stockpile_alloys value >= @half_ship_cargo_capacity }
-        check_variable = { which = iicso_stockpile_exotic_gases value >= @half_ship_cargo_capacity }
-        check_variable = { which = iicso_stockpile_rare_crystals value >= @half_ship_cargo_capacity }
-        check_variable = { which = iicso_stockpile_volatile_motes value >= @half_ship_cargo_capacity }
-        check_variable = { which = iicso_stockpile_zro value >= @half_ship_cargo_capacity }
-        check_variable = { which = iicso_stockpile_dark_matter value >= @half_ship_cargo_capacity }
-        check_variable = { which = iicso_stockpile_living_metal value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_minerals value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_alloys value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_exotic_gases value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_rare_crystals value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_volatile_motes value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_zro value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_dark_matter value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_living_metal value >= @min_small_cargo_capacity }
 
-        check_variable = { which = iicso_stockpile_food value >= @half_ship_cargo_capacity }
-        check_variable = { which = iicso_stockpile_consumer_goods value >= @half_ship_cargo_capacity }
+        check_variable = { which = iicso_stockpile_food value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_consumer_goods value >= @min_small_cargo_capacity }
     }
 }
 
@@ -100,5 +100,24 @@ has_stockpile = {
         check_variable = { which = iicso_stockpile_food value > 0 }
         check_variable = { which = iicso_stockpile_consumer_goods value > 0 }
     }
+}
 
+is_tanker_type = {
+    OR = {
+        has_fleet_flag = exotic_gases_ship
+        has_fleet_flag = volatile_motes_ship
+        has_fleet_flag = zro_ship
+        has_fleet_flag = dark_matter_ship
+        has_fleet_flag = living_metal_ship
+    }
+}
+
+is_container_type = {
+    OR = {
+        has_fleet_flag = minerals_ship
+        has_fleet_flag = alloys_ship
+        has_fleet_flag = rare_crystals_ship
+        has_fleet_flag = consumer_goods_ship
+        has_fleet_flag = food_ship
+    }
 }

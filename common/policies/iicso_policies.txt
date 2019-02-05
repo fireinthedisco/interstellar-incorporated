@@ -232,20 +232,6 @@ civilian_armament = {
 		modifier = {
 			planet_stability_add = -5
 		}
-
-		on_enabled = {
-			random_country = {
-				limit = { has_country_flag = civ_faction_of@PREV }
-				add_modifier = { modifier = unrestricted_armament_double_suppression days = -1 }
-			}
-		}
-
-		on_disabled = {
-			random_country = {
-				limit = { has_country_flag = civ_faction_of@PREV }
-				remove_modifier = unrestricted_armament_double_suppression
-			}
-		}
 		
 		AI_weight = {
 			modifier = {
@@ -303,19 +289,6 @@ civilian_armament = {
 			planet_stability_add = 5
 		}
 
-		on_enabled = {
-			random_country = {
-				limit = { has_country_flag = civ_faction_of@PREV }
-				add_modifier = { modifier = banned_armament_no_suppression days = -1 }
-			}
-		}
-
-		on_disabled = {
-			random_country = {
-				limit = { has_country_flag = civ_faction_of@PREV }
-				remove_modifier = banned_armament_no_suppression
-			}
-		}
 		
 		AI_weight = {
 			modifier = {

@@ -15,6 +15,8 @@ event = {
                 }
             }
             every_owned_planet = {
+                limit = { NOT = { is_capital = yes }}
+                
                 set_variable = { which = planet_minerals_output value = 0 }
                 set_variable = { which = planet_alloys_output value = 0 }
                 set_variable = { which = planet_exotic_gases_output value = 0 }
@@ -5769,7 +5771,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { minerals = 1 }}
                         change_variable = { which = planet_minerals_owed value = 1 }
-                        change_variable = { which = planet_minerals_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_minerals value = -1 }
                     }
                 } else = {
                     while = {
@@ -5777,7 +5779,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { minerals = -1 }}
                         change_variable = { which = planet_minerals_owed value = -1 }
-                        change_variable = { which = planet_minerals_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_minerals value = 1 }
                     }
                 }
 
@@ -5789,7 +5791,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { alloys = 1 }}
                         change_variable = { which = planet_alloys_owed value = 1 }
-                        change_variable = { which = planet_alloys_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_alloys value = -1 }
                     }
                 } else = {
                     while = {
@@ -5797,7 +5799,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { alloys = -1 }}
                         change_variable = { which = planet_alloys_owed value = -1 }
-                        change_variable = { which = planet_alloys_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_alloys value = 1 }
                     }
                 }
 
@@ -5809,7 +5811,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { exotic_gases = 1 }}
                         change_variable = { which = planet_exotic_gases_owed value = 1 }
-                        change_variable = { which = planet_exotic_gases_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_exotic_gases value = -1 }
                     }
                 } else = {
                     while = {
@@ -5817,7 +5819,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { exotic_gases = -1 }}
                         change_variable = { which = planet_exotic_gases_owed value = -1 }
-                        change_variable = { which = planet_exotic_gases_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_exotic_gases value = 1 }
                     }
                 }
 
@@ -5829,7 +5831,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { rare_crystals = 1 }}
                         change_variable = { which = planet_rare_crystals_owed value = 1 }
-                        change_variable = { which = planet_rare_crystals_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_rare_crystals value = -1 }
                     }
                 } else = {
                     while = {
@@ -5837,7 +5839,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { rare_crystals = -1 }}
                         change_variable = { which = planet_rare_crystals_owed value = -1 }
-                        change_variable = { which = planet_rare_crystals_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_rare_crystals value = 1 }
                     }
                 }
 
@@ -5849,7 +5851,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { volatile_motes = 1 }}
                         change_variable = { which = planet_volatile_motes_owed value = 1 }
-                        change_variable = { which = planet_volatile_motes_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_volatile_motes value = -1 }
                     }
                 } else = {
                     while = {
@@ -5857,7 +5859,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { volatile_motes = -1 }}
                         change_variable = { which = planet_volatile_motes_owed value = -1 }
-                        change_variable = { which = planet_volatile_motes_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_volatile_motes value = 1 }
                     }
                 }
 
@@ -5869,7 +5871,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { sr_zro = 1 }}
                         change_variable = { which = planet_zro_owed value = 1 }
-                        change_variable = { which = planet_zro_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_zro value = -1 }
                     }
                 } else = {
                     while = {
@@ -5877,7 +5879,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { sr_zro = -1 }}
                         change_variable = { which = planet_zro_owed value = -1 }
-                        change_variable = { which = planet_zro_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_zro value = 1 }
                     }
                 }
 
@@ -5889,7 +5891,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { sr_dark_matter = 1 }}
                         change_variable = { which = planet_dark_matter_owed value = 1 }
-                        change_variable = { which = planet_dark_matter_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_dark_matter value = -1 }
                     }
                 } else = {
                     while = {
@@ -5897,27 +5899,27 @@ event = {
                         count = 1000
                         owner = { add_resource = { sr_dark_matter = -1 }}
                         change_variable = { which = planet_dark_matter_owed value = -1 }
-                        change_variable = { which = planet_dark_matter_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_dark_matter value = 1 }
                     }
                 }
 
                 
                 if = {
-                    limit = { check_variable = { which = planet_living_metals_owed value < 0 }}
+                    limit = { check_variable = { which = planet_living_metal_owed value < 0 }}
                     while = {
-                        limit = { check_variable = { which = planet_living_metals_owed value < 0 }}
+                        limit = { check_variable = { which = planet_living_metal_owed value < 0 }}
                         count = 1000
                         owner = { add_resource = { sr_living_metal = 1 }}
-                        change_variable = { which = planet_living_metals_owed value = 1 }
-                        change_variable = { which = planet_living_metals_stockpile value = -1 }
+                        change_variable = { which = planet_living_metal_owed value = 1 }
+                        change_variable = { which = iicso_stockpile_living_metal value = -1 }
                     }
                 } else = {
                     while = {
-                        limit = { check_variable = { which = planet_living_metals_owed value > 0 }}
+                        limit = { check_variable = { which = planet_living_metal_owed value > 0 }}
                         count = 1000
                         owner = { add_resource = { sr_living_metal = -1 }}
-                        change_variable = { which = planet_living_metals_owed value = -1 }
-                        change_variable = { which = planet_living_metals_stockpile value = 1 }
+                        change_variable = { which = planet_living_metal_owed value = -1 }
+                        change_variable = { which = iicso_stockpile_living_metal value = 1 }
                     }
                 }
 
@@ -5929,7 +5931,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { food = 1 }}
                         change_variable = { which = planet_food_owed value = 1 }
-                        change_variable = { which = planet_food_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_food value = -1 }
                     }
                 } else = {
                     while = {
@@ -5937,7 +5939,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { food = -1 }}
                         change_variable = { which = planet_food_owed value = -1 }
-                        change_variable = { which = planet_food_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_food value = 1 }
                     }
                 }
 
@@ -5949,7 +5951,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { consumer_goods = 1 }}
                         change_variable = { which = planet_consumer_goods_owed value = 1 }
-                        change_variable = { which = planet_consumer_goods_stockpile value = -1 }
+                        change_variable = { which = iicso_stockpile_consumer_goods value = -1 }
                     }
                 } else = {
                     while = {
@@ -5957,7 +5959,7 @@ event = {
                         count = 1000
                         owner = { add_resource = { consumer_goods = -1 }}
                         change_variable = { which = planet_consumer_goods_owed value = -1 }
-                        change_variable = { which = planet_consumer_goods_stockpile value = 1 }
+                        change_variable = { which = iicso_stockpile_consumer_goods value = 1 }
                     }
                 }
 
