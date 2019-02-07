@@ -2,12 +2,11 @@ deposit_cargo_at_colony = {
     FROM = {
         if = {
             limit = {
-                any_system = {
-                    any_system_planet = {
-                        FROM = { has_fleet_flag = enroute_to_capital@PREV }
-                        any_country = {
-                            has_country_flag = civ_faction@FROM.owner
-                            capital_scope = { is_same_value = PREVPREV }
+                owner = {
+                    any_country = {
+                        has_country_flag = civ_faction@PREV
+                        capital_scope = {
+                            PREVPREVPREV = { has_fleet_flag = enroute_to_capital@PREV }
                         }
                     }
                 }
