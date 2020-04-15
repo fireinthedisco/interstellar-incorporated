@@ -12,9 +12,9 @@ on_monthly_pulse = {
 		iicso.100
 		iicso.102
 		iicso.200
-		iicso.404
-		iicso.406
-		iicso.1000
+		#iicso.404
+		#iicso.406
+		#iicso.1000
 		#iicso.600
 		#iicso.6000
 	}
@@ -24,7 +24,7 @@ on_monthly_pulse = {
 on_yearly_pulse = {
 	events = {
 		iicso.121 #gate
-		iicso.400
+		#iicso.400
 	}
 }
 
@@ -42,7 +42,7 @@ on_post_communications_established = {
 # Only works if clear auto move on arrival is enabled
 on_fleet_auto_move_arrival = {
 	events = {
-		iicso.403
+		#iicso.403
 		#iicso.502
 		#iicso.602
 		#iicso.701
@@ -54,7 +54,7 @@ on_fleet_auto_move_arrival = {
 # FROM = Former Owner (Country)
 on_starbase_transfer = {
 	events = {
-		iicso.420
+		#iicso.420
 		#iicso.520
 		iicso.112
 	}
@@ -139,7 +139,7 @@ on_war_ended = {
 # From = System
 on_entering_system_fleet = {
 	events = {
-		iicso.503 #civilians recheck closest valid destination colony
+		#iicso.503 #civilians recheck closest valid destination colony
 		#civilian ships flee if enemies present
 	}
 }

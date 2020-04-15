@@ -4,6 +4,7 @@ namespace = iicso
 #########################################################
 ############### 1xx. Resource Management ################
 #########################################################
+#called on game start, on monthly pulse (for games started in progress)
 event = {
     id = iicso.100
     is_triggered_only = yes
@@ -22,7 +23,7 @@ event = {
 
             if = { #immediately set up all planets inside of empires
                 limit = { solar_system = { exists = space_owner }}
-                set_planet_flag = initialsetup_ownedsystem
+                set_planet_flag = iicso_initialsetup_ownedsystem
                 planet_event = {
                     id = iicso.101
                     days = 1
@@ -60,6 +61,7 @@ event = {
 }
 
 #determines number of resources on each planet; called again every year
+#called from iicso.100, calls itself
 planet_event = {
     id = iicso.101
     is_triggered_only = yes
@@ -73,8 +75,8 @@ planet_event = {
         #log = "planet [THIS.GetName] has [THIS.iicso_orbital_minerals] minerals"
 
         if = {
-            limit = { has_planet_flag = initialsetup_ownedsystem }
-            remove_planet_flag = initialsetup_ownedsystem
+            limit = { has_planet_flag = iicso_initialsetup_ownedsystem }
+            remove_planet_flag = iicso_initialsetup_ownedsystem
             planet_event = {
                 id = iicso.101
                 days = 1
@@ -91,6 +93,7 @@ planet_event = {
 }
 
 #removes mined resources from empire total, stores it in station stockpile
+#on monthly pulse
 event = {
     id = iicso.102
     is_triggered_only = yes
@@ -188,6 +191,7 @@ country_event = {
 }
 
 #when colonies are created or change hands, relevant empires recalculate closest colonies for all of their systems
+#called on colonized, on planet transfer, on colony destroyed
 planet_event = {
     id = iicso.110
     is_triggered_only = yes
@@ -244,7 +248,7 @@ planet_event = {
         }
         if = {
             limit = { exists = event_target:prev_owner }
-            event_target:colony_owner = {
+            event_target:prev_owner = {
                 every_system = {
                     limit = {
                         any_system = {
@@ -271,6 +275,7 @@ planet_event = {
     }
 }
 
+#called from iicso.100, iicso.110, iicso.112
 #calculates closest colony for given system
 planet_event = {
     id = iicso.111
@@ -329,6 +334,7 @@ planet_event = {
 }
 
 #called on starbase transfer or starbase being built, triggers 111 to calculate closest colony for system
+#THIS is either the starbase or construction ship, depending on how it was triggered
 ship_event = {
     id = iicso.112
     is_triggered_only = yes
@@ -395,6 +401,7 @@ event = {
     immediate = {
         #log = "yearly pulse gate event triggered"
         #quarterly events
+        
         #station freighter running
         random_country = {
             limit = { is_country_type = global_event }
@@ -415,6 +422,7 @@ event = {
 #########################################################
 
 #spawns civilian trader faction for each empire
+#called on game start, on monthly pulse
 event = {
     id = iicso.200
     is_triggered_only = yes
@@ -446,45 +454,21 @@ event = {
                     set_country_flag = avoiding_first_contact
                 }
 
-                if = {
-                    limit = {
-                        is_synthetic_empire = yes
-                    }
-                    create_country = {
-                        name = "[THIS.GetAdj] Autonomous Transports"
-                        type = civilian_economy
-                        auto_delete = no
-        
-                        flag = THIS
-                        name_list = THIS
-                        species = THIS
-                    }
+                create_country = {
+                    name = random
+                    type = iicso_civilian_country
+                    ignore_initial_colony_error = yes
+                    auto_delete = no
+
+                    authority = THIS
+                    civics = THIS
+                    ethos = THIS
+    
+                    flag = THIS
+                    name_list = THIS
+                    species = THIS
                 }
-                else_if = {
-                    limit = {
-                        has_authority = auth_hive_mind
-                    }
-                    create_country = {
-                        name = "[THIS.GetAdj] Carrier Drones"
-                        type = civilian_economy
-                        auto_delete = no
-        
-                        flag = THIS
-                        name_list = THIS
-                        species = THIS
-                    }
-                }
-                else = {
-                    create_country = {
-                        name = "[THIS.GetAdj] Civilian Vessels"
-                        type = civilian_economy
-                        auto_delete = no
-        
-                        flag = THIS
-                        name_list = THIS
-                        species = THIS
-                    }
-                }
+                
                 establish_communications_no_message = last_created_country
                 set_country_flag = civ_faction@last_created_country
 
@@ -492,13 +476,14 @@ event = {
                     #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
                     set_subject_of = {
                         who = PREV
-                        subject_type = civilian_interstellar_inc
+                        subject_type = iicso_civilian_subject
                     }
                     set_country_flag = iicso_civilian_country
                     set_country_flag = civ_faction_of@PREV
                     copy_techs_from = { target = PREV }
                     #log = "[THIS.GetName] is economy vassal of [PREV.GetName]"
 
+                    #share comms with every country who already has comms with parent country
                     every_country = {
                         limit = {
                             OR = {
@@ -510,6 +495,8 @@ event = {
                             NOT = { has_country_flag = civ_faction@PREV }
                         }
                         establish_communications_no_message = PREV
+
+                        #only be hostile to civs if hostile to all, or at war with parent and hostile to enemy civs
                         if = {
                             limit = {
                                 OR = {
@@ -559,7 +546,7 @@ event = {
                     PREV = {
                         set_subject_of = {
                             who = PREV
-                            subject_type = civilian_interstellar_inc
+                            subject_type = iicso_civilian_subject
                         }
                     }
                 }
@@ -605,7 +592,8 @@ country_event = {
     }
 }
 
-#sets country with appropriate policy hostile to enemy civilians on war start 
+#sets country with appropriate policy hostile to enemy civilians on war start
+#called from on war beginning, on war entered
 country_event = {
     id = iicso.210
     is_triggered_only = yes
@@ -629,6 +617,7 @@ country_event = {
 }
 
 #on war end sets countries with appropriate policy back to neutral with former enemy civilian factions
+#does this even work??
 country_event = {
     id = iicso.211
     is_triggered_only = yes
@@ -690,24 +679,26 @@ country_event = {
 }
 
 #needs to trigger event after war has cleared out
-country_event = {
-    id= iicso.212
-    is_triggered_only = yes
-    hide_window = yes
+#???
+# country_event = {
+#     id= iicso.212
+#     is_triggered_only = yes
+#     hide_window = yes
 
-    immediate = {
-        country_event = {
-            id = iicso.211
-            days = 5
-        }
-    }
-}
+#     immediate = {
+#         country_event = {
+#             id = iicso.211
+#             days = 5
+#         }
+#     }
+# }
 
 #########################################################
 ############# 4xx. Autonomous Miner Events ##############
 #########################################################
 
 #spawns autonomous miners that mine bodies with no station
+#called on yearly pulse
 event = {
     id = iicso.400
     is_triggered_only = yes
@@ -733,6 +724,7 @@ event = {
     }
 }
 
+#called from iicso.400
 planet_event = {
     id = iicso.401
     is_triggered_only = yes
@@ -797,7 +789,8 @@ planet_event = {
     }
 }
 
-#called by other autonomous miner events; miner decides which body to go mine
+#miner decides which body to go mine
+#called from iicso.401, iicso.403, iicso.406, effect deposit_cargo_at_colony
 fleet_event = {
     id = iicso.402
     is_triggered_only = yes
@@ -884,7 +877,8 @@ country_event = {
     }
 }
 
-#adds cargo to autonomous miners, sends them back to colony when full; triggered by on_monthly_pulse
+#adds cargo to autonomous miners, sends them back to colony when full
+#called by on_monthly_pulse
 event = {
     id = iicso.404
     is_triggered_only = yes
@@ -960,6 +954,7 @@ event = {
 
 
 #rerelays current destination in case ship ends up idle (runs for miners & freighters)
+#called by on monthly pulse
 event = {
     id = iicso.406
     is_triggered_only = yes
@@ -1063,7 +1058,8 @@ event = {
 }
 
 
-#called by on_starbase_transfer; reassigns miner to new colony; THIS = starbase ship scope, FROM = former owner
+#called by on_starbase_transfer
+#reassigns miner to new colony; THIS = starbase ship scope, FROM = former owner
 ship_event = {
     id = iicso.420
     is_triggered_only = yes

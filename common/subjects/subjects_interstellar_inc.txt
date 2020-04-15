@@ -1,4 +1,4 @@
-civilian_interstellar_inc = {
+iicso_civilian_subject = {
     can_expand = no
     can_be_integrated = no
 

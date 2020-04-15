@@ -16,8 +16,10 @@ blockade = {
 
 	planet_damage = 0
 	army_damage = 0	
-	
-	kill_pop_chance = 0
+
+	kill_pop_chance = {
+		base = 0
+	}
 	min_pops_to_kill_pop = 0
 	
 	# root = fleet

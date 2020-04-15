@@ -1,12 +1,13 @@
 namespace = iicso
 
+#called by yearly pulse gate event (semi-annually)
 country_event = {
     id = iicso.500
     is_triggered_only = yes
     hide_window = yes
 
     immediate = {
-        #log = "iicso.500 triggered, sending event to mining stations"
+        log = "iicso.500 triggered, sending event to mining stations"
         every_planet = {
             limit = {
                 NOT = { has_planet_flag = running_freighters }
@@ -35,6 +36,7 @@ country_event = {
     }
 }
 
+#called by iicso.500, calls itself
 planet_event = {
     id = iicso.501
     is_triggered_only = yes
@@ -159,6 +161,7 @@ planet_event = {
     }
 }
 
+#called by iicso.501, fleet auto move arrival (deactivated)
 fleet_event = {
     id = iicso.502
     is_triggered_only = yes
@@ -231,6 +234,7 @@ fleet_event = {
     }
 }
 
+#called by iicso.501, on entering system fleet
 fleet_event = {
     id = iicso.503
     is_triggered_only = yes
@@ -462,6 +466,7 @@ fleet_event = {
     }
 }
 
+#called by effect deposit_cargo_at_colony
 fleet_event = {
     id = iicso.504
     is_triggered_only = yes

@@ -1,7 +1,7 @@
-civilian_economy = {
+iicso_civilian_country = {
     playable = no
 	show_in_contacts_list = yes
-    government = no
+    government = yes
 	sub_title = "Civilian"
 	needs_survey = yes
 	share_survey_data = no
@@ -26,7 +26,7 @@ civilian_economy = {
 	}
 }
 
-civilian_corporation = {
+iicso_corporation_country = {
     playable = no
 	show_in_contacts_list = no
     government = no
@@ -57,20 +57,20 @@ civilian_corporation = {
     }
 }
 
-pop_dummy = {
-	playable = no
-	show_in_contacts_list = yes
-	government = no
-	ai = {
-		enabled = no
-	}
-	faction = {
-		neutral = yes
-		hostile = no
-		generate_borders = no
-		needs_colony = no
-		auto_delete = no
-	}
-	modules = {
-	}
-}
+# pop_dummy = {
+# 	playable = no
+# 	show_in_contacts_list = yes
+# 	government = no
+# 	ai = {
+# 		enabled = no
+# 	}
+# 	faction = {
+# 		neutral = yes
+# 		hostile = no
+# 		generate_borders = no
+# 		needs_colony = no
+# 		auto_delete = no
+# 	}
+# 	modules = {
+# 	}
+# }

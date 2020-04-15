@@ -1,0 +1,27 @@
+# Find out if iicso.211 works whatsoever - supposed to fix hostilities towards civ factions after war end
+
+
+# Dynamic generation:
+
+# 	scripted_effects\iicso_effects.txt
+# 		set_planet_resources
+# 			Deposit types
+# 		remove_mining_station_income
+# 			Detected resources/deposit types
+# 		remove_starbase_income
+# 			Detected buildings/reources
+
+# 	scripted_triggers\iicso_triggers.txt
+# 		has_stockpile
+# 			Detected resources/deposit types
+# 		has_sufficient_stockpile
+# 			Detected resources
+
+
+# Added markers, objects:
+# 	global_flag iicso_active
+# 	planet_flag iicso_initialsetup_ownedsystem
+# 	planet_flag iicso_resources_set
+# 	planet stockpile flags
+# 	civ countries with iicso_civilian_country flags
+# 	country_flag civilian_faction@<civ country> on regular empires
