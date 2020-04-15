@@ -1,0 +1,15 @@
+iicso_civilian_gov = {
+	possible = {}							# Determines if a government name can be chosen. AND trigger, scope: country; valid triggers: has_ethic, has_authority, has_valid_civic; everything else is undefined behavior!
+	weight = {								# scriptable value, scope: country; the (possible) government type with the biggest weight is assigned to the country
+        base = 0
+        modifier = {
+            add = 10000
+            is_country_type = iicso_civilian_country
+        }
+	}
+
+	ruler_title = RT_KING					# translation tag for male ruler's title
+	ruler_title_female = RT_QUEEN			# translation tag for female ruler's title
+	heir_title = HT_CROWN_PRINCE			# translation tag for male heir's title
+    heir_title_female = HT_CROWN_PRINCESS	# translation tag for female heir's title
+}

@@ -34,7 +34,7 @@ empire_name_format = {
 	random_weight = {
 		factor = 0
 		modifier = {
-			add = 100
+			add = 1000
 			is_country_type = iicso_civilian_country
 			has_authority = auth_hive_mind
 		}
@@ -48,7 +48,7 @@ empire_name_format = {
 	random_weight = {
 		factor = 0
 		modifier = {
-			add = 100
+			add = 1000
 			is_country_type = iicso_civilian_country
 			is_synthetic_empire = yes
 		}
@@ -62,7 +62,7 @@ empire_name_format = {
 	random_weight = {
 		factor = 0
 		modifier = {
-			add = 100
+			add = 1000
 			is_country_type = iicso_civilian_country
 			NOR = {
 				is_synthetic_empire = yes

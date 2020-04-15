@@ -21,10 +21,10 @@ country_event = {
                         has_stockpile = yes
                         solar_system = { exists = starbase }
                     }
-                    AND = {
-                        is_colony = yes
-                        NOT = { is_capital = yes }
-                    }
+                    # AND = {
+                    #     is_colony = yes
+                    #     NOT = { is_capital = yes }
+                    # }
                 }
             }
             planet_event = {
@@ -43,7 +43,7 @@ planet_event = {
     hide_window = yes
 
     immediate = {
-        #log = "system freighters triggered at [THIS.GetName] for empire [THIS.solar_system.space_owner.GetName]"
+        log = "system freighters triggered at [THIS.GetName] for empire [THIS.solar_system.space_owner.GetName]"
         if = {
             limit = {
                 OR = {

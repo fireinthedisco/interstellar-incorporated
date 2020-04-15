@@ -63,8 +63,8 @@ IICSO_CIVILIAN_BEHAVIOR_DESC:0 "This ship is unarmed or poorly armed and will at
 bombardment_blockade:0 "Blockade"
 bombardment_blockade_desc:1 "The planet will not be bombarded or attacked, but our ships will form an orbital blockade, disallowing all civilian traffic on or offworld."
 
-SUBJECT_iicso_civilian_subject:0 "Civilian subject"
-SUBJECT_DESC_iicso_civilian_subject:1 "Civilian subject nation"
+iicso_civilian_gov:0 "Civilian Vessels"
+iicso_civilian_gov_desc:1 "The civilian component of another nation."
 
 policy_civilian_hostility:0 "Civilian Hostility Policy"
 policy_civilian_hostility_desc:0 "We should decide what our policy will be when dealing with the civilian starships of other empires.\n"
