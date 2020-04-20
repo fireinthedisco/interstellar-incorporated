@@ -1,8 +1,8 @@
-@large_cargo_capacity = 60
-@min_large_cargo_capacity = 40
+@large_cargo_capacity = 120
+@min_large_cargo_capacity = 90
 
-@medium_cargo_capacity = 30
-@min_medium_cargo_capacity = 20
+@medium_cargo_capacity = 60
+@min_medium_cargo_capacity = 40
 
-@small_cargo_capacity = 15
-@min_small_cargo_capacity = 7
+@small_cargo_capacity = 30
+@min_small_cargo_capacity = 20

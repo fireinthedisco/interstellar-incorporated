@@ -1,146 +1,147 @@
+#called in auto move arrival effects
+#THIS is fleet, FROM is planet
 deposit_cargo_at_colony = {
-    FROM = {
-        if = {
-            limit = {
-                owner = {
-                    any_country = {
-                        has_country_flag = civ_faction@PREV
-                        capital_scope = {
-                            PREVPREVPREV = { has_fleet_flag = enroute_to_capital@PREV }
-                        }
-                    }
-                }
-            }
-            while = {
-                count = cargo_minerals
-                FROMFROM = { owner = { add_resource = { minerals = 1 }}}
-            }
-            set_variable = { which = cargo_minerals value = 0 }
-            while = {
-                count = cargo_alloys
-                FROMFROM = { owner = { add_resource = { alloys = 1 }}}
-            }
-            set_variable = { which = cargo_alloys value = 0 }
-            while = {
-                count = cargo_exotic_gases
-                FROMFROM = { owner = { add_resource = { exotic_gases = 1 }}}
-            }
-            set_variable = { which = cargo_exotic_gases value = 0 }
-            while = {
-                count = cargo_rare_crystals
-                FROMFROM = { owner = { add_resource = { rare_crystals = 1 }}}
-            }
-            set_variable = { which = cargo_rare_crystals value = 0 }
-            while = {
-                count = cargo_volatile_motes
-                FROMFROM = { owner = { add_resource = { volatile_motes = 1 }}}
-            }
-            set_variable = { which = cargo_volatile_motes value = 0 }
-            while = {
-                count = cargo_zro
-                FROMFROM = { owner = { add_resource = { sr_zro = 1 }}}
-            }
-            set_variable = { which = cargo_zro value = 0 }
-            while = {
-                count = cargo_dark_matter
-                FROMFROM = { owner = { add_resource = { sr_dark_matter = 1 }}}
-            }
-            set_variable = { which = cargo_dark_matter value = 0 }
-            while = {
-                count = cargo_living_metal
-                FROMFROM = { owner = { add_resource = { sr_living_metal = 1 }}}
-            }
-            set_variable = { which = cargo_living_metal value = 0 }
-    
-            while = {
-                count = cargo_food
-                FROMFROM = { owner = { add_resource = { food = 1 }}}
-            }
-            set_variable = { which = cargo_food value = 0 }
-            while = {
-                count = cargo_consumer_goods
-                FROMFROM = { owner = { add_resource = { consumer_goods = 1 }}}
-            }
-            set_variable = { which = cargo_consumer_goods value = 0 }    
+    #log = "deposit_cargo_at_colony is called by [FROMFROM.owner.GetName]"
+    # if = {
+    #     limit = {
+    #         owner = {
+    #             any_country = {
+    #                 has_country_flag = civ_faction@PREV
+    #                 capital_scope = {
+    #                     PREVPREVPREV = { has_fleet_flag = enroute_to_capital@PREV }
+    #                 }
+    #             }
+    #         }
+    #     }
+        while = {
+            count = cargo_minerals
+            FROM = { owner = { add_resource = { minerals = 1 }}}
         }
-        else = {
-            while = {
-                count = cargo_minerals
-                FROMFROM = { change_variable = { which = iicso_stockpile_minerals value = 1 }}
-            }
-            set_variable = { which = cargo_minerals value = 0 }
-            while = {
-                count = cargo_alloys
-                FROMFROM = { change_variable = { which = iicso_stockpile_alloys value = 1 }}
-            }
-            set_variable = { which = cargo_alloys value = 0 }
-            while = {
-                count = cargo_exotic_gases
-                FROMFROM = { change_variable = { which = iicso_stockpile_exotic_gases value = 1 }}
-            }
-            set_variable = { which = cargo_exotic_gases value = 0 }
-            while = {
-                count = cargo_rare_crystals
-                FROMFROM = { change_variable = { which = iicso_stockpile_rare_crystals value = 1 }}
-            }
-            set_variable = { which = cargo_rare_crystals value = 0 }
-            while = {
-                count = cargo_volatile_motes
-                FROMFROM = { change_variable = { which = iicso_stockpile_volatile_motes value = 1 }}
-            }
-            set_variable = { which = cargo_volatile_motes value = 0 }
-            while = {
-                count = cargo_zro
-                FROMFROM = { change_variable = { which = iicso_stockpile_zro value = 1 }}
-            }
-            set_variable = { which = cargo_zro value = 0 }
-            while = {
-                count = cargo_dark_matter
-                FROMFROM = { change_variable = { which = iicso_stockpile_dark_matter value = 1 }}
-            }
-            set_variable = { which = cargo_dark_matter value = 0 }
-            while = {
-                count = cargo_living_metal
-                FROMFROM = { change_variable = { which = iicso_stockpile_living_metal value = 1 }}
-            }
-            set_variable = { which = cargo_living_metal value = 0 }
-    
-            while = {
-                count = cargo_food
-                FROMFROM = { change_variable = { which = iicso_stockpile_food value = 1 }}
-            }
-            set_variable = { which = cargo_food value = 0 }
-            while = {
-                count = cargo_consumer_goods
-                FROMFROM = { change_variable = { which = iicso_stockpile_consumer_goods value = 1 }}
-            }
-            set_variable = { which = cargo_consumer_goods value = 0 }
+        set_variable = { which = cargo_minerals value = 0 }
+        while = {
+            count = cargo_alloys
+            FROM = { owner = { add_resource = { alloys = 1 }}}
         }
-        remove_fleet_flag = enroute_to_home
-        if = {
-            limit = {
-                OR = {
-                    has_fleet_flag = kill_switch
-                    has_fleet_flag = station_freighter
-                    has_fleet_flag = system_freighter
-                    has_fleet_flag = hub_freighter
-                    has_fleet_flag = colony_freighter
-                }
-            }
-            fleet_event = {
-                id = iicso.504
-                days = 5
-                random = 10
+        set_variable = { which = cargo_alloys value = 0 }
+        while = {
+            count = cargo_exotic_gases
+            FROM = { owner = { add_resource = { exotic_gases = 1 }}}
+        }
+        set_variable = { which = cargo_exotic_gases value = 0 }
+        while = {
+            count = cargo_rare_crystals
+            FROM = { owner = { add_resource = { rare_crystals = 1 }}}
+        }
+        set_variable = { which = cargo_rare_crystals value = 0 }
+        while = {
+            count = cargo_volatile_motes
+            FROM = { owner = { add_resource = { volatile_motes = 1 }}}
+        }
+        set_variable = { which = cargo_volatile_motes value = 0 }
+        while = {
+            count = cargo_zro
+            FROM = { owner = { add_resource = { sr_zro = 1 }}}
+        }
+        set_variable = { which = cargo_zro value = 0 }
+        while = {
+            count = cargo_dark_matter
+            FROM = { owner = { add_resource = { sr_dark_matter = 1 }}}
+        }
+        set_variable = { which = cargo_dark_matter value = 0 }
+        while = {
+            count = cargo_living_metal
+            FROM = { owner = { add_resource = { sr_living_metal = 1 }}}
+        }
+        set_variable = { which = cargo_living_metal value = 0 }
+
+        while = {
+            count = cargo_food
+            FROM = { owner = { add_resource = { food = 1 }}}
+        }
+        set_variable = { which = cargo_food value = 0 }
+        while = {
+            count = cargo_consumer_goods
+            FROM = { owner = { add_resource = { consumer_goods = 1 }}}
+        }
+        set_variable = { which = cargo_consumer_goods value = 0 }    
+    #}
+    # else = {
+    #     while = {
+    #         count = cargo_minerals
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_minerals value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_minerals value = 0 }
+    #     while = {
+    #         count = cargo_alloys
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_alloys value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_alloys value = 0 }
+    #     while = {
+    #         count = cargo_exotic_gases
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_exotic_gases value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_exotic_gases value = 0 }
+    #     while = {
+    #         count = cargo_rare_crystals
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_rare_crystals value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_rare_crystals value = 0 }
+    #     while = {
+    #         count = cargo_volatile_motes
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_volatile_motes value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_volatile_motes value = 0 }
+    #     while = {
+    #         count = cargo_zro
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_zro value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_zro value = 0 }
+    #     while = {
+    #         count = cargo_dark_matter
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_dark_matter value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_dark_matter value = 0 }
+    #     while = {
+    #         count = cargo_living_metal
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_living_metal value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_living_metal value = 0 }
+
+    #     while = {
+    #         count = cargo_food
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_food value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_food value = 0 }
+    #     while = {
+    #         count = cargo_consumer_goods
+    #         FROMFROM = { change_variable = { which = iicso_stockpile_consumer_goods value = 1 }}
+    #     }
+    #     set_variable = { which = cargo_consumer_goods value = 0 }
+    # }
+    remove_fleet_flag = enroute_to_home
+    if = {
+        limit = {
+            OR = {
+                has_fleet_flag = kill_switch
+                has_fleet_flag = station_freighter
+                has_fleet_flag = system_freighter
+                has_fleet_flag = hub_freighter
+                has_fleet_flag = colony_freighter
             }
         }
-        else = {
-            fleet_event = {
-                id = iicso.402
-                days = 10
-                random = 10
-            }
+        fleet_event = {
+            id = iicso.504
+            days = 5
+            random = 10
         }
     }
+    # else = {
+    #     fleet_event = {
+    #         id = iicso.402
+    #         days = 10
+    #         random = 10
+    #     }
+    # }
 }
 
 calculate_empty_cargo = {
@@ -942,65 +943,63 @@ create_station_freighter_ships = {
 }
 
 deposit_cargo_at_starbase = {
-    FROM = {
-        while = {
-            count = cargo_minerals
-            FROMFROM = { change_variable = { which = iicso_stockpile_minerals value = 1 }}
-        }
-        set_variable = { which = cargo_minerals value = 0 }
-        while = {
-            count = cargo_alloys
-            FROMFROM = { change_variable = { which = iicso_stockpile_alloys value = 1 }}
-        }
-        set_variable = { which = cargo_alloys value = 0 }
-        while = {
-            count = cargo_exotic_gases
-            FROMFROM = { change_variable = { which = iicso_stockpile_exotic_gases value = 1 }}
-        }
-        set_variable = { which = cargo_exotic_gases value = 0 }
-        while = {
-            count = cargo_rare_crystals
-            FROMFROM = { change_variable = { which = iicso_stockpile_rare_crystals value = 1 }}
-        }
-        set_variable = { which = cargo_rare_crystals value = 0 }
-        while = {
-            count = cargo_volatile_motes
-            FROMFROM = { change_variable = { which = iicso_stockpile_volatile_motes value = 1 }}
-        }
-        set_variable = { which = cargo_volatile_motes value = 0 }
-        while = {
-            count = cargo_zro
-            FROMFROM = { change_variable = { which = iicso_stockpile_zro value = 1 }}
-        }
-        set_variable = { which = cargo_zro value = 0 }
-        while = {
-            count = cargo_dark_matter
-            FROMFROM = { change_variable = { which = iicso_stockpile_dark_matter value = 1 }}
-        }
-        set_variable = { which = cargo_dark_matter value = 0 }
-        while = {
-            count = cargo_living_metal
-            FROMFROM = { change_variable = { which = iicso_stockpile_living_metal value = 1 }}
-        }
-        set_variable = { which = cargo_living_metal value = 0 }
-        while = {
-            count = cargo_food
-            FROMFROM = { change_variable = { which = iicso_stockpile_food value = 1 }}
-        }
-        set_variable = { which = cargo_food value = 0 }
-        while = {
-            count = cargo_consumer_goods
-            FROMFROM = { change_variable = { which = iicso_stockpile_consumer_goods value = 1 }}
-        }
-        set_variable = { which = cargo_consumer_goods value = 0 }
-
-        # fleet_event = {
-        #     id = iicso.504
-        #     days = 5
-        #     random = 10
-        # }
-        delete_fleet = THIS
+    while = {
+        count = cargo_minerals
+        FROM = { change_variable = { which = iicso_stockpile_minerals value = 1 }}
     }
+    set_variable = { which = cargo_minerals value = 0 }
+    while = {
+        count = cargo_alloys
+        FROM = { change_variable = { which = iicso_stockpile_alloys value = 1 }}
+    }
+    set_variable = { which = cargo_alloys value = 0 }
+    while = {
+        count = cargo_exotic_gases
+        FROM = { change_variable = { which = iicso_stockpile_exotic_gases value = 1 }}
+    }
+    set_variable = { which = cargo_exotic_gases value = 0 }
+    while = {
+        count = cargo_rare_crystals
+        FROM = { change_variable = { which = iicso_stockpile_rare_crystals value = 1 }}
+    }
+    set_variable = { which = cargo_rare_crystals value = 0 }
+    while = {
+        count = cargo_volatile_motes
+        FROM = { change_variable = { which = iicso_stockpile_volatile_motes value = 1 }}
+    }
+    set_variable = { which = cargo_volatile_motes value = 0 }
+    while = {
+        count = cargo_zro
+        FROM = { change_variable = { which = iicso_stockpile_zro value = 1 }}
+    }
+    set_variable = { which = cargo_zro value = 0 }
+    while = {
+        count = cargo_dark_matter
+        FROM = { change_variable = { which = iicso_stockpile_dark_matter value = 1 }}
+    }
+    set_variable = { which = cargo_dark_matter value = 0 }
+    while = {
+        count = cargo_living_metal
+        FROM = { change_variable = { which = iicso_stockpile_living_metal value = 1 }}
+    }
+    set_variable = { which = cargo_living_metal value = 0 }
+    while = {
+        count = cargo_food
+        FROM = { change_variable = { which = iicso_stockpile_food value = 1 }}
+    }
+    set_variable = { which = cargo_food value = 0 }
+    while = {
+        count = cargo_consumer_goods
+        FROM = { change_variable = { which = iicso_stockpile_consumer_goods value = 1 }}
+    }
+    set_variable = { which = cargo_consumer_goods value = 0 }
+
+    # fleet_event = {
+    #     id = iicso.504
+    #     days = 5
+    #     random = 10
+    # }
+    delete_fleet = THIS
 }
 
 set_planet_resources = {
@@ -1169,83 +1168,30 @@ set_planet_resources = {
 }
 
 
+#THIS = mining_station
+remove_mining_station_income_resource = {
+    set_variable = { which = iicso_orbital_$RESOURCE$ value = orbit }
+    while = {
+        count = iicso_orbital_$RESOURCE$
+        owner = { add_resource = { $RESOURCE$ = -1 }}
+        orbit = {
+            change_variable = { which = iicso_stockpile_$RESOURCE$ value = 1 }
+        }
+    }
+}
+
 #THIS = country
 remove_mining_station_income = {
     every_mining_station = {
+        remove_mining_station_income_resource = { RESOURCE = minerals }
+        remove_mining_station_income_resource = { RESOURCE = alloys }
+        remove_mining_station_income_resource = { RESOURCE = exotic_gases }
+        remove_mining_station_income_resource = { RESOURCE = rare_crystals }
+        remove_mining_station_income_resource = { RESOURCE = volatile_motes }
+        remove_mining_station_income_resource = { RESOURCE = sr_zro }
+        remove_mining_station_income_resource = { RESOURCE = sr_dark_matter }
+        remove_mining_station_income_resource = { RESOURCE = sr_living_metal }
         #log = "removing [THIS.orbit.iicso_orbital_minerals] minerals from empire total"
-        set_variable = { which = iicso_orbital_minerals value = orbit }
-        set_variable = { which = iicso_orbital_alloys value = orbit }
-        set_variable = { which = iicso_orbital_exotic_gases value = orbit }
-        set_variable = { which = iicso_orbital_rare_crystals value = orbit }
-        set_variable = { which = iicso_orbital_volatile_motes value = orbit }
-        set_variable = { which = iicso_orbital_zro value = orbit }
-        set_variable = { which = iicso_orbital_dark_matter value = orbit }
-        set_variable = { which = iicso_orbital_living_metal value = orbit }
-
-        while = {
-            count = iicso_orbital_minerals
-            owner = { add_resource = { minerals = -1 }}
-            orbit = {
-                change_variable = { which = iicso_stockpile_minerals value = 1 }
-            }
-        }
-        set_variable = { which = iicso_orbital_minerals value = 0 }
-        while = {
-            count = iicso_orbital_alloys
-            owner = { add_resource = { alloys = -1 }}
-            orbit = {
-                change_variable = { which = iicso_stockpile_alloys value = 1 }
-            }
-        }
-        set_variable = { which = iicso_orbital_alloys value = 0 }
-        while = {
-            count = iicso_orbital_exotic_gases
-            owner = { add_resource = { exotic_gases = -1 }}
-            orbit = {
-                change_variable = { which = iicso_stockpile_exotic_gases value = 1 }
-            }
-        }
-        set_variable = { which = iicso_orbital_exotic_gases value = 0 }
-        while = {
-            count = iicso_orbital_rare_crystals
-            owner = { add_resource = { rare_crystals = -1 }}
-            orbit = {
-                change_variable = { which = iicso_stockpile_rare_crystals value = 1 }
-            }
-        }
-        set_variable = { which = iicso_orbital_rare_crystals value = 0 }
-        while = {
-            count = iicso_orbital_volatile_motes
-            owner = { add_resource = { volatile_motes = -1 }}
-            orbit = {
-                change_variable = { which = iicso_stockpile_volatile_motes value = 1 }
-            }
-        }
-        set_variable = { which = iicso_orbital_volatile_motes value = 0 }
-        while = {
-            count = iicso_orbital_zro
-            owner = { add_resource = { sr_zro = -1 }}
-            orbit = {
-                change_variable = { which = iicso_stockpile_zro value = 1 }
-            }
-        }
-        set_variable = { which = iicso_orbital_zro value = 0 }
-        while = {
-            count = iicso_orbital_dark_matter
-            owner = { add_resource = { sr_dark_matter = -1 }}
-            orbit = {
-                change_variable = { which = iicso_stockpile_dark_matter value = 1 }
-            }
-        }
-        set_variable = { which = iicso_orbital_dark_matter value = 0 }
-        while = {
-            count = iicso_orbital_living_metal
-            owner = { add_resource = { sr_living_metal = -1 }}
-            orbit = {
-                change_variable = { which = iicso_stockpile_living_metal value = 1 }
-            }
-        }
-        set_variable = { which = iicso_orbital_living_metal value = 0 }
     }
 }
 

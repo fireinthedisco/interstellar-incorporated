@@ -5,3 +5,4 @@
  hub_freighter_fleet: "[PREV.GetName] Hub Freight"
  colony_freighter_fleet: "[PREV.GetName] Intercolonial Freight"
  migration_fleet: "[PREVPREVPREV.GetSpeciesAdj] Migrant Fleet"
+ trader_fleet: "[ROOT.GetName] Trader Fleet"

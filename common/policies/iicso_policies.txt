@@ -318,3 +318,64 @@ civilian_armament = {
 		}
 	}
 }
+
+
+corporate_freedom = {
+
+	potential = {
+		is_country_type = default
+		NOT = { has_authority = auth_hive_mind }
+	}
+
+	allow = {
+		always = yes
+	}
+
+	option = {
+		name = "nationalized_corporations"
+
+		policy_flags = {
+			nationalized_corporations
+		}
+	}
+
+	option = {
+		name = "weak_corporate_freedom"
+
+		modifier = {
+			trade_value_mult = 0.05
+		}
+
+		policy_flags = {
+			weak_corporate_freedom
+		}
+	}
+
+	option = {
+		name = "strong_corporate_freedom"
+
+		valid = { always = no }
+
+		modifier = {
+			trade_value_mult = 0.10
+		}
+
+		policy_flags = {
+			strong_corporate_freedom
+		}
+	}
+
+	option = {
+		name = "pseudonational_corporations"
+
+		valid = { always = no }
+
+		modifier = {
+			trade_value_mult = 0.15
+		}
+
+		policy_flags = {
+			pseudonational_corporations
+		}
+	}
+}

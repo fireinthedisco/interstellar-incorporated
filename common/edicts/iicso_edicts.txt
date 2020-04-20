@@ -1,0 +1,47 @@
+iicso_deactivate = {
+	length = 60
+	resources = {
+		category = edicts
+	}
+
+	potential = {
+		NOT = { is_ai = yes }
+	}
+
+	allow = {
+		has_global_flag = iicso_active
+	}
+
+	effect = {
+		remove_global_flag = iicso_active
+		set_timed_global_flag = {
+			flag = iicso_deactivated
+			days = 60
+		}
+		every_country = {
+			limit = { is_country_type = iicso_civilian_country }
+			every_owned_fleet = {
+				delete_fleet = THIS
+			}
+			destroy_country = yes
+		}
+		every_planet = {
+			limit = {
+				has_planet_flag = iicso_resources_set
+			}
+			remove_planet_flag = iicso_resources_set
+			set_variable = { which = iicso_orbital_minerals value = 0 }
+			set_variable = { which = iicso_orbital_alloys value = 0 }
+			set_variable = { which = iicso_orbital_exotic_gases value = 0 }
+			set_variable = { which = iicso_orbital_rare_crystals value = 0 }
+			set_variable = { which = iicso_orbital_volatile_motes value = 0 }
+			set_variable = { which = iicso_orbital_zro value = 0 }
+			set_variable = { which = iicso_orbital_dark_matter value = 0 }
+			set_variable = { which = iicso_orbital_living_metal value = 0 }
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}

@@ -65,6 +65,8 @@ bombardment_blockade_desc:1 "The planet will not be bombarded or attacked, but o
 
 iicso_civilian_gov:0 "Civilian Vessels"
 iicso_civilian_gov_desc:1 "The civilian component of another nation."
+SUBJECT_iicso_civilian_subject:0 "Civilian Subject"
+SUBJECT_DESC_iicso_civilian_subject:0 "The civilian component of its parent nation."
 
 policy_civilian_hostility:0 "Civilian Hostility Policy"
 policy_civilian_hostility_desc:0 "We should decide what our policy will be when dealing with the civilian starships of other empires.\n"
@@ -89,3 +91,15 @@ limited_armament_desc:1 "Our government shall not divest the citizenry of the ri
 banned_armament:0 "Banned Armament"
 banned_armament_name:0 "Banned Armament"
 banned_armament_desc:1 "For the sake of public order and the common good, we must forbid civilians from owning military-grade weapons, lest the proliferation of weaponry lend strength to the criminal elements of our empire and threaten our society."
+
+policy_corporate_freedom:0 "Corporate Freedom"
+policy_corporate_freedom_desc:0 "Allowing corporate elements to operate in our country may benefit our empire through the mechanisms of the free market, but also represents a partial surrender of governmental control of the economy. We should decide how we will approach this issue."
+nationalized_corporations:0 "Nationalized Corporations"
+nationalized_corporations_name:0 "Nationalized Corporations"
+nationalized_corporations_desc:1 "Independent corporate bodies are banned, in favor of a state-operated economic solution."
+weak_corporate_freedom:0 "Weak Corporate Freedom"
+weak_corporate_freedom_name:0 "Weak Corporate Freedom"
+weak_corporate_freedom_desc:1 "Corporations are allowed to exist, but have limited power, and are very reliant on the state. Corporations may own stations, branch offices, and limited defense fleets, and have access only to weaponry that the rest of our citizenry have access to."
+
+edict_iicso_deactivate:0 "Deactivate Interstellar Incorporated: A Civilian Space Odyssey"
+edict_iicso_deactivate_desc:0 "This edict should remove everything added by II:CSO, and prevent the mod from reinitializing for 60 days. If you wish to remove the mod entirely, once the edict has finished removing II:CSO content, save your game, exit, and deactivate the mod in your game launcher or mod organizer. If you are using this edict to reset II:CSO due to a bug, update, or otherwise, simply let your game continue. After the 60-day edict expires, the mod will begin reinitializing on the next start of month."

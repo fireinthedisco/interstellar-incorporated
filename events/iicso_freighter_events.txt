@@ -7,25 +7,25 @@ country_event = {
     hide_window = yes
 
     immediate = {
-        log = "iicso.500 triggered, sending event to mining stations"
+        #log = "iicso.500 triggered, sending event to mining stations"
         every_planet = {
             limit = {
                 NOT = { has_planet_flag = running_freighters }
-                OR = {
+                #OR = {
                     AND = {
                         has_mining_station = yes
                         has_stockpile = yes
                     }
-                    AND = {
-                        is_primary_star = yes
-                        has_stockpile = yes
-                        solar_system = { exists = starbase }
-                    }
+                    # AND = {
+                    #     is_primary_star = yes
+                    #     has_stockpile = yes
+                    #     solar_system = { exists = starbase }
+                    #}
                     # AND = {
                     #     is_colony = yes
                     #     NOT = { is_capital = yes }
                     # }
-                }
+                #}
             }
             planet_event = {
                 id = iicso.501
@@ -43,70 +43,70 @@ planet_event = {
     hide_window = yes
 
     immediate = {
-        log = "system freighters triggered at [THIS.GetName] for empire [THIS.solar_system.space_owner.GetName]"
+        #log = "system freighters triggered at [THIS.GetName] for empire [THIS.solar_system.space_owner.GetName]"
         if = {
             limit = {
-                OR = {
+                #OR = {
                     solar_system = {
                         starbase = {
                             controller = { is_same_value = PREV.owner }
                         }
                     }
-                    AND = {
-                        is_colony = yes
-                        controller = { is_same_value = PREV.owner }
-                    }
-                }
+                    # AND = {
+                    #     is_colony = yes
+                    #     controller = { is_same_value = PREV.owner }
+                    # }
+                #}
             }
             if = {
                 limit = { has_sufficient_stockpile = yes }
                 random_country = {
                     limit = { has_country_flag = civ_faction_of@PREV.space_owner }
     
-                    if = {
-                        limit = {
-                            ROOT = {
-                                is_primary_star = yes
-                                solar_system = {
-                                    starbase = { has_starbase_module = trading_hub }
-                                }
-                            }
-                        }
-                        create_fleet = {
-                            name = hub_freighter_fleet
-                            effect = {
-                                set_owner = PREV
-                                create_station_freighter_ships = yes
-                                set_location = PREVPREV
-                                set_fleet_flag = hub_freighter
-                            }
-                        }
-                    }
-                    else_if = {
-                        limit = { ROOT = { is_primary_star = yes }}
-                        create_fleet = {
-                            name = system_freighter_fleet
-                            effect = {
-                                set_owner = PREV
-                                create_station_freighter_ships = yes
-                                set_location = PREVPREV
-                                set_fleet_flag = system_freighter
-                            }
-                        }
-                    }
-                    else_if = {
-                        limit = { ROOT = { is_colony = yes }}
-                        create_fleet = {
-                            name = colony_freighter_fleet
-                            effect = {
-                                set_owner = PREV
-                                create_station_freighter_ships = yes
-                                set_location = PREVPREV
-                                set_fleet_flag = colony_freighter
-                            }
-                        }
-                    }
-                    else = {
+                    # if = {
+                    #     limit = {
+                    #         ROOT = {
+                    #             is_primary_star = yes
+                    #             solar_system = {
+                    #                 starbase = { has_starbase_module = trading_hub }
+                    #             }
+                    #         }
+                    #     }
+                    #     create_fleet = {
+                    #         name = hub_freighter_fleet
+                    #         effect = {
+                    #             set_owner = PREV
+                    #             create_station_freighter_ships = yes
+                    #             set_location = PREVPREV
+                    #             set_fleet_flag = hub_freighter
+                    #         }
+                    #     }
+                    # }
+                    # else_if = {
+                    #     limit = { ROOT = { is_primary_star = yes }}
+                    #     create_fleet = {
+                    #         name = system_freighter_fleet
+                    #         effect = {
+                    #             set_owner = PREV
+                    #             create_station_freighter_ships = yes
+                    #             set_location = PREVPREV
+                    #             set_fleet_flag = system_freighter
+                    #         }
+                    #     }
+                    # }
+                    # else_if = {
+                    #     limit = { ROOT = { is_colony = yes }}
+                    #     create_fleet = {
+                    #         name = colony_freighter_fleet
+                    #         effect = {
+                    #             set_owner = PREV
+                    #             create_station_freighter_ships = yes
+                    #             set_location = PREVPREV
+                    #             set_fleet_flag = colony_freighter
+                    #         }
+                    #     }
+                    # }
+                    # else = {
                         create_fleet = {
                             name = station_freighter_fleet
                             effect = {
@@ -116,35 +116,35 @@ planet_event = {
                                 set_fleet_flag = station_freighter
                             }
                         }
-                    }
+                    #}
                     last_created_fleet = {
                         set_fleet_stance = evasive
                         set_timed_fleet_flag = {
                             flag = orders_received
                             days = 90
                         }
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    OR = {
-                                        is_primary_star = yes
-                                        is_colony = yes
-                                    }
-                                }
-                            }
-                            fleet_event = {
-                                id = iicso.503
-                                days = 5
-                                random = 10
-                            }
-                        }
-                        else = {
+                        # if = {
+                        #     limit = {
+                        #         ROOT = {
+                        #             OR = {
+                        #                 is_primary_star = yes
+                        #                 is_colony = yes
+                        #             }
+                        #         }
+                        #     }
+                        #     fleet_event = {
+                        #         id = iicso.503
+                        #         days = 5
+                        #         random = 10
+                        #     }
+                        # }
+                        # else = {
                             fleet_event = {
                                 id = iicso.502
                                 days = 5
                                 random = 10
                             }
-                        }
+                        # }
                     }
                 }
             }
@@ -200,11 +200,13 @@ fleet_event = {
                             flag = orders_received
                             days = 120
                         }
-                        if = {
-                            limit = { PREV = { is_capital = yes }}
-                            set_fleet_flag = enroute_to_capital@PREV
-                        }
-                        else = { set_fleet_flag = enroute_to_colony@PREV }
+                        # if = {
+                        #     limit = { PREV = { is_capital = yes }}
+                        #     set_fleet_flag = enroute_to_capital@PREV
+                        # }
+                        # else = {
+                            set_fleet_flag = enroute_to_colony@PREV
+                        #}
                         auto_move_to_planet = {
                             target = PREV
                             clear_auto_move_on_arrival = no
