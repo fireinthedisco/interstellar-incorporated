@@ -35,9 +35,9 @@ iicso_deactivate = {
 			set_variable = { which = iicso_orbital_exotic_gases value = 0 }
 			set_variable = { which = iicso_orbital_rare_crystals value = 0 }
 			set_variable = { which = iicso_orbital_volatile_motes value = 0 }
-			set_variable = { which = iicso_orbital_zro value = 0 }
-			set_variable = { which = iicso_orbital_dark_matter value = 0 }
-			set_variable = { which = iicso_orbital_living_metal value = 0 }
+			set_variable = { which = iicso_orbital_sr_zro value = 0 }
+			set_variable = { which = iicso_orbital_sr_dark_matter value = 0 }
+			set_variable = { which = iicso_orbital_sr_living_metal value = 0 }
 		}
 	}
 

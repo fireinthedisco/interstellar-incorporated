@@ -77,9 +77,9 @@ has_sufficient_stockpile = {
         check_variable = { which = iicso_stockpile_exotic_gases value >= @min_small_cargo_capacity }
         check_variable = { which = iicso_stockpile_rare_crystals value >= @min_small_cargo_capacity }
         check_variable = { which = iicso_stockpile_volatile_motes value >= @min_small_cargo_capacity }
-        check_variable = { which = iicso_stockpile_zro value >= @min_small_cargo_capacity }
-        check_variable = { which = iicso_stockpile_dark_matter value >= @min_small_cargo_capacity }
-        check_variable = { which = iicso_stockpile_living_metal value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_sr_zro value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_sr_dark_matter value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_sr_living_metal value >= @min_small_cargo_capacity }
 
         check_variable = { which = iicso_stockpile_food value >= @min_small_cargo_capacity }
         check_variable = { which = iicso_stockpile_consumer_goods value >= @min_small_cargo_capacity }
@@ -93,9 +93,9 @@ has_stockpile = {
         check_variable = { which = iicso_stockpile_exotic_gases value > 0 }
         check_variable = { which = iicso_stockpile_rare_crystals value > 0 }
         check_variable = { which = iicso_stockpile_volatile_motes value > 0 }
-        check_variable = { which = iicso_stockpile_zro value > 0 }
-        check_variable = { which = iicso_stockpile_dark_matter value > 0 }
-        check_variable = { which = iicso_stockpile_living_metal value > 0 }
+        check_variable = { which = iicso_stockpile_sr_zro value > 0 }
+        check_variable = { which = iicso_stockpile_sr_dark_matter value > 0 }
+        check_variable = { which = iicso_stockpile_sr_living_metal value > 0 }
 
         check_variable = { which = iicso_stockpile_food value > 0 }
         check_variable = { which = iicso_stockpile_consumer_goods value > 0 }
@@ -106,9 +106,9 @@ is_tanker_type = {
     OR = {
         has_fleet_flag = exotic_gases_ship
         has_fleet_flag = volatile_motes_ship
-        has_fleet_flag = zro_ship
-        has_fleet_flag = dark_matter_ship
-        has_fleet_flag = living_metal_ship
+        has_fleet_flag = sr_zro_ship
+        has_fleet_flag = sr_dark_matter_ship
+        has_fleet_flag = sr_living_metal_ship
     }
 }
 

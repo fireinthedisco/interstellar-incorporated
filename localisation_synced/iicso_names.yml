@@ -1,5 +1,6 @@
 ﻿l_default:
  miner_fleet: "[ROOT.GetName] Miner"
+ gas_miner_fleet: "[ROOT.GetName] Gas Miner"
  station_freighter_fleet: "[PREV.GetName] Station Freight"
  system_freighter_fleet: "[PREV.GetName] System Freight"
  hub_freighter_fleet: "[PREV.GetName] Hub Freight"

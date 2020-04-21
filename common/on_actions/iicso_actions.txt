@@ -13,7 +13,7 @@ on_monthly_pulse = {
 		iicso.100
 		iicso.102
 		iicso.200
-		#iicso.404
+		#iicso.403
 		#iicso.406
 		#iicso.1000
 		#iicso.600
@@ -44,7 +44,6 @@ on_post_communications_established = {
 # Only works if clear auto move on arrival is enabled
 on_fleet_auto_move_arrival = {
 	events = {
-		#iicso.403
 		#iicso.502
 		#iicso.602
 	}
@@ -57,7 +56,6 @@ on_starbase_transfer = {
 	events = {
 		#iicso.420
 		#iicso.520
-		iicso.112
 	}
 }
 
@@ -67,7 +65,6 @@ on_starbase_transfer = {
 # immediately before station is created
 on_building_starbase_outpost = {
 	events = {
-		iicso.112
 	}
 }
 
@@ -77,7 +74,6 @@ on_building_starbase_outpost = {
 # Scope = Planet
 on_colonized = {
 	events = {
-		iicso.110
 	}
 }
 
@@ -87,7 +83,6 @@ on_colonized = {
 #This = Planet scope
 on_planet_transfer = {
 	events = {
-		iicso.110
 	}
 }
 
@@ -95,7 +90,6 @@ on_planet_transfer = {
 # Scope = Planet
 on_colony_destroyed = {
 	events = {
-		iicso.110
 	}
 }
 

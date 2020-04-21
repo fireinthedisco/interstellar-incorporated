@@ -5871,7 +5871,7 @@
 #                         count = 1000
 #                         owner = { add_resource = { sr_zro = 1 }}
 #                         change_variable = { which = planet_zro_owed value = 1 }
-#                         change_variable = { which = iicso_stockpile_zro value = -1 }
+#                         change_variable = { which = iicso_stockpile_sr_zro value = -1 }
 #                     }
 #                 } else = {
 #                     while = {
@@ -5879,7 +5879,7 @@
 #                         count = 1000
 #                         owner = { add_resource = { sr_zro = -1 }}
 #                         change_variable = { which = planet_zro_owed value = -1 }
-#                         change_variable = { which = iicso_stockpile_zro value = 1 }
+#                         change_variable = { which = iicso_stockpile_sr_zro value = 1 }
 #                     }
 #                 }
 
@@ -5891,7 +5891,7 @@
 #                         count = 1000
 #                         owner = { add_resource = { sr_dark_matter = 1 }}
 #                         change_variable = { which = planet_dark_matter_owed value = 1 }
-#                         change_variable = { which = iicso_stockpile_dark_matter value = -1 }
+#                         change_variable = { which = iicso_stockpile_sr_dark_matter value = -1 }
 #                     }
 #                 } else = {
 #                     while = {
@@ -5899,7 +5899,7 @@
 #                         count = 1000
 #                         owner = { add_resource = { sr_dark_matter = -1 }}
 #                         change_variable = { which = planet_dark_matter_owed value = -1 }
-#                         change_variable = { which = iicso_stockpile_dark_matter value = 1 }
+#                         change_variable = { which = iicso_stockpile_sr_dark_matter value = 1 }
 #                     }
 #                 }
 
@@ -5911,7 +5911,7 @@
 #                         count = 1000
 #                         owner = { add_resource = { sr_living_metal = 1 }}
 #                         change_variable = { which = planet_living_metal_owed value = 1 }
-#                         change_variable = { which = iicso_stockpile_living_metal value = -1 }
+#                         change_variable = { which = iicso_stockpile_sr_living_metal value = -1 }
 #                     }
 #                 } else = {
 #                     while = {
@@ -5919,7 +5919,7 @@
 #                         count = 1000
 #                         owner = { add_resource = { sr_living_metal = -1 }}
 #                         change_variable = { which = planet_living_metal_owed value = -1 }
-#                         change_variable = { which = iicso_stockpile_living_metal value = 1 }
+#                         change_variable = { which = iicso_stockpile_sr_living_metal value = 1 }
 #                     }
 #                 }
 
