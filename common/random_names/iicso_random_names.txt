@@ -32,104 +32,203 @@ empire_name_parts_list = {
 	}
 }
 
-
-
 empire_name_parts_list = {
-	key = "corporate_empires_names"
+	key = "corporate_empire_names_suffix"
 	parts = {
 
 		"Net" = 5
 		"net" = 5
-		"X" = 10
+		"X" = 5
 
 		"Corp" = 5
 		"corp" = 5
-		" Co" = 10
-		" Corporation" = 10
-		" Inc" = 10
-		" Incorporated" = 10
-		" Ltd" = 10
-		" Limited" = 10
-		" LLC" = 10
+
 		"Dyne" = 5
 		"dyne" = 5
-		"tex" = 10
 
-		" Group" = 5
-		"group" = 5
-		" Consolidated" = 5
-		" Conglomerate" = 5
-		" Institute" = 5
-		" Initiative" = 5
-		" Foundation" = 5
+		"group" = 8
 
-		" Enterprises" = 5
-		" Industries" = 5
-		" Industrial" = 5
-		" Shipping" = 5
-		" Engineering" = 5
-		" Aerospace" = 5
-		" Transport" = 5
-		" Charters" = 5
-		" Manufacturing" = 5
-		" Spaceways" = 5
-		" Spacelines" = 5
-		" Transways" = 5
-		" Products" = 5
-		" Imports" = 5
-		" Exports" = 5
+		"Sec" = 5
+		"sec" = 5
 
-		" Securities" = 5
-		" Securitas" = 5
-		"Sec" = 3
-		"sec" = 3
-		" Contractors" = 5
+		"Tech" = 2
+		"tech" = 2
+		"Tec" = 2
+		"tec" = 2
+		"tex" = 2
+		"metrics" = 8
+		"Gen" = 10
 
-		" Futures" = 5
-		" Financials" = 5
-		" Trust" = 5
-		" Investments" = 5
-		" Associates" = 5
-		" Holdings" = 5
+		"Pharma" = 5
 
-		"Tech" = 3
-		"tech" = 3
-		"Tec" = 3
-		"metrics" = 5
-		"Gen" = 5
+	}
+}
 
-		" Technologies" = 5
-		" Nanotechnology" = 5
-		" Data" = 5
-		" Networks" = 5
-		" Dynamics" = 5
-		" Nanotech" = 5
-		" Genomics" = 5
-		" Cybernetics" = 5
-		" Biotics" = 5
-		" Composites" = 5
-		" Astronautics" = 5
-		" Laboratories" = 5
-		" Subatomics" = 5
-		" Technics" = 5
-		" Heuristics" = 5
-		" Autonetics" = 5
-		" Biochem" = 5
-		" Insights" = 5
-		"Pharma" = 3
-		" Pharmaceuticals" = 3
+empire_name_parts_list = {
+	key = "corporate_empire_names_final_obligate"
+	parts = {	
+		"Co" = 8
+		"Corporation" = 8
+		"Inc" = 8
+		"Incorporated" = 8
+		"Ltd" = 4
+		"Limited" = 4
+		"LLC" = 4
+		"Consolidated" = 5
+		"Conglomerate" = 5
+		"Institute" = 5
+		"Initiative" = 5
+		"Foundation" = 5
+		"Group" = 5
+	}
+}
 
-		" Amalgamated" = 5
-		" Unlimited" = 5
-		" Systems" = 5
 
-		" Galactic" = 5
-		" Multisolar" = 5
-		" Transorbital" = 5
-		" Frontiers" = 5
-		" Intercolonial" = 5
-		" Interplanet" = 5
-		" Intersolar" = 5
+empire_name_parts_list = {
+	key = "corporate_empire_names_final"
+	parts = {
+
+		"Enterprises" = 5
+		"Industries" = 5
+		"Industrial" = 5
+		"Shipping" = 5
+		"Engineering" = 5
+		"Aerospace" = 5
+		"Transport" = 5
+		"Charters" = 5
+		"Manufacturing" = 5
+		"Spaceways" = 5
+		"Spacelines" = 5
+		"Transways" = 5
+		"Products" = 5
+		"Imports" = 5
+		"Exports" = 5
+
+		"Securities" = 5
+		"Securitas" = 5
+		"Contractors" = 5
+
+		"Futures" = 5
+		"Financials" = 5
+		"Trust" = 5
+		"Investments" = 5
+		"Associates" = 5
+		"Holdings" = 5
+
+		"Technologies" = 5
+		"Nanotechnology" = 5
+		"Data" = 5
+		"Networks" = 5
+		"Dynamics" = 5
+		"Nanotech" = 5
+		"Genomics" = 5
+		"Cybernetics" = 5
+		"Biotics" = 5
+		"Composites" = 5
+		"Astronautics" = 5
+		"Laboratories" = 5
+		"Subatomics" = 5
+		"Technics" = 5
+		"Heuristics" = 5
+		"Autonetics" = 5
+		"Biochem" = 5
+		"Insights" = 5
+		"Pharmaceuticals" = 3
+		"Plastics" = 5
+		"Helix" = 5
+
+		"Amalgamated" = 5
+		"Unlimited" = 5
+		"Systems" = 5
+
+		"Galactic" = 5
+		"Multisolar" = 5
+		"Transorbital" = 5
+		"Frontiers" = 5
+		"Intercolonial" = 5
+		"Interplanet" = 5
+		"Intersolar" = 5
+	}
+}
+
+empire_name_parts_list = {
+	key = "corporate_empire_names_prefix"
+	parts = {
+		"Mattix" = 5
+		"Kovana" = 5
+		"Theta" = 5
+		"Proto" = 5
+		"Omega" = 5
+		"Nano" = 5
+		"Zephyr" = 5
+		"Elendil" = 5
+		"Libuscha" = 5
+		"Azgon" = 5
+		"Andanx" = 5
+		"Utros" = 5
+		"Viltru" = 5
+		"M'Hori" = 5
+		"Xani" = 5
+		"Hizo" = 5
+		"Sychu" = 5
+		"Buzz" = 5
+		"Xian" = 5
+		"Zander" = 5
+		"Inan" = 5
+		"Cyber" = 5
+		"Exo" = 5
+		"Omni" = 5
+		"Symbio" = 5
+		"Thule" = 5
+		"Star" = 5
+		"Galacta" = 5
+		"Aqui" = 5
+		"Kosmo" = 5
+		"Elysi" = 5
+	}
+}
+
+empire_name_parts_list = {
+	key = "corporate_empire_names_standalone"
+	parts = {
+		"Solar" = 5
+		"Sovereign" = 5
+		"Hipparchus" = 5
+		"Rampart" = 5
+		"Shepherd" = 5
+		"Compass Rose" = 5
+		"Hummingbird" = 5
+		"Pathfinder" = 5
+		"Hyldemoer" = 5
+		"Pazuzu" = 5
+		"Accelerant" = 5
+		"Oraxis" = 5
+		"Binary" = 5
+		"Blackstone" = 5
+		"Darkwater" = 5
+		"Colonial" = 5
+		"Dharma" = 5
+		"Epsilon Eridani" = 5
+		"Fidelity" = 5
+		"Flagship" = 5
+		"Gateway" = 5
+		"Nakamura" = 5
+		"Salamander" = 5
+		"Titan" = 5
+		"Tyrell" = 5
+		"Umbrella" = 5
+		"Infineon" = 5
+		"Battlestar" = 5
+		"Nihilus" = 5
+		"Infinitum" = 5
+		"Pleiades" = 5
+		"Harbinger" = 5
+		"Divine Wind" = 5
+		"Falling Star" = 5
+		"Millenium" = 5
+		"Spectrum" = 5
+		"Thunderbird" = 5
+		"Betelgeuse" = 5
 	}
 }
 
@@ -192,6 +291,42 @@ empire_name_format = {
 			is_country_type = iicso_corporation_country
 		}
 	}
-	format = "[THIS.overlord.GetAdj] <corporate_empire_names>"
+	format = "<corporate_empire_names_prefix><corporate_empire_names_suffix> <corporate_empire_names_final>"
+	noun = "[This.GetSpeciesName]"
+}
+
+empire_name_format = {
+	random_weight = {
+		factor = 0
+		modifier = {
+			add = 1000
+			is_country_type = iicso_corporation_country
+		}
+	}
+	format = "<corporate_empire_names_standalone> <corporate_empire_names_final>"
+	noun = "[This.GetSpeciesName]"
+}
+
+empire_name_format = {
+	random_weight = {
+		factor = 0
+		modifier = {
+			add = 1000
+			is_country_type = iicso_corporation_country
+		}
+	}
+	format = "<corporate_empire_names_standalone> <corporate_empire_names_final> <corporate_empire_names_final_obligate>"
+	noun = "[This.GetSpeciesName]"
+}
+
+empire_name_format = {
+	random_weight = {
+		factor = 0
+		modifier = {
+			add = 1000
+			is_country_type = iicso_corporation_country
+		}
+	}
+	format = "<corporate_empire_names_standalone> <corporate_empire_names_final_obligate>"
 	noun = "[This.GetSpeciesName]"
 }

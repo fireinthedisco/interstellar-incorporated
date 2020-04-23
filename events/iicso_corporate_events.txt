@@ -1,0 +1,9 @@
+event = {
+	id = iicso.900
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		
+	}
+}
