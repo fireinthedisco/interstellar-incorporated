@@ -72,6 +72,8 @@ iicso_corporate_gov:0 "Corporation"
 iicso_corporate_gov_desc:1 "A corporation within another empire."
 SUBJECT_iicso_civilian_subject:0 "Civilian Subject"
 SUBJECT_DESC_iicso_civilian_subject:0 "The civilian component of its parent nation."
+SUBJECT_iicso_corporate_subject:0 "Corporate Subject"
+SUBJECT_DESC_iicso_corporate_subject:0 "A minor corporation, part of the private sector of its parent nation."
 
 policy_civilian_hostility:0 "Civilian Hostility Policy"
 policy_civilian_hostility_desc:0 "We should decide what our policy will be when dealing with the civilian starships of other empires.\n"
@@ -108,3 +110,6 @@ weak_corporate_freedom_desc:1 "Corporations are allowed to exist, but have limit
 
 edict_iicso_deactivate:0 "Deactivate Interstellar Incorporated: A Civilian Space Odyssey"
 edict_iicso_deactivate_desc:0 "This edict should remove everything added by II:CSO, and prevent the mod from reinitializing for 60 days. If you wish to remove the mod entirely, once the edict has finished removing II:CSO content, save your game, exit, and deactivate the mod in your game launcher or mod organizer. If you are using this edict to reset II:CSO due to a bug, update, or otherwise, simply let your game continue. After the 60-day edict expires, the mod will begin reinitializing on the next start of month."
+
+iicso.901.name:0 "A Prominent Corporation Rises"
+iicso.901.desc:0 "A new corporation has risen to prominence in our country's private sector, having acquired a number of spacebourne assets and extending their influence to the stars. According to the corporate registry, the firm is called [last_created_country]."

@@ -6,6 +6,8 @@ country_event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = { has_global_flag = iicso_active }
+
     immediate = {
         #log = "iicso.500 triggered, sending event to mining stations/hubs"
         every_planet = {
@@ -38,6 +40,8 @@ planet_event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = { has_global_flag = iicso_active }
+
     immediate = {
         #log = "system freighters triggered at [THIS.GetName] for empire [THIS.solar_system.space_owner.GetName]"
         if = {
@@ -50,75 +54,84 @@ planet_event = {
             }
             if = {
                 limit = { has_sufficient_stockpile = yes }
-                random_country = {
-                    limit = { has_country_flag = iicso_faction_of@PREV.space_owner }
+                if = { #if the station is owned by parent empire, fleet is owned by civilian vessels country
+                    limit = { mining_station = { owner = { is_same_value = { ROOT.space_owner }}}}
+                    random_country = {
+                        limit = { has_country_flag = iicso_faction_of@ROOT.space_owner }
+                        save_event_target_as = iicso_fleet_owner
+                    }
+                }
+                else_if = { #if fleet is owned by a corp, fleet is owned by corp
+                    limit = { mining_station = { owner = { is_country_type = iicso_corporate_country }}}
+                    mining_station = { owner = { save_event_target_as = iicso_fleet_owner }}
+                }
     
+                if = {
+                    limit = {
+                        ROOT = {
+                            is_primary_star = yes
+                            solar_system = {
+                                starbase = { has_starbase_module = trading_hub }
+                            }
+                        }
+                    }
+                    create_fleet = {
+                        name = hub_freighter_fleet
+                        effect = {
+                            set_owner = event_target:iicso_fleet_owner
+                            create_station_freighter_ships = yes
+                            set_location = PREVPREV
+                            set_fleet_flag = hub_freighter
+                        }
+                    }
+                }
+                else_if = {
+                    limit = { ROOT = { is_primary_star = yes }}
+                    create_fleet = {
+                        name = system_freighter_fleet
+                        effect = {
+                            set_owner = event_target:iicso_fleet_owner
+                            create_station_freighter_ships = yes
+                            set_location = PREVPREV
+                            set_fleet_flag = system_freighter
+                        }
+                    }
+                }
+                else = {
+                    create_fleet = {
+                        name = station_freighter_fleet
+                        effect = {
+                            set_owner = event_target:iicso_fleet_owner
+                            create_station_freighter_ships = yes
+                            set_location = PREVPREV
+                            set_fleet_flag = station_freighter
+                        }
+                    }
+                }
+                clear_event_target = iicso_fleet_owner
+                last_created_fleet = {
+                    set_fleet_stance = evasive
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 90
+                    }
                     if = {
                         limit = {
                             ROOT = {
                                 is_primary_star = yes
-                                solar_system = {
-                                    starbase = { has_starbase_module = trading_hub }
-                                }
                             }
                         }
-                        create_fleet = {
-                            name = hub_freighter_fleet
-                            effect = {
-                                set_owner = PREV
-                                create_station_freighter_ships = yes
-                                set_location = PREVPREV
-                                set_fleet_flag = hub_freighter
-                            }
-                        }
-                    }
-                    else_if = {
-                        limit = { ROOT = { is_primary_star = yes }}
-                        create_fleet = {
-                            name = system_freighter_fleet
-                            effect = {
-                                set_owner = PREV
-                                create_station_freighter_ships = yes
-                                set_location = PREVPREV
-                                set_fleet_flag = system_freighter
-                            }
+                        fleet_event = {
+                            id = iicso.503
+                            days = 5
+                            random = 10
                         }
                     }
                     else = {
-                        create_fleet = {
-                            name = station_freighter_fleet
-                            effect = {
-                                set_owner = PREV
-                                create_station_freighter_ships = yes
-                                set_location = PREVPREV
-                                set_fleet_flag = station_freighter
-                            }
-                        }
-                    }
-                    last_created_fleet = {
-                        set_fleet_stance = evasive
-                        set_timed_fleet_flag = {
-                            flag = orders_received
-                            days = 90
-                        }
-                        if = {
-                            limit = {
-                                ROOT = {
-                                    is_primary_star = yes
-                                }
-                            }
-                            fleet_event = {
-                                id = iicso.503
-                                days = 5
-                                random = 10
-                            }
-                        }
-                        else = {
-                            fleet_event = {
-                                id = iicso.502
-                                days = 5
-                                random = 10
-                            }
+                        fleet_event = {
+                            id = iicso.502
+                            days = 5
+                            random = 10
                         }
                     }
                 }
@@ -136,13 +149,14 @@ planet_event = {
     }
 }
 
-#called by iicso.501, fleet auto move arrival (deactivated)
+#called by iicso.501, #fleet auto move arrival (deactivated)
 fleet_event = {
     id = iicso.502
     is_triggered_only = yes
     hide_window = yes
 
     trigger = {
+        has_global_flag = iicso_active
         exists = FROM
     }
 
@@ -205,13 +219,14 @@ fleet_event = {
     }
 }
 
-#called by iicso.501, on entering system fleet
+#called by iicso.501, #on entering system fleet
 fleet_event = {
     id = iicso.503
     is_triggered_only = yes
     hide_window = yes
 
     trigger = {
+        has_global_flag = iicso_active
         OR = {
             has_fleet_flag = hub_freighter
             has_fleet_flag = system_freighter
@@ -220,7 +235,12 @@ fleet_event = {
 
     immediate = {
         random_country = {
-            limit = { has_country_flag = iicso_faction_is@ROOT.owner }
+            limit = {
+                OR = {
+                    has_country_flag = iicso_faction_is@ROOT.owner
+                    has_country_flag = iicso_corporation_is@ROOT.owner
+                }
+            }
             ROOT = {
                 closest_system = {
                     limit = {
@@ -319,6 +339,8 @@ fleet_event = {
     id = iicso.504
     is_triggered_only = yes
     hide_window = yes
+
+    trigger = { has_global_flag = iicso_active }
 
     immediate = {
         delete_fleet = THIS

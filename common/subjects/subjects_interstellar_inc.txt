@@ -12,3 +12,18 @@ iicso_civilian_subject = {
 	calls_overlord_to_war = yes
 	can_do_diplomacy = no
 }
+
+iicso_corporate_subject = {
+    can_expand = no
+    can_be_integrated = no
+
+    research_sharing = yes
+
+    potential = {
+        always = no
+    }
+
+    joins_overlord_wars = no
+	calls_overlord_to_war = yes
+	can_do_diplomacy = no
+}

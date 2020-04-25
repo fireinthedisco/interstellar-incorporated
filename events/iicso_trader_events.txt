@@ -11,6 +11,8 @@ event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = { has_global_flag = iicso_active }
+
     immediate = {
         every_country = {
             limit = {
@@ -49,6 +51,8 @@ planet_event = {
     id = iicso.701
     is_triggered_only = yes
     hide_window = yes
+
+    trigger = { has_global_flag = iicso_active }
 
     immediate = {
         #log = "[THIS.GetName] in [THIS.Owner.GetName] is searching for a trader target..."
@@ -139,6 +143,7 @@ planet_event = {
                     auto_move_to_planet = {
                         target = PREVPREV
                         clear_auto_move_on_arrival = no
+                        arrival_effect = trader_arrival
                     }
                 }
             }

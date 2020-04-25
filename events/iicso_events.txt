@@ -1,32 +1,9 @@
-namespace = iicso
-
-event = {
-    id = iicso.50
-    is_triggered_only = yes
-    hide_window = yes
-
-    immediate = {
-        log = "iicso.50 triggered"
-        every_planet = {
-            limit = { has_mining_station = yes }
-            mining_station = {
-                solar_system = {
-                    space_owner = {
-                        random_country = {
-                            limit = { has_country_flag = iicso_faction_of@PREV }
-                            PREVPREVPREV = {
-                                set_owner = PREV
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 #########################################################
 ############### 1xx. Resource Management ################
 #########################################################
+
+namespace = iicso
+
 #called on game start, on monthly pulse (for games started in progress)
 event = {
     id = iicso.100
@@ -74,6 +51,8 @@ planet_event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = { has_global_flag = iicso_active }
+
     immediate = {
         #log = "mineral count triggered on planet [THIS.GetName] in empire [THIS.solar_system.space_owner.GetName]"
         #first find how many resources the mining station produces
@@ -106,6 +85,8 @@ event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = { has_global_flag = iicso_active }
+
     immediate = {
         every_country = {
             limit = {
@@ -130,6 +111,7 @@ country_event = {
     hide_window = yes
 
     trigger = {
+        has_global_flag = iicso_active
         FROMFROM = {
             solar_system = {
                 any_ship_in_system = {
@@ -224,6 +206,8 @@ event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = { has_global_flag = iicso_active }
+
     immediate = {
         #log = "yearly pulse gate event triggered"
         #quarterly events
@@ -274,6 +258,8 @@ event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = { has_global_flag = iicso_active }
+
     immediate = {
         every_country = {
 			limit = {
@@ -292,12 +278,6 @@ event = {
                             has_country_flag = iicso_civilian_country
                         }
                     }
-                }
-
-                if = {
-                    limit = { NOT = { has_country_flag = Story7 }}
-                    set_country_flag = Story7
-                    set_country_flag = avoiding_first_contact
                 }
 
                 create_country = {
@@ -329,11 +309,6 @@ event = {
                     #share comms with every country who already has comms with parent country
                     every_country = {
                         limit = {
-                            OR = {
-                                is_country_type = default
-                                is_country_type = fallen_empire
-                                is_country_type = awakened_fallen_empire
-                            }
                             has_communications = PREVPREV
                             NOT = { has_country_flag = iicso_faction_is@PREV }
                         }
@@ -355,6 +330,12 @@ event = {
                     }
                 }
                 #log = "[THIS.GetName] is economy overlord of [last_created_country.GetName]"
+
+                if = {
+                    limit = { NOT = { has_country_flag = Story7 }}
+                    set_country_flag = Story7
+                    set_country_flag = avoiding_first_contact
+                }
 
                 if = {
                     limit = { has_country_flag = avoiding_first_contact }
@@ -411,6 +392,8 @@ country_event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = { has_global_flag = iicso_active }
+
     immediate = {
         random_country = {
             limit = { has_country_flag = iicso_faction_of@ROOT }
@@ -443,6 +426,7 @@ country_event = {
     hide_window = yes
 
     trigger = {
+        has_global_flag = iicso_active
         has_policy_flag = hostile_to_enemy_civilians
     }
 
@@ -465,6 +449,8 @@ country_event = {
     id = iicso.211
     is_triggered_only = yes
     hide_window = yes
+
+    trigger = { has_global_flag = iicso_active }
 
     immediate = {
         #log = "a war has ended"

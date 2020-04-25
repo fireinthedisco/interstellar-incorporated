@@ -1,3 +1,4 @@
+# Triggers when the game starts
 on_game_start = {
 	events = {
 		iicso.100
@@ -6,10 +7,10 @@ on_game_start = {
 	}
 }
 
+# No scope, like on_game_start
 on_monthly_pulse = {
 	events = {
 		#iicso.120
-		#iicso.50
 		iicso.100
 		iicso.102
 		iicso.200
@@ -18,15 +19,34 @@ on_monthly_pulse = {
 		#iicso.1000
 		#iicso.600
 		#iicso.6000
-		iicso.900
 	}
 }
 
 # this = country
+on_monthly_pulse_country = {
+	events = {
+		iicso.900
+		iicso.910
+	}
+}
+
+# No scope, like on_game_start
 on_yearly_pulse = {
 	events = {
 		iicso.121 #gate
 		iicso.700
+	}
+}
+# No scope, like on_game_start
+on_five_year_pulse = {
+	events = {
+	}
+}
+
+# this = country
+on_five_year_pulse_country = {
+	events = {
+		#iicso.900
 	}
 }
 

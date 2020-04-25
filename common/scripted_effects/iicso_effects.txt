@@ -130,113 +130,87 @@ miner_arrival = {
     }
 }
 
+add_resource_to_miner = {
+    random_list = {
+        0 = {
+            modifier = {
+                add = 20
+                check_variable = { which = empty_cargo value < 2 }
+            }
+            change_variable = { which = cargo_$RESOURCE$ value = 1 }
+            change_variable = { which = empty_cargo value = -1 }
+        }
+        20 = {
+            modifier = {
+                factor = 0
+                check_variable = { which = empty_cargo value < 2 }
+            }
+            change_variable = { which = cargo_$RESOURCE$ value = 2 }
+            change_variable = { which = empty_cargo value = -2 }
+        }
+        20 = {
+            modifier = {
+                factor = 0
+                check_variable = { which = empty_cargo value < 3 }
+            }
+            change_variable = { which = cargo_$RESOURCE$ value = 3 }
+            change_variable = { which = empty_cargo value = -3 }
+        }
+        20 = {
+            modifier = {
+                factor = 0
+                check_variable = { which = empty_cargo value < 4 }
+            }
+            change_variable = { which = cargo_$RESOURCE$ value = 4 }
+            change_variable = { which = empty_cargo value = -4 }
+        }
+        20 = {
+            modifier = {
+                factor = 0
+                check_variable = { which = empty_cargo value < 5 }
+            }
+            change_variable = { which = cargo_$RESOURCE$ value = 5 }
+            change_variable = { which = empty_cargo value = -5 }
+        }
+        20 = {
+            modifier = {
+                factor = 0
+                check_variable = { which = empty_cargo value < 6 }
+            }
+            change_variable = { which = cargo_$RESOURCE$ value = 6 }
+            change_variable = { which = empty_cargo value = -6 }
+        }
+    }
+}
+
 add_cargo_to_miner = {
     if = {
         limit = { has_fleet_flag = civilian_miner }
-        random_list = {
-            0 = {
-                modifier = {
-                    add = 20
-                    check_variable = { which = empty_cargo value < 2 }
-                }
-                change_variable = { which = cargo_minerals value = 1 }
-                change_variable = { which = empty_cargo value = -1 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 2 }
-                }
-                change_variable = { which = cargo_minerals value = 2 }
-                change_variable = { which = empty_cargo value = -2 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 3 }
-                }
-                change_variable = { which = cargo_minerals value = 3 }
-                change_variable = { which = empty_cargo value = -3 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 4 }
-                }
-                change_variable = { which = cargo_minerals value = 4 }
-                change_variable = { which = empty_cargo value = -4 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 5 }
-                }
-                change_variable = { which = cargo_minerals value = 5 }
-                change_variable = { which = empty_cargo value = -5 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 6 }
-                }
-                change_variable = { which = cargo_minerals value = 6 }
-                change_variable = { which = empty_cargo value = -6 }
-            }
-        }
+        add_resource_to_miner = { RESOURCE = minerals }
     }
     else_if = {
         limit = { has_fleet_flag = civilian_gas_miner }
-        random_list = {
-            0 = {
-                modifier = {
-                    add = 20
-                    check_variable = { which = empty_cargo value < 2 }
-                }
-                change_variable = { which = cargo_energy value = 1 }
-                change_variable = { which = empty_cargo value = -1 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 2 }
-                }
-                change_variable = { which = cargo_energy value = 2 }
-                change_variable = { which = empty_cargo value = -2 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 3 }
-                }
-                change_variable = { which = cargo_energy value = 3 }
-                change_variable = { which = empty_cargo value = -3 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 4 }
-                }
-                change_variable = { which = cargo_energy value = 4 }
-                change_variable = { which = empty_cargo value = -4 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 5 }
-                }
-                change_variable = { which = cargo_energy value = 5 }
-                change_variable = { which = empty_cargo value = -5 }
-            }
-            20 = {
-                modifier = {
-                    factor = 0
-                    check_variable = { which = empty_cargo value < 6 }
-                }
-                change_variable = { which = cargo_energy value = 6 }
-                change_variable = { which = empty_cargo value = -6 }
+        add_resource_to_miner = { RESOURCE = energy }
+    }
+}
+
+trader_arrival = {
+    FROM = { add_modifier = { modifier = trader_has_arrived days = 360 }}
+    random_planet = {
+        limit = { PREV = { has_fleet_flag = trader_home@PREV }}
+        PREV = {
+            auto_move_to_planet = {
+                target = PREV
+                clear_auto_move_on_arrival = no
+                arrival_effect = trader_arrival_home
             }
         }
     }
+}
+
+trader_arrival_home = {
+    FROM = { add_modifier = { modifier = trader_has_arrived days = 360 }}
+    delete_fleet = THIS
 }
 
 create_station_freighter_ships = {
@@ -257,20 +231,7 @@ create_station_freighter_ships = {
     while = {
         limit = {
             PREVPREV = {
-                OR = {
-                    check_variable = { which = iicso_stockpile_minerals value > 0 }
-                    check_variable = { which = iicso_stockpile_alloys value > 0 }
-                    check_variable = { which = iicso_stockpile_exotic_gases value > 0 }
-                    check_variable = { which = iicso_stockpile_rare_crystals value > 0 }
-                    check_variable = { which = iicso_stockpile_volatile_motes value > 0 }
-                    check_variable = { which = iicso_stockpile_sr_zro value > 0 }
-                    check_variable = { which = iicso_stockpile_sr_dark_matter value > 0 }
-                    check_variable = { which = iicso_stockpile_sr_living_metal value > 0 }
-                    
-                    check_variable = { which = iicso_stockpile_food value > 0 }
-                    check_variable = { which = iicso_stockpile_consumer_goods value > 0 }
-                    check_variable = { which = iicso_stockpile_energy value > 0 }
-                }
+                has_stockpile = yes
             }
         }
         if = {

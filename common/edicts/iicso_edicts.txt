@@ -1,5 +1,5 @@
 iicso_deactivate = {
-	length = 60
+	length = 1
 	resources = {
 		category = edicts
 	}
@@ -21,12 +21,28 @@ iicso_deactivate = {
 				days = 60
 			}
 			every_country = {
-				limit = { is_country_type = iicso_civilian_country }
+				limit = {
+					OR = {
+						is_country_type = iicso_civilian_country
+						is_country_type = iicso_corporate_country
+					}
+				}
+				random_country = {
+					limit = {
+						OR = {
+							has_country_flag = iicso_faction_is@PREV
+							has_country_flag = iicso_corporation_is@PREV
+						}
+					}
+					remove_country_flag = iicso_faction_is@PREV
+					remove_country_flag = iicso_corporation_is@PREV
+				}
 				every_owned_fleet = {
 					delete_fleet = THIS
 				}
 				destroy_country = yes
 			}
+
 			every_planet = {
 				limit = {
 					has_planet_flag = iicso_resources_set

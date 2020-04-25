@@ -1,0 +1,3 @@
+trader_has_arrived = {
+	trade_value_add = 10
+}

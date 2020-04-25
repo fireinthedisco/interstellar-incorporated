@@ -30,15 +30,35 @@ planet_event = {
     hide_window = yes
 
     immediate = {
+        #1 miner per ten pops on planet
         every_owned_pop = {
             PREV = { change_variable = { which = planet_miner_cap value = 1 }}
         }
-        #log = "[THIS.GetName] in empire [THIS.owner.GetName] has [THIS.planet_miner_cap] pops"
+        log = "[THIS.GetName] in empire [THIS.owner.GetName] has [THIS.planet_miner_cap] pops"
         divide_variable = { which = planet_miner_cap value = 10 }
-        #log = "[THIS.GetName] has miner cap of [THIS.planet_miner_cap]"
+        #remove remainder
+        set_variable = { which = planet_miner_cap_temp value = planet_miner_cap }
+        while = {
+            limit = { check_variable = { which = planet_miner_cap_temp value > 1 }}
+            change_variable = { which = planet_miner_cap_temp value = -1 }
+        }
+        subtract_variable = { which = planet_miner_cap value = planet_miner_cap_temp }
+        set_variable = { which = planet_miner_cap_temp value = 0 }
+        log = "[THIS.GetName] has miner cap of [THIS.planet_miner_cap]"
+
         random_country = {
             limit = {
                 has_country_flag = iicso_faction_of@ROOT.owner
+            }
+            every_owned_fleet = {
+                limit = {
+                    OR = {
+                        has_fleet_flag = civilian_miner
+                        has_fleet_flag = civilian_gas_miner
+                    }
+                    has_fleet_flag = home_colony@ROOT
+                }
+                ROOT = { change_variable = { which = planet_miner_count value = 1 }}
             }
             if = {
                 limit = {
@@ -49,78 +69,10 @@ planet_event = {
                             }
                         }
                     }
-                    OR = {
-                        count_owned_ships = {
-                            limit = {
-                                fleet = {
-                                    OR = {
-                                        has_fleet_flag = civilian_miner
-                                        has_fleet_flag = civilian_gas_miner
-                                    }
-                                    has_fleet_flag = home_colony@ROOT
-                                }
-                            }
-                            count < 2
-                        }
-                        AND = {
-                            PREV = { check_variable = { which = planet_miner_cap value = 3 }}
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        OR = {
-                                            has_fleet_flag = civilian_miner
-                                            has_fleet_flag = civilian_gas_miner
-                                        }
-                                        has_fleet_flag = home_colony@ROOT
-                                    }
-                                }
-                                count < 3
-                            } 
-                        }
-                        AND = {
-                            PREV = { check_variable = { which = planet_miner_cap value = 4 }}
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        OR = {
-                                            has_fleet_flag = civilian_miner
-                                            has_fleet_flag = civilian_gas_miner
-                                        }
-                                        has_fleet_flag = home_colony@ROOT
-                                    }
-                                }
-                                count < 4
-                            } 
-                        }
-                        AND = {
-                            PREV = { check_variable = { which = planet_miner_cap value = 5 }}
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        OR = {
-                                            has_fleet_flag = civilian_miner
-                                            has_fleet_flag = civilian_gas_miner
-                                        }
-                                        has_fleet_flag = home_colony@ROOT
-                                    }
-                                }
-                                count < 5
-                            } 
-                        }
-                        AND = {
-                            PREV = { check_variable = { which = planet_miner_cap value >= 6 }}
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        OR = {
-                                            has_fleet_flag = civilian_miner
-                                            has_fleet_flag = civilian_gas_miner
-                                        }
-                                        has_fleet_flag = home_colony@ROOT
-                                    }
-                                }
-                                count < 6
-                            } 
+                    ROOT = {
+                        OR = {
+                            check_variable = { which = planet_miner_count value < 2 }
+                            check_variable = { which = planet_miner_count value < planet_miner_cap }
                         }
                     }
                 }
@@ -189,7 +141,8 @@ planet_event = {
                 }
             }
         }
-        set_variable = { which = planet_pop_num value = 0}
+        set_variable = { which = planet_miner_cap value = 0 }
+        set_variable = { which = planet_miner_count value = 0 }
     }
 }
 
