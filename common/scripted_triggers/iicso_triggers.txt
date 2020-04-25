@@ -32,23 +32,23 @@ has_stockpile = {
     }
 }
 
-is_tanker_type = {
-    OR = {
-        has_fleet_flag = exotic_gases_ship
-        has_fleet_flag = volatile_motes_ship
-        has_fleet_flag = sr_dark_matter_ship
-        has_fleet_flag = sr_living_metal_ship
-        has_fleet_flag = energy_ship
-    }
-}
+# is_tanker_type = {
+#     OR = {
+#         has_fleet_flag = exotic_gases_ship
+#         has_fleet_flag = volatile_motes_ship
+#         has_fleet_flag = sr_dark_matter_ship
+#         has_fleet_flag = sr_living_metal_ship
+#         has_fleet_flag = energy_ship
+#     }
+# }
 
-is_container_type = {
-    OR = {
-        has_fleet_flag = minerals_ship
-        has_fleet_flag = alloys_ship
-        has_fleet_flag = rare_crystals_ship
-        has_fleet_flag = consumer_goods_ship
-        has_fleet_flag = food_ship
-        has_fleet_flag = sr_zro_ship
-    }
-}
+# is_container_type = {
+#     OR = {
+#         has_fleet_flag = minerals_ship
+#         has_fleet_flag = alloys_ship
+#         has_fleet_flag = rare_crystals_ship
+#         has_fleet_flag = consumer_goods_ship
+#         has_fleet_flag = food_ship
+#         has_fleet_flag = sr_zro_ship
+#     }
+# }
