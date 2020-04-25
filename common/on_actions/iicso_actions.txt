@@ -13,11 +13,12 @@ on_monthly_pulse = {
 		iicso.100
 		iicso.102
 		iicso.200
-		#iicso.403
+		iicso.403
 		#iicso.406
 		#iicso.1000
 		#iicso.600
 		#iicso.6000
+		iicso.900
 	}
 }
 
@@ -25,7 +26,6 @@ on_monthly_pulse = {
 on_yearly_pulse = {
 	events = {
 		iicso.121 #gate
-		#iicso.400
 		iicso.700
 	}
 }

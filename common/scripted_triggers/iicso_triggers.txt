@@ -1,75 +1,3 @@
-can_mine_planet = {
-    any_deposit = {
-        OR = {
-            is_deposit_type = d_minerals_1
-            is_deposit_type = d_minerals_2
-            is_deposit_type = d_minerals_3
-            is_deposit_type = d_minerals_4
-            is_deposit_type = d_minerals_5
-            is_deposit_type = d_minerals_6
-            is_deposit_type = d_minerals_7
-            is_deposit_type = d_minerals_8
-            is_deposit_type = d_minerals_9
-            is_deposit_type = d_minerals_10
-            is_deposit_type = d_alloys_1
-            is_deposit_type = d_alloys_2
-            is_deposit_type = d_alloys_3
-            is_deposit_type = d_alloys_4
-            is_deposit_type = d_alloys_5
-            AND = {
-                OR = {
-                    is_deposit_type = d_exotic_gases_1
-                    is_deposit_type = d_exotic_gases_2
-                    is_deposit_type = d_exotic_gases_3
-                    is_deposit_type = d_exotic_gases_4
-                    is_deposit_type = d_exotic_gases_5
-                }
-                ROOT = { owner = { has_technology = tech_mine_exotic_gases }}
-            }
-            AND = {
-                OR = {
-                    is_deposit_type = d_rare_crystals_1
-                    is_deposit_type = d_rare_crystals_2
-                    is_deposit_type = d_rare_crystals_3
-                    is_deposit_type = d_rare_crystals_4
-                    is_deposit_type = d_rare_crystals_5
-                }
-                ROOT = { owner = { has_technology = tech_mine_rare_crystals }}
-            }
-            AND = {
-                OR = {
-                    is_deposit_type = d_volatile_motes_1
-                    is_deposit_type = d_volatile_motes_2
-                    is_deposit_type = d_volatile_motes_3
-                    is_deposit_type = d_volatile_motes_4
-                    is_deposit_type = d_volatile_motes_5
-                }
-                ROOT = { owner = { has_technology = tech_mine_volatile_motes }}
-            }
-            AND = {
-               OR = { 
-                    is_deposit_type = d_zro_deposit_1
-                    is_deposit_type = d_zro_deposit_2
-                    is_deposit_type = d_zro_deposit_3
-               }
-               ROOT = { owner = { has_technology = tech_mine_zro }}
-            }
-            AND = {
-                OR = {
-                    is_deposit_type = d_dark_matter_deposit_1
-                    is_deposit_type = d_dark_matter_deposit_2
-                    is_deposit_type = d_dark_matter_deposit_3
-                }
-                ROOT = { owner = { has_technology = tech_mine_dark_matter }}
-            }
-            AND = {
-                is_deposit_type = d_living_metal_deposit
-                ROOT = { owner = { has_technology = tech_mine_living_metal }}
-            }
-        }
-    }
-}
-
 has_sufficient_stockpile = {
     OR = {
         check_variable = { which = iicso_stockpile_minerals value >= @min_small_cargo_capacity }
@@ -83,6 +11,7 @@ has_sufficient_stockpile = {
 
         check_variable = { which = iicso_stockpile_food value >= @min_small_cargo_capacity }
         check_variable = { which = iicso_stockpile_consumer_goods value >= @min_small_cargo_capacity }
+        check_variable = { which = iicso_stockpile_energy value >= @min_small_cargo_capacity }
     }
 }
 
@@ -99,6 +28,7 @@ has_stockpile = {
 
         check_variable = { which = iicso_stockpile_food value > 0 }
         check_variable = { which = iicso_stockpile_consumer_goods value > 0 }
+        check_variable = { which = iicso_stockpile_energy value > 0 }
     }
 }
 
@@ -106,9 +36,9 @@ is_tanker_type = {
     OR = {
         has_fleet_flag = exotic_gases_ship
         has_fleet_flag = volatile_motes_ship
-        has_fleet_flag = sr_zro_ship
         has_fleet_flag = sr_dark_matter_ship
         has_fleet_flag = sr_living_metal_ship
+        has_fleet_flag = energy_ship
     }
 }
 
@@ -119,5 +49,6 @@ is_container_type = {
         has_fleet_flag = rare_crystals_ship
         has_fleet_flag = consumer_goods_ship
         has_fleet_flag = food_ship
+        has_fleet_flag = sr_zro_ship
     }
 }

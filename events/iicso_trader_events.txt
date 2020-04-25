@@ -1,0 +1,148 @@
+###################################################################
+############## 7xx. Interimperial Trade Ship Events ###############
+###################################################################
+
+namespace = iicso
+
+#called by annual pulse
+#25% chance any given planet will try to send out a trader each year
+event = {
+    id = iicso.700
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        every_country = {
+            limit = {
+                is_country_type = default
+                any_country = {
+                    has_commercial_pact = PREV
+                }
+            }
+            random_country = {
+                limit = { has_commercial_pact = PREV }
+                #log = "[PREV.GetName] can roll for traders. Has pact with at least [THIS.GetName]"
+            }
+            every_owned_planet = {
+                #log = "[THIS.GetName] for empire [THIS.owner.GetName] is rolling for traders!"
+                PREV = { change_variable = { which = planets_traders_rolled value = 1 }}
+                random_list = {
+                    25 = {
+                        #log = "[THIS.GetName] has elected to send a trader this year!"
+                        planet_event = {
+                            id = iicso.701
+                            days = 1
+                            random = 359
+                        }
+                        PREV = { change_variable = { which = planets_traders_rolled_succ value = 1 }}
+                    }
+                    75 = {}
+                }
+            }
+            #log = "[THIS.GetName] rolled [THIS.planets_traders_rolled] planets with [THIS.planets_traders_rolled_succ] successes"
+        }
+    }
+}
+
+#called by iicso.700
+planet_event = {
+    id = iicso.701
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        #log = "[THIS.GetName] in [THIS.Owner.GetName] is searching for a trader target..."
+        random_planet = {
+            limit = {
+                is_colony = yes
+                owner = { has_commercial_pact = PREVPREV.owner }
+                controller = { is_same_value = PREV.owner }
+                NOT = { has_orbital_bombardment = yes }
+            }
+            weights = { #prefers closer targets
+                base = 0
+                modifier = {
+                    add = 20
+                    is_capital = yes
+                }
+                modifier = {
+                    add = 60
+                    distance = {
+                        source = PREV
+                        min_jumps = 0
+                        max_jumps = 5
+                        use_bypasses = yes
+                        bypass_empire = PREV.owner
+                    }
+                }
+                modifier = {
+                    add = 25
+                    distance = {
+                        source = PREV
+                        min_jumps = 6
+                        max_jumps = 10
+                        use_bypasses = yes
+                        bypass_empire = PREV.owner
+                    }
+                }
+                modifier = {
+                    add = 10
+                    distance = {
+                        source = PREV
+                        min_jumps = 11
+                        max_jumps = 15
+                        use_bypasses = yes
+                        bypass_empire = PREV.owner
+                    }
+                }
+                modifier = {
+                    add = 4
+                    distance = {
+                        source = PREV
+                        min_jumps = 16
+                        max_jumps = 20
+                        use_bypasses = yes
+                        bypass_empire = PREV.owner
+                    }
+                }
+                modifier = {
+                    add = 1
+                    distance = {
+                        source = PREV
+                        min_jumps = 21
+                        max_jumps = 25
+                        use_bypasses = yes
+                        bypass_empire = PREV.owner
+                    }
+                }
+            }
+            #log = "[PREV.GetName] in [PREV.owner.GetName] has found trader target - it's [THIS.GetName] in empire [THIS.owner.GetName]!"
+            random_country = {
+                limit = { has_country_flag = iicso_faction_of@ROOT.owner }
+                create_fleet = {
+                    name = trader_fleet
+                    effect = {
+                        set_owner = PREV
+                        set_location = ROOT
+                        set_fleet_flag = trader_home@ROOT
+                        set_fleet_flag = trader_destination@PREVPREV
+                        set_fleet_flag = trader_fleet
+                        create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_armed }
+                        set_fleet_stance = evasive
+                    }
+                }
+                last_created_fleet = {
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 120
+                    }
+                    auto_move_to_planet = {
+                        target = PREVPREV
+                        clear_auto_move_on_arrival = no
+                    }
+                }
+            }
+        }
+    }
+}
+

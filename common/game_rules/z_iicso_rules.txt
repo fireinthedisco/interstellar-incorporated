@@ -96,7 +96,7 @@ can_take_hostile_actions = {
 	}
 	else_if = {
 		limit = {
-			has_country_flag = civ_faction_of@ROOT
+			has_country_flag = iicso_faction_of@ROOT
 		}
 		custom_tooltip = {
 			text = ""

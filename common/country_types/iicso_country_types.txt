@@ -3,7 +3,7 @@ iicso_civilian_country = {
 	show_in_contacts_list = yes
 	government = yes
 	uses_origins = no
-	sub_title = "Civilian"
+	sub_title = civilian_subtitle
 	needs_survey = yes
 	share_survey_data = no
 	ship_disengagement = yes
@@ -27,12 +27,12 @@ iicso_civilian_country = {
 	}
 }
 
-iicso_corporation_country = {
+iicso_corporate_country = {
     playable = no
-	show_in_contacts_list = no
-	government = no
+	show_in_contacts_list = yes
+	government = yes
 	uses_origins = no
-    sub_title = "Corporation"
+    sub_title = corporation_subtitle
 	ai = {
         enabled = yes
 		declare_war = no

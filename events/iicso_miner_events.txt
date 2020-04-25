@@ -1,0 +1,559 @@
+#########################################################
+############# 4xx. Autonomous Miner Events ##############
+#########################################################
+
+namespace = iicso
+
+#spawns miners that mine asteroids for minerals and some alloys
+#called on yearly pulse
+country_event = {
+    id = iicso.400
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        every_owned_planet = {
+            limit = { NOT = { is_under_colonization = yes }}
+            planet_event = {
+                id = iicso.401
+                days = 1
+                random = 179
+            }
+        }
+    }
+}
+
+#called from iicso.400
+planet_event = {
+    id = iicso.401
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        every_owned_pop = {
+            PREV = { change_variable = { which = planet_miner_cap value = 1 }}
+        }
+        #log = "[THIS.GetName] in empire [THIS.owner.GetName] has [THIS.planet_miner_cap] pops"
+        divide_variable = { which = planet_miner_cap value = 10 }
+        #log = "[THIS.GetName] has miner cap of [THIS.planet_miner_cap]"
+        random_country = {
+            limit = {
+                has_country_flag = iicso_faction_of@ROOT.owner
+            }
+            if = {
+                limit = {
+                    ROOT.solar_system = {
+                        any_ship_in_system = {
+                            fleet = {
+                                owner = { NOT = { is_hostile = ROOT.owner }}
+                            }
+                        }
+                    }
+                    OR = {
+                        count_owned_ships = {
+                            limit = {
+                                fleet = {
+                                    OR = {
+                                        has_fleet_flag = civilian_miner
+                                        has_fleet_flag = civilian_gas_miner
+                                    }
+                                    has_fleet_flag = home_colony@ROOT
+                                }
+                            }
+                            count < 2
+                        }
+                        AND = {
+                            PREV = { check_variable = { which = planet_miner_cap value = 3 }}
+                            count_owned_ships = {
+                                limit = {
+                                    fleet = {
+                                        OR = {
+                                            has_fleet_flag = civilian_miner
+                                            has_fleet_flag = civilian_gas_miner
+                                        }
+                                        has_fleet_flag = home_colony@ROOT
+                                    }
+                                }
+                                count < 3
+                            } 
+                        }
+                        AND = {
+                            PREV = { check_variable = { which = planet_miner_cap value = 4 }}
+                            count_owned_ships = {
+                                limit = {
+                                    fleet = {
+                                        OR = {
+                                            has_fleet_flag = civilian_miner
+                                            has_fleet_flag = civilian_gas_miner
+                                        }
+                                        has_fleet_flag = home_colony@ROOT
+                                    }
+                                }
+                                count < 4
+                            } 
+                        }
+                        AND = {
+                            PREV = { check_variable = { which = planet_miner_cap value = 5 }}
+                            count_owned_ships = {
+                                limit = {
+                                    fleet = {
+                                        OR = {
+                                            has_fleet_flag = civilian_miner
+                                            has_fleet_flag = civilian_gas_miner
+                                        }
+                                        has_fleet_flag = home_colony@ROOT
+                                    }
+                                }
+                                count < 5
+                            } 
+                        }
+                        AND = {
+                            PREV = { check_variable = { which = planet_miner_cap value >= 6 }}
+                            count_owned_ships = {
+                                limit = {
+                                    fleet = {
+                                        OR = {
+                                            has_fleet_flag = civilian_miner
+                                            has_fleet_flag = civilian_gas_miner
+                                        }
+                                        has_fleet_flag = home_colony@ROOT
+                                    }
+                                }
+                                count < 6
+                            } 
+                        }
+                    }
+                }
+                #log = "Spawning fleet at [THIS.GetName]..."
+                random_list = {
+                    50 = {
+                        #log = "It's a mining fleet!"
+                        create_fleet = {
+                            name = miner_fleet
+                            effect = {
+                                set_owner = PREV
+                                create_ship = {
+                                    name = random
+                                    design = random_existing_design
+                                    random_existing_design = z_iicso_miner
+                                }
+                                last_created_ship = {
+                                    set_ship_flag = civilian_miner
+                                }
+                                set_fleet_flag = civilian_miner
+                                set_fleet_flag = home_colony@ROOT
+                                set_timed_fleet_flag = {
+                                    flag = orders_received
+                                    days = 120
+                                }
+                                set_location = ROOT
+                                #log = "Created miner at [ROOT.GetName]"
+                            }
+                        }
+                        #log = "Successfully created."
+                    }
+                    50 = {
+                        #log = "It's a gas mining fleet!"
+                        create_fleet = {
+                            name = gas_miner_fleet
+                            effect = {
+                                set_owner = PREV
+                                create_ship = {
+                                    name = random
+                                    design = random_existing_design
+                                    random_existing_design = z_iicso_tanker
+                                }
+                                last_created_ship = {
+                                    set_ship_flag = civilian_gas_miner
+                                }
+                                set_fleet_flag = civilian_gas_miner
+                                set_fleet_flag = home_colony@ROOT
+                                set_timed_fleet_flag = {
+                                    flag = orders_received
+                                    days = 120
+                                }
+                                set_location = ROOT
+                                #log = "Created miner at [ROOT.GetName]"
+                            }
+                        }
+                        #log = "Successfully created."
+                    }
+                }
+    
+                last_created_fleet = {
+                    fleet_event = {
+                        id = iicso.402
+                        days = 3
+                        random = 7
+                    }
+                }
+            }
+        }
+        set_variable = { which = planet_pop_num value = 0}
+    }
+}
+
+#miner decides which body to go mine
+#called from iicso.401, iicso.403, iicso.406, effect deposit_cargo_at_colony
+fleet_event = {
+    id = iicso.402
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        exists = FROM
+    }
+
+    immediate = {
+        remove_fleet_flag = enroute_to_mine
+        remove_fleet_flag = pending_mine_target
+        set_timed_fleet_flag = {
+            flag = orders_received
+            days = 120
+        }
+        #if = { limit = { owner = { overlord = { is_ai = no }}} log = "miner event started" }
+        random_planet = {
+            limit = { PREV = { has_fleet_flag = home_colony@PREV }}
+            #if = { limit = { ROOT = { owner = { overlord = { is_ai = no }}}} log = "found home colony [THIS.GetName]" }
+            
+            random_planet = {
+                limit = {
+                    NOT = { has_mining_station = yes }
+                    is_surveyed = { who = PREV.owner status = yes }
+                    NOT = { has_anomaly = yes }
+                    OR = {
+                        AND = {
+                            ROOT = { has_fleet_flag = civilian_miner }
+                            OR = {
+                                is_planet_class = pc_asteroid
+                                is_planet_class = pc_ice_asteroid
+                            }
+                        }
+                        AND = {
+                            ROOT = { has_fleet_flag = civilian_gas_miner }
+                            is_planet_class = pc_gas_giant
+                        }
+                    }
+                }
+                weights = {
+                    base = 0
+                    modifier = {
+                        add = 40
+                        distance = {
+                            source = PREV
+                            min_jumps = 0
+                            max_jumps = 2
+                            use_bypasses = yes
+                            bypass_empire = PREV.owner
+                        }
+                    }
+                    modifier = {
+                        add = 10
+                        distance = {
+                            source = PREV
+                            min_jumps = 3
+                            max_jumps = 4
+                            use_bypasses = yes
+                            bypass_empire = PREV.owner
+                        }
+                    }
+                    modifier = {
+                        add = 2
+                        distance = {
+                            source = PREV
+                            min_jumps = 5
+                            max_jumps = 6
+                            use_bypasses = yes
+                            bypass_empire = PREV.owner
+                        }
+                    }
+                }
+                #if = { limit = { ROOT = { owner = { overlord = { is_ai = no }}}} log = "found target planet [THIS.GetName]" }
+                ROOT = {
+                    set_fleet_flag = enroute_to_mine
+                    auto_move_to_planet = {
+                        target = PREV
+                        clear_auto_move_on_arrival = no
+                        arrival_effect = miner_arrival
+                    }
+                    #if = { limit = { owner = { overlord = { is_ai = no }}} log = "[THIS.GetName] enroute to [PREV.GetName]" }
+                }
+            }
+        }
+        if = {
+            limit = { NOT = { has_auto_move_target = yes }}
+            set_fleet_flag = pending_mine_target
+        }
+    }
+}
+
+#adds cargo to autonomous miners, sends them back to colony when full
+#called by on_monthly_pulse
+event = {
+    id = iicso.403
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        every_country = {
+            limit = { has_country_flag = iicso_civilian_country }
+            every_owned_fleet = {
+                limit = {
+                    OR = {
+                        has_fleet_flag = civilian_miner
+                        has_fleet_flag = civilian_gas_miner
+                    }
+                    exists = solar_system
+                    solar_system = {
+                        any_system_planet = {
+                            PREVPREV = { has_fleet_flag = mining_in_progress@PREV }
+                        }
+                    }
+                }
+
+                solar_system = {
+                    random_system_planet = {
+                        limit = { PREVPREV = { has_fleet_flag = mining_in_progress@PREV }}
+                        save_event_target_as = mined_planet
+                    }
+                }
+
+                calculate_empty_cargo = yes
+                if = {
+                    limit = { check_variable = { which = empty_cargo value > 0 }}
+                    add_cargo_to_miner = yes
+                }
+                #log = "[THIS.GetName] is mining [orbit.GetName]. Current cargo [THIS.cargo]"
+
+                if = {
+                    limit = { check_variable = { which = empty_cargo value = 0 }}
+
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 120
+                    }
+                    set_fleet_flag = enroute_to_home
+
+                    random_planet = {
+                        limit = { PREV = { has_fleet_flag = mining_in_progress@PREV }}
+                        PREV = { remove_fleet_flag = mining_in_progress@PREV }
+                    }
+
+                    random_planet = {
+                        limit = { PREV = { has_fleet_flag = home_colony@PREV }}
+                        PREV = {
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_colony
+                            }
+                        }
+                    }
+                }
+                else = {
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 120
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+#rerelays current destination in case ship ends up idle (runs for miners & freighters)
+#called by on monthly pulse
+event = {
+    id = iicso.406
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        every_country = {
+            limit = { has_country_flag = iicso_civilian_country }
+            every_owned_fleet = {
+                limit = { NOT = { has_fleet_flag = orders_received }}
+                if = {
+                    limit = { has_fleet_flag = enroute_to_home }
+
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 120
+                    }
+
+                    random_planet = {
+                        limit = { PREV = { has_fleet_flag = home_colony@PREV }}
+                        PREV = {
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_colony
+                            }
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        OR = {
+                            has_fleet_flag = pending_mine_target
+                            has_fleet_flag = enroute_to_mine
+                        }
+                    }
+                    fleet_event = {
+                        id = iicso.402
+                        days = 1
+                        random = 29
+                    }
+                }
+                else_if = {
+                    limit = { 
+                        any_system ={
+                            any_system_planet = {
+                                PREVPREV = {
+                                    has_fleet_flag = enroute_to_starbase@PREV
+                                }
+                            }
+                        }
+                    }
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 120
+                    }
+                    random_planet = {
+                        limit = { PREV = { has_fleet_flag = enroute_to_starbase@PREV }}
+                        PREV = {
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_starbase
+                            }
+                        }
+                        
+                    }
+                }
+                else_if = {
+                    limit = { 
+                        any_system ={
+                            any_system_planet = {
+                                PREVPREV = {
+                                    has_fleet_flag = enroute_to_colony@PREV
+                                }
+                            }
+                        }
+                    }
+                    set_timed_fleet_flag = {
+                        flag = orders_received
+                        days = 120
+                    }
+                    random_planet = {
+                        limit = { PREV = { has_fleet_flag = enroute_to_colony@PREV }}
+                        PREV = {
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_colony
+                            } 
+                        }
+                    }
+                }
+                else_if = {
+                    limit = { NOT = { has_fleet_flag = pending_reassignment }}
+                    delete_fleet = THIS
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+#called by on_starbase_transfer
+#reassigns miner to new colony; THIS = starbase ship scope, FROM = former owner
+# ship_event = {
+#     id = iicso.420
+#     is_triggered_only = yes
+#     hide_window = yes
+
+#     trigger = {
+#         solar_system = {
+#             any_system_planet = { is_colony = yes }
+#         }
+#         exists = FROM
+#     }
+
+#     immediate = {
+#         solar_system = {
+#             every_system_planet = {
+#                 limit = { is_colony = yes }
+#                 save_event_target_as = former_colony
+
+#                 FROM = {
+#                     random_country = {
+#                         limit = { has_country_flag = iicso_faction_of@PREV }
+#                         every_owned_fleet = {
+#                             limit = {
+#                                 has_fleet_flag = home_colony@event_target:former_colony
+#                                 has_fleet_flag = civilian_miner
+#                             }
+
+#                             closest_system = {
+#                                 limit = {
+#                                     any_system_planet = {
+#                                         is_colony = yes
+#                                         exists = owner
+#                                         owner = { is_same_value = FROM }
+#                                     }
+#                                 }
+#                                 random_system_planet = {
+#                                     limit = {
+#                                         is_colony = yes
+#                                         exists = owner
+#                                         owner = { is_same_value = FROM }
+#                                     }
+#                                     save_event_target_as = new_closest_colony
+#                                 }
+#                             }
+
+#                             remove_fleet_flag = home_colony@event_target:former_colony
+#                             set_fleet_flag = home_colony@event_target:new_closest_colony
+
+#                             if = {
+#                                 limit = {
+#                                     event_target:new_closest_colony = {
+#                                         owner = {
+#                                             count_owned_ships = {
+#                                                 limit = {
+#                                                     fleet = {
+#                                                         has_fleet_flag = civilian_miner
+#                                                         has_fleet_flag = home_colony@PREVPREVPREV
+#                                                     }
+#                                                 }
+#                                                 count >= 3
+#                                             }
+#                                         }
+#                                     }
+#                                 }
+#                                 set_fleet_flag = kill_switch
+#                             }
+
+#                             set_timed_fleet_flag = {
+#                                 flag = orders_received
+#                                 days = 120
+#                             }
+#                             remove_fleet_flag = enroute_to_mine
+#                             set_fleet_flag = enroute_to_home
+#                             remove_auto_move_target = yes
+#                             auto_move_to_planet = { target = event_target:new_closest_colony clear_auto_move_on_arrival = yes }
+#                         }
+#                     }
+#                 }
+#             }
+#         }
+#     }
+# }

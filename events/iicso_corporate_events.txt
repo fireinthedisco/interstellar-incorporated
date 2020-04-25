@@ -1,9 +1,35 @@
+#########################################################
+############### 9xx. Corporation Events #################
+#########################################################
+
+namespace = iicso
+
+#test event
 event = {
 	id = iicso.900
 	hide_window = yes
 	is_triggered_only = yes
 
+	trigger = {
+		NOT = { has_global_flag = spawned_corporations }
+	}
 	immediate = {
+		#log = "Spawning test corporations..."
+		#set_global_flag = spawned_corporations
 		
+		while = {
+			count = 30
+			create_country = {
+				name = random
+				type = iicso_corporate_country
+				ignore_initial_colony_error = yes
+				auto_delete = no
+
+				flag = random
+				name_list = random
+				species = random
+			}
+			log = "[last_created_country.GetName] has been spawned as a corporation!"
+		}
 	}
 }

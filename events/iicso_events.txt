@@ -13,7 +13,7 @@ event = {
                 solar_system = {
                     space_owner = {
                         random_country = {
-                            limit = { has_country_flag = civ_faction_of@PREV }
+                            limit = { has_country_flag = iicso_faction_of@PREV }
                             PREVPREVPREV = {
                                 set_owner = PREV
                             }
@@ -156,7 +156,7 @@ country_event = {
         }
         # random_country = {
         #     limit = {
-        #         has_country_flag = civ_faction_of@ROOT
+        #         has_country_flag = iicso_faction_of@ROOT
         #     }
         #     every_owned_fleet = {
         #         limit = {
@@ -244,6 +244,22 @@ event = {
                 days = 180
             }
         }
+        every_country = {
+            limit = {
+                OR = {
+                    is_country_type = default
+                    is_country_type = awakened_fallen_empire
+                }
+            }
+            country_event = {
+                id = iicso.400
+                days = 0
+            }
+            country_event = {
+                id = iicso.400
+                days = 180
+            }
+        }
     }
 }
 
@@ -272,7 +288,7 @@ event = {
                 limit = {
                     NOT = {
                         any_country = {
-                            has_country_flag = civ_faction_of@PREV
+                            has_country_flag = iicso_faction_of@PREV
                             has_country_flag = iicso_civilian_country
                         }
                     }
@@ -296,7 +312,7 @@ event = {
                 }
                 
                 establish_communications_no_message = last_created_country
-                set_country_flag = civ_faction@last_created_country
+                set_country_flag = iicso_faction_is@last_created_country
 
                 last_created_country = {
                     #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
@@ -305,7 +321,7 @@ event = {
                         subject_type = iicso_civilian_subject
                     }
                     set_country_flag = iicso_civilian_country
-                    set_country_flag = civ_faction_of@PREV
+                    set_country_flag = iicso_faction_of@PREV
                     copy_techs_from = { target = PREV }
                     set_name = random
                     #log = "[THIS.GetName] is economy vassal of [PREV.GetName]"
@@ -319,7 +335,7 @@ event = {
                                 is_country_type = awakened_fallen_empire
                             }
                             has_communications = PREVPREV
-                            NOT = { has_country_flag = civ_faction@PREV }
+                            NOT = { has_country_flag = iicso_faction_is@PREV }
                         }
                         establish_communications_no_message = PREV
 
@@ -353,7 +369,7 @@ event = {
             limit = { has_country_flag = iicso_civilian_country }
 
             random_country = {
-                limit = { has_country_flag = civ_faction@PREV }
+                limit = { has_country_flag = iicso_faction_is@PREV }
                 
                 save_event_target_as = parent_empire
             }
@@ -362,10 +378,10 @@ event = {
                 limit = {
                     OR = {
                         is_subject = no
-                        overlord = { NOT = { has_country_flag = civ_faction@PREV }}
+                        overlord = { NOT = { has_country_flag = iicso_faction_is@PREV }}
                     }
                     any_country = {
-                        has_country_flag = civ_faction@PREV
+                        has_country_flag = iicso_faction_is@PREV
                         is_subject = no
                     }
                 }
@@ -397,7 +413,7 @@ country_event = {
 
     immediate = {
         random_country = {
-            limit = { has_country_flag = civ_faction_of@ROOT }
+            limit = { has_country_flag = iicso_faction_of@ROOT }
             establish_communications_no_message = FROM
             FROM = {
                 if = {
@@ -407,7 +423,7 @@ country_event = {
             }
         }
         random_country = {
-            limit = { has_country_flag = civ_faction_of@FROM }
+            limit = { has_country_flag = iicso_faction_of@FROM }
             establish_communications_no_message = ROOT
             ROOT = {
                 if = {
@@ -434,7 +450,7 @@ country_event = {
         every_country = {
             limit = { is_at_war_with = PREV }
             random_country = {
-                limit = { has_country_flag = civ_faction_of@PREV }
+                limit = { has_country_flag = iicso_faction_of@PREV }
                 PREVPREV = {
                     set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
                 }
@@ -460,7 +476,7 @@ country_event = {
                 every_war_attacker = {
                     enemy = FROM
                     random_country = {
-                        limit = { has_country_flag = civ_faction_of@PREV }
+                        limit = { has_country_flag = iicso_faction_of@PREV }
                         PREVPREVPREV = {
                             set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
                         }
@@ -476,7 +492,7 @@ country_event = {
                 every_war_defender = {
                     enemy = FROM
                     random_country = {
-                        limit = { has_country_flag = civ_faction_of@PREV }
+                        limit = { has_country_flag = iicso_faction_of@PREV }
                         PREVPREVPREV = {
                             set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
                         }
@@ -491,7 +507,7 @@ country_event = {
         #     every_country = {
         #         limit = {
         #             any_country = {
-        #                 has_country_flag = civ_faction@PREV
+        #                 has_country_flag = iicso_faction_is@PREV
         #                 NOT = { is_at_war_with = PREVPREV }
         #             }
         #             has_communications = PREV
@@ -519,866 +535,6 @@ country_event = {
 #         }
 #     }
 # }
-
-#########################################################
-############# 4xx. Autonomous Miner Events ##############
-#########################################################
-
-#spawns miners that mine asteroids for minerals and some alloys
-#called on yearly pulse
-event = {
-    id = iicso.400
-    is_triggered_only = yes
-    hide_window = yes
-
-    immediate = {
-        every_country = {
-            limit = {
-                OR = {
-                    is_country_type = default
-                    is_country_type = awakened_fallen_empire
-                }
-            }
-            every_owned_planet = {
-                limit = { NOT = { is_under_colonization = yes }}
-                planet_event = {
-                    id = iicso.401
-                    days = 1
-                    random = 359
-                }
-            }
-        }
-    }
-}
-
-#called from iicso.400
-planet_event = {
-    id = iicso.401
-    is_triggered_only = yes
-    hide_window = yes
-
-    immediate = {
-        every_owned_pop = {
-            PREV = { change_variable = { which = planet_miner_cap value = 1 }}
-        }
-        log = "[THIS.GetName] in empire [THIS.owner.GetName] has [planet_miner_cap] pops"
-        divide_variable = { which = planet_miner_cap value = 10 }
-        random_country = {
-            limit = {
-                has_country_flag = civ_faction_of@ROOT.owner
-            }
-            set_variable = { which = planet_miner_cap value = PREV }
-            if = {
-                limit = {
-                    ROOT.solar_system = {
-                        any_ship_in_system = {
-                            fleet = {
-                                owner = { NOT = { is_hostile = ROOT.owner }}
-                            }
-                        }
-                    }
-                    OR = {
-                        count_owned_ships = {
-                            limit = {
-                                fleet = {
-                                    OR = {
-                                        has_fleet_flag = civilian_miner
-                                        has_fleet_flag = civilian_gas_miner
-                                    }
-                                    has_fleet_flag = home_colony@ROOT
-                                }
-                            }
-                            count < 2
-                        }
-                        AND = {
-                            PREV = { check_variable = { which = planet_miner_cap value = 3 }}
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        OR = {
-                                            has_fleet_flag = civilian_miner
-                                            has_fleet_flag = civilian_gas_miner
-                                        }
-                                        has_fleet_flag = home_colony@ROOT
-                                    }
-                                }
-                                count < 3
-                            } 
-                        }
-                        AND = {
-                            PREV = { check_variable = { which = planet_miner_cap value = 4 }}
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        OR = {
-                                            has_fleet_flag = civilian_miner
-                                            has_fleet_flag = civilian_gas_miner
-                                        }
-                                        has_fleet_flag = home_colony@ROOT
-                                    }
-                                }
-                                count < 4
-                            } 
-                        }
-                        AND = {
-                            PREV = { check_variable = { which = planet_miner_cap value = 5 }}
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        OR = {
-                                            has_fleet_flag = civilian_miner
-                                            has_fleet_flag = civilian_gas_miner
-                                        }
-                                        has_fleet_flag = home_colony@ROOT
-                                    }
-                                }
-                                count < 5
-                            } 
-                        }
-                        AND = {
-                            PREV = { check_variable = { which = planet_miner_cap value >= 6 }}
-                            count_owned_ships = {
-                                limit = {
-                                    fleet = {
-                                        OR = {
-                                            has_fleet_flag = civilian_miner
-                                            has_fleet_flag = civilian_gas_miner
-                                        }
-                                        has_fleet_flag = home_colony@ROOT
-                                    }
-                                }
-                                count < 6
-                            } 
-                        }
-                    }
-                }
-                random_list = {
-                    50 = {
-                        create_fleet = {
-                            name = miner_fleet
-                            effect = {
-                                set_owner = PREV
-                                create_ship = {
-                                    name = random
-                                    design = random_existing_design
-                                    random_existing_design = z_iicso_miner
-                                }
-                                last_created_ship = {
-                                    set_ship_flag = civilian_miner
-                                }
-                                set_fleet_flag = civilian_miner
-                                set_fleet_flag = home_colony@ROOT
-                                set_timed_fleet_flag = {
-                                    flag = orders_received
-                                    days = 120
-                                }
-                                set_location = ROOT
-                                #log = "Created miner at [ROOT.GetName]"
-                            }
-                        }
-                    }
-                    50 = {
-                        create_fleet = {
-                            name = gas_miner_fleet
-                            effect = {
-                                set_owner = PREV
-                                create_ship = {
-                                    name = random
-                                    design = random_existing_design
-                                    random_existing_design = z_iicso_tanker
-                                }
-                                last_created_ship = {
-                                    set_ship_flag = civilian_gas_miner
-                                }
-                                set_fleet_flag = civilian_gas_miner
-                                set_fleet_flag = home_colony@ROOT
-                                set_timed_fleet_flag = {
-                                    flag = orders_received
-                                    days = 120
-                                }
-                                set_location = ROOT
-                                #log = "Created miner at [ROOT.GetName]"
-                            }
-                        }
-                    }
-                }
-    
-                last_created_fleet = {
-                    fleet_event = {
-                        id = iicso.402
-                        days = 3
-                        random = 7
-                    }
-                }
-            }
-        }
-        set_variable = { which = planet_pop_num value = 0}
-    }
-}
-
-#miner decides which body to go mine
-#called from iicso.401, iicso.403, iicso.406, effect deposit_cargo_at_colony
-fleet_event = {
-    id = iicso.402
-    is_triggered_only = yes
-    hide_window = yes
-
-    trigger = {
-        exists = FROM
-    }
-
-    immediate = {
-        remove_fleet_flag = enroute_to_mine
-        remove_fleet_flag = pending_mine_target
-        set_timed_fleet_flag = {
-            flag = orders_received
-            days = 120
-        }
-        #if = { limit = { owner = { overlord = { is_ai = no }}} log = "miner event started" }
-        random_planet = {
-            limit = { PREV = { has_fleet_flag = home_colony@PREV }}
-            #if = { limit = { ROOT = { owner = { overlord = { is_ai = no }}}} log = "found home colony [THIS.GetName]" }
-            
-            random_planet = {
-                limit = {
-                    can_mine_planet = yes
-                    NOT = { has_mining_station = yes }
-                    is_surveyed = { who = PREV.owner status = yes }
-                    NOT = { has_anomaly = yes }
-                    OR = {
-                        AND = {
-                            ROOT = { has_fleet_flag = civilian_miner }
-                            OR = {
-                                is_planet_class = pc_asteroid
-                                is_planet_class = pc_ice_asteroid
-                            }
-                        }
-                        AND = {
-                            ROOT = { has_fleet_flag = civilian_gas_miner }
-                            is_planet_class = pc_gas_giant
-                        }
-                    }
-                }
-                weights = {
-                    base = 0
-                    modifier = {
-                        add = 10
-                        distance = {
-                            source = PREV.solar_system
-                            min_jumps = 0
-                            max_jumps = 2
-                            use_bypasses = yes
-                            bypass_empire = PREV.owner
-                        }
-                    }
-                    modifier = {
-                        add = 5
-                        distance = {
-                            source = PREV.solar_system
-                            min_jumps = 3
-                            max_jumps = 4
-                            use_bypasses = yes
-                            bypass_empire = PREV.owner
-                        }
-                    }
-                    modifier = {
-                        add = 2
-                        distance = {
-                            source = PREV.solar_system
-                            min_jumps = 5
-                            max_jumps = 6
-                            use_bypasses = yes
-                            bypass_empire = PREV.owner
-                        }
-                    }
-                }
-                #if = { limit = { ROOT = { owner = { overlord = { is_ai = no }}}} log = "found target planet [THIS.GetName]" }
-                ROOT = {
-                    set_fleet_flag = enroute_to_mine
-                    auto_move_to_planet = {
-                        target = PREV
-                        clear_auto_move_on_arrival = no
-                        arrival_effect = miner_arrival
-                    }
-                    #if = { limit = { owner = { overlord = { is_ai = no }}} log = "[THIS.GetName] enroute to [PREV.GetName]" }
-                }
-            }
-        }
-        if = {
-            limit = { NOT = { has_auto_move_target = yes }}
-            set_fleet_flag = pending_mine_target
-        }
-    }
-}
-
-#adds cargo to autonomous miners, sends them back to colony when full
-#called by on_monthly_pulse
-event = {
-    id = iicso.403
-    is_triggered_only = yes
-    hide_window = yes
-
-    immediate = {
-        every_country = {
-            limit = { has_country_flag = iicso_civilian_country }
-            every_owned_fleet = {
-                limit = {
-                    OR = {
-                        has_fleet_flag = civilian_miner
-                        has_fleet_flag = civilian_gas_miner
-                    }
-                    exists = solar_system
-                    solar_system = {
-                        any_system_planet = {
-                            PREVPREV = { has_fleet_flag = mining_in_progress@PREV }
-                        }
-                    }
-                }
-
-                solar_system = {
-                    random_system_planet = {
-                        limit = { PREVPREV = { has_fleet_flag = mining_in_progress@PREV }}
-                        save_event_target_as = mined_planet
-                    }
-                }
-
-                calculate_empty_cargo = yes
-                if = {
-                    limit = { check_variable = { which = empty_cargo value > 0 }}
-                    add_cargo_to_miner = yes
-                }
-                #log = "[THIS.GetName] is mining [orbit.GetName]. Current cargo [THIS.cargo]"
-
-                if = {
-                    limit = { check_variable = { which = empty_cargo value = 0 }}
-
-                    set_timed_fleet_flag = {
-                        flag = orders_received
-                        days = 120
-                    }
-                    set_fleet_flag = enroute_to_home
-
-                    random_planet = {
-                        limit = { PREV = { has_fleet_flag = home_colony@PREV }}
-                        PREV = {
-                            auto_move_to_planet = {
-                                target = PREV
-                                clear_auto_move_on_arrival = no
-                                arrival_effect = deposit_cargo_at_colony
-                            }
-                        }
-                    }
-                }
-                else = {
-                    set_timed_fleet_flag = {
-                        flag = orders_received
-                        days = 120
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-
-
-#rerelays current destination in case ship ends up idle (runs for miners & freighters)
-#called by on monthly pulse
-event = {
-    id = iicso.406
-    is_triggered_only = yes
-    hide_window = yes
-
-    immediate = {
-        every_country = {
-            limit = { has_country_flag = iicso_civilian_country }
-            every_owned_fleet = {
-                limit = { NOT = { has_fleet_flag = orders_received }}
-                if = {
-                    limit = { has_fleet_flag = enroute_to_home }
-
-                    set_timed_fleet_flag = {
-                        flag = orders_received
-                        days = 120
-                    }
-
-                    random_planet = {
-                        limit = { PREV = { has_fleet_flag = home_colony@PREV }}
-                        PREV = {
-                            auto_move_to_planet = {
-                                target = PREV
-                                clear_auto_move_on_arrival = no
-                                arrival_effect = deposit_cargo_at_colony
-                            }
-                        }
-                    }
-                }
-                else_if = {
-                    limit = {
-                        OR = {
-                            has_fleet_flag = pending_mine_target
-                            has_fleet_flag = enroute_to_mine
-                        }
-                    }
-                    fleet_event = {
-                        id = iicso.402
-                        days = 1
-                        random = 29
-                    }
-                }
-                else_if = {
-                    limit = { 
-                        any_system ={
-                            any_system_planet = {
-                                PREVPREV = {
-                                    has_fleet_flag = enroute_to_starbase@PREV
-                                }
-                            }
-                        }
-                    }
-                    set_timed_fleet_flag = {
-                        flag = orders_received
-                        days = 120
-                    }
-                    random_planet = {
-                        limit = { PREV = { has_fleet_flag = enroute_to_starbase@PREV }}
-                        PREV = {
-                            auto_move_to_planet = {
-                                target = PREV
-                                clear_auto_move_on_arrival = no
-                                arrival_effect = deposit_cargo_at_starbase
-                            }
-                        }
-                        
-                    }
-                }
-                else_if = {
-                    limit = { 
-                        any_system ={
-                            any_system_planet = {
-                                PREVPREV = {
-                                    has_fleet_flag = enroute_to_colony@PREV
-                                }
-                            }
-                        }
-                    }
-                    set_timed_fleet_flag = {
-                        flag = orders_received
-                        days = 120
-                    }
-                    random_planet = {
-                        limit = { PREV = { has_fleet_flag = enroute_to_colony@PREV }}
-                        PREV = {
-                            auto_move_to_planet = {
-                                target = PREV
-                                clear_auto_move_on_arrival = no
-                                arrival_effect = deposit_cargo_at_colony
-                            } 
-                        }
-                    }
-                }
-                else_if = {
-                    limit = { NOT = { has_fleet_flag = pending_reassignment }}
-                    delete_fleet = THIS
-                }
-            }
-        }
-    }
-}
-
-
-#called by on_starbase_transfer
-#reassigns miner to new colony; THIS = starbase ship scope, FROM = former owner
-# ship_event = {
-#     id = iicso.420
-#     is_triggered_only = yes
-#     hide_window = yes
-
-#     trigger = {
-#         solar_system = {
-#             any_system_planet = { is_colony = yes }
-#         }
-#         exists = FROM
-#     }
-
-#     immediate = {
-#         solar_system = {
-#             every_system_planet = {
-#                 limit = { is_colony = yes }
-#                 save_event_target_as = former_colony
-
-#                 FROM = {
-#                     random_country = {
-#                         limit = { has_country_flag = civ_faction_of@PREV }
-#                         every_owned_fleet = {
-#                             limit = {
-#                                 has_fleet_flag = home_colony@event_target:former_colony
-#                                 has_fleet_flag = civilian_miner
-#                             }
-
-#                             closest_system = {
-#                                 limit = {
-#                                     any_system_planet = {
-#                                         is_colony = yes
-#                                         exists = owner
-#                                         owner = { is_same_value = FROM }
-#                                     }
-#                                 }
-#                                 random_system_planet = {
-#                                     limit = {
-#                                         is_colony = yes
-#                                         exists = owner
-#                                         owner = { is_same_value = FROM }
-#                                     }
-#                                     save_event_target_as = new_closest_colony
-#                                 }
-#                             }
-
-#                             remove_fleet_flag = home_colony@event_target:former_colony
-#                             set_fleet_flag = home_colony@event_target:new_closest_colony
-
-#                             if = {
-#                                 limit = {
-#                                     event_target:new_closest_colony = {
-#                                         owner = {
-#                                             count_owned_ships = {
-#                                                 limit = {
-#                                                     fleet = {
-#                                                         has_fleet_flag = civilian_miner
-#                                                         has_fleet_flag = home_colony@PREVPREVPREV
-#                                                     }
-#                                                 }
-#                                                 count >= 3
-#                                             }
-#                                         }
-#                                     }
-#                                 }
-#                                 set_fleet_flag = kill_switch
-#                             }
-
-#                             set_timed_fleet_flag = {
-#                                 flag = orders_received
-#                                 days = 120
-#                             }
-#                             remove_fleet_flag = enroute_to_mine
-#                             set_fleet_flag = enroute_to_home
-#                             remove_auto_move_target = yes
-#                             auto_move_to_planet = { target = event_target:new_closest_colony clear_auto_move_on_arrival = yes }
-#                         }
-#                     }
-#                 }
-#             }
-#         }
-#     }
-# }
-
-#########################################################
-######### 6xx. Intercolonial Freighter Events ###########
-#########################################################
-
-# #called by monthly pulse
-# event = {
-#     id = iicso.600
-#     is_triggered_only = yes
-#     hide_window = yes
-
-#     immediate = {
-#         every_country = {
-#             limit = {
-#                 any_country = { has_country_flag = civ_faction_of@PREV }
-#             }
-#             random_country = {
-#                 limit = { has_country_flag = civ_faction_of@PREV }
-#                 save_event_target_as = civ_economy_country
-#             }
-#             every_owned_planet = {
-#                 limit = { check_variable = { which = planet_mineral_stockpile value > 10 }}
-
-#                 create_fleet = {
-#                     name = intercolonial_freighter_fleet
-#                     effect = {
-#                         set_owner = event_target:civ_economy_country
-#                         while = {
-#                             limit = { PREV = { check_variable = { which = planet_mineral_stockpile value > 10 }}}
-                            
-#                             create_ship = {
-#                                 name = random
-#                                 design = random_existing_design
-#                                 random_existing_design = z_iicso_freighter
-#                             }
-
-#                             PREV = { change_variable = { which = planet_mineral_stockpile value = -10 }}
-#                             change_variable = { which = cargo value = 10 }
-#                         }
-#                         set_fleet_flag = home_planet@PREV
-#                         set_fleet_flag = civilian_intercolonial_freighter
-#                         set_location = PREV
-#                     }
-#                 }
-
-#                 last_created_fleet = {
-#                     fleet_event = {
-#                         id = iicso.601
-#                         days = 5
-#                     }
-#                 }
-#             }
-#         }
-#     }
-# }
-
-# #called by other freighter events; sends the freighter to capital/home planet
-# fleet_event = {
-#     id = iicso.601
-#     is_triggered_only = yes
-#     hide_window = yes
-
-#     immediate = {
-#         random_country = {
-#             limit = {
-#                 has_country_flag = civ_faction@ROOT.owner
-#             }
-#             capital_scope = {
-#                 ROOT = {
-#                     set_timed_fleet_flag = {
-#                         flag = orders_received
-#                         days = 120
-#                     }
-#                     set_fleet_flag = enroute_to_capital
-#                     auto_move_to_planet = { target = PREV clear_auto_move_on_arrival = yes }
-#                 }
-#             }
-#         }
-#     }
-# }
-
-# #called by auto move arrival
-# country_event = {
-#     id = iicso.602
-#     is_triggered_only = yes
-#     hide_window = yes
-
-#     trigger = {
-#         FROM = {
-#             has_fleet_flag = civilian_intercolonial_freighter
-#             NOT = { has_fleet_flag = auto_move_arrival }
-#         }
-#     }
-#     immediate = {
-#         FROM = {
-#             set_timed_fleet_flag = {
-#                 flag = auto_move_arrival
-#                 days = 2
-#             }
-#             #if = { limit = { owner = { overlord = { is_ai = no }}} log = "[THIS.GetName] auto move completion at [orbit.GetName]" }
-#             if = {
-#                 limit = { has_fleet_flag = enroute_to_home_planet }
-#                 fleet_event = {
-#                     id = iicso.603
-#                     days = 10
-#                     random = 5
-#                 }
-#             }
-#             else_if = {
-#                 limit = { has_fleet_flag = enroute_to_capital }
-#                 #log = "Miner arrived at home base [orbit.GetName]"
-#                 remove_fleet_flag = enroute_to_capital
-
-#                 while = {
-#                     limit = { check_variable = { which = cargo value > 0 }}
-#                     change_variable = { which = cargo value = -1 }
-#                     #orbit = { owner = { add_minerals = 1 }}
-#                 }
-
-#                 fleet_event = { #send it back to the station
-#                     id = iicso.604
-#                     days = 10
-#                     random = 5
-#                 }
-#             }
-#         }
-#     }
-# }
-
-# #destroys fleet when it returns home
-# fleet_event = {
-#     id = iicso.603
-#     is_triggered_only = yes
-#     hide_window = yes
-
-#     immediate = {
-#         destroy_fleet = THIS
-#     }
-# }
-
-# #called by other freighter events; sends the freighter to home planet
-# fleet_event = {
-#     id = iicso.604
-#     is_triggered_only = yes
-#     hide_window = yes
-
-#     immediate = {
-#         random_planet = {
-#             limit = {
-#                 ROOT = { has_fleet_flag = home_planet@PREV }
-#             }
-#             ROOT = {
-#                 set_timed_fleet_flag = {
-#                     flag = orders_received
-#                     days = 120
-#                 }
-#                 set_fleet_flag = enroute_to_home_planet
-#                 auto_move_to_planet = { target = PREV clear_auto_move_on_arrival = yes }
-#             }
-#         }
-#     }
-# }
-
-###################################################################
-############## 7xx. Interimperial Trade Ship Events ###############
-###################################################################
-
-#called by annual pulse
-#25% chance any given planet will try to send out a trader each year
-event = {
-    id = iicso.700
-    is_triggered_only = yes
-    hide_window = yes
-
-    immediate = {
-        every_country = {
-            limit = {
-                is_country_type = default
-                any_country = {
-                    has_commercial_pact = PREV
-                }
-            }
-            random_country = {
-                limit = { has_commercial_pact = PREV }
-                log = "[PREV.GetName] can roll for traders. Has pact with at least [THIS.GetName]"
-            }
-            every_owned_planet = {
-                #log = "[THIS.GetName] for empire [THIS.owner.GetName] is rolling for traders!"
-                PREV = { change_variable = { which = planets_traders_rolled value = 1 }}
-                random_list = {
-                    25 = {
-                        #log = "[THIS.GetName] has elected to send a trader this year!"
-                        planet_event = {
-                            id = iicso.701
-                            days = 1
-                            random = 359
-                        }
-                        PREV = { change_variable = { which = planets_traders_rolled_succ value = 1 }}
-                    }
-                    75 = {}
-                }
-            }
-            log = "[THIS.GetName] rolled [THIS.planets_traders_rolled] planets with [THIS.planets_traders_rolled_succ] successes"
-        }
-    }
-}
-
-planet_event = {
-    id = iicso.701
-    is_triggered_only = yes
-    hide_window = yes
-
-    immediate = {
-        log = "[THIS.GetName] in [THIS.Owner.GetName] is searching for a trader target..."
-        random_planet = {
-            limit = {
-                is_colony = yes
-                owner = { has_commercial_pact = PREVPREV.owner }
-                controller = { is_same_value = PREV.owner }
-                NOT = { has_orbital_bombardment = yes }
-            }
-            weights = { #prefers closer targets
-                base = 0
-                modifier = {
-                    add = 5
-                    is_capital = yes
-                }
-                modifier = {
-                    add = 17
-                    distance = {
-                        source = PREV
-                        min_jumps = 0
-                        max_jumps = 5
-                        use_bypasses = yes
-                        bypass_empire = PREV.owner
-                    }
-                }
-                modifier = {
-                    add = 13
-                    distance = {
-                        source = PREV
-                        min_jumps = 6
-                        max_jumps = 10
-                        use_bypasses = yes
-                        bypass_empire = PREV.owner
-                    }
-                }
-                modifier = {
-                    add = 9
-                    distance = {
-                        source = PREV
-                        min_jumps = 11
-                        max_jumps = 15
-                        use_bypasses = yes
-                        bypass_empire = PREV.owner
-                    }
-                }
-                modifier = {
-                    add = 5
-                    distance = {
-                        source = PREV
-                        min_jumps = 16
-                        max_jumps = 20
-                        use_bypasses = yes
-                        bypass_empire = PREV.owner
-                    }
-                }
-                modifier = {
-                    add = 1
-                    distance = {
-                        source = PREV
-                        min_jumps = 21
-                        max_jumps = 25
-                        use_bypasses = yes
-                        bypass_empire = PREV.owner
-                    }
-                }
-            }
-            log = "[PREV.GetName] in [PREV.owner.GetName] has found trader target - it's [THIS.GetName] in empire [THIS.owner.GetName]!"
-            random_country = {
-                limit = { has_country_flag = civ_faction_of@ROOT.owner }
-                create_fleet = {
-                    name = trader_fleet
-                    effect = {
-                        set_owner = PREV
-                        set_location = ROOT
-                        set_fleet_flag = trader_home@ROOT
-                        set_fleet_flag = trader_destination@PREVPREV
-                        set_fleet_flag = trader_fleet
-                        create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_armed }
-                        set_fleet_stance = evasive
-                    }
-                }
-                last_created_fleet = {
-                    set_timed_fleet_flag = {
-                        flag = orders_received
-                        days = 120
-                    }
-                    auto_move_to_planet = {
-                        target = PREVPREV
-                        clear_auto_move_on_arrival = no
-                    }
-                }
-            }
-        }
-    }
-}
 
 
 

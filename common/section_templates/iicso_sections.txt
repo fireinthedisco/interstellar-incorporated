@@ -9,7 +9,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -29,7 +29,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -61,7 +61,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		
@@ -102,7 +102,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -122,7 +122,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -154,7 +154,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		
@@ -195,7 +195,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -215,7 +215,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -247,7 +247,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		
@@ -289,7 +289,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -309,7 +309,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -341,7 +341,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		
@@ -382,7 +382,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -402,7 +402,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -434,7 +434,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		
@@ -475,7 +475,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -495,7 +495,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -527,7 +527,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		
@@ -570,7 +570,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -590,7 +590,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -622,7 +622,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		
@@ -663,7 +663,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -683,7 +683,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -715,7 +715,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		
@@ -756,7 +756,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = banned_armament }
 			}
 		}		
@@ -776,7 +776,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = limited_armament }
 			}
 		}		
@@ -808,7 +808,7 @@ ship_section_template = {
 		modifier = {
 			factor = 0
 			any_country = {
-				has_country_flag = civ_faction@PREV
+				has_country_flag = iicso_faction_is@PREV
 				NOT = { has_policy_flag = unrestricted_armament }
 			}
 		}		

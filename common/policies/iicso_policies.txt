@@ -34,10 +34,10 @@ civilian_hostility = {
 				every_country = {
 					limit = {
 						any_country = {
-							has_country_flag = civ_faction@PREV
+							has_country_flag = iicso_faction_is@PREV
 						}
 						has_communications = PREV
-						PREV = { NOT = { has_country_flag = civ_faction@PREV }}
+						PREV = { NOT = { has_country_flag = iicso_faction_is@PREV }}
 					}
 					PREV = {
 						set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no } 
@@ -80,7 +80,7 @@ civilian_hostility = {
 				every_country = {
 					limit = { is_at_war_with = PREV }
 					random_country = {
-						limit = { has_country_flag = civ_faction_of@PREV }
+						limit = { has_country_flag = iicso_faction_of@PREV }
 						PREVPREV = {
 							set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
 						}					
@@ -94,7 +94,7 @@ civilian_hostility = {
 				every_country = {
 					limit = { is_at_war_with = PREV }
 					random_country = {
-						limit = { has_country_flag = civ_faction_of@PREV }
+						limit = { has_country_flag = iicso_faction_of@PREV }
 						PREVPREV = {
 							set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
 						}					
@@ -139,10 +139,10 @@ civilian_hostility = {
 				every_country = {
 					limit = {
 						any_country = {
-							has_country_flag = civ_faction@PREV
+							has_country_flag = iicso_faction_is@PREV
 						}
 						has_communications = PREV
-						PREV = { NOT = { has_country_flag = civ_faction@PREV }}
+						PREV = { NOT = { has_country_flag = iicso_faction_is@PREV }}
 					}
 					PREV = {
 						set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no } 
@@ -156,10 +156,10 @@ civilian_hostility = {
 				every_country = {
 					limit = {
 						any_country = {
-							has_country_flag = civ_faction@PREV
+							has_country_flag = iicso_faction_is@PREV
 						}
 						has_communications = PREV
-						PREV = { NOT = { has_country_flag = civ_faction@PREV }}
+						PREV = { NOT = { has_country_flag = iicso_faction_is@PREV }}
 					}
 					PREV = {
 						set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no } 

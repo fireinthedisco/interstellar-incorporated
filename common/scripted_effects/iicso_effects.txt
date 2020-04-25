@@ -2,131 +2,25 @@
 #THIS is fleet, FROM is planet
 deposit_cargo_at_colony = {
     #log = "deposit_cargo_at_colony is called by [FROMFROM.owner.GetName]"
-    # if = {
-    #     limit = {
-    #         owner = {
-    #             any_country = {
-    #                 has_country_flag = civ_faction@PREV
-    #                 capital_scope = {
-    #                     PREVPREVPREV = { has_fleet_flag = enroute_to_capital@PREV }
-    #                 }
-    #             }
-    #         }
-    #     }
-        while = {
-            count = cargo_minerals
-            FROM = { owner = { add_resource = { minerals = 1 }}}
-        }
-        set_variable = { which = cargo_minerals value = 0 }
-        while = {
-            count = cargo_alloys
-            FROM = { owner = { add_resource = { alloys = 1 }}}
-        }
-        set_variable = { which = cargo_alloys value = 0 }
-        while = {
-            count = cargo_exotic_gases
-            FROM = { owner = { add_resource = { exotic_gases = 1 }}}
-        }
-        set_variable = { which = cargo_exotic_gases value = 0 }
-        while = {
-            count = cargo_rare_crystals
-            FROM = { owner = { add_resource = { rare_crystals = 1 }}}
-        }
-        set_variable = { which = cargo_rare_crystals value = 0 }
-        while = {
-            count = cargo_volatile_motes
-            FROM = { owner = { add_resource = { volatile_motes = 1 }}}
-        }
-        set_variable = { which = cargo_volatile_motes value = 0 }
-        while = {
-            count = cargo_sr_zro
-            FROM = { owner = { add_resource = { sr_zro = 1 }}}
-        }
-        set_variable = { which = cargo_sr_zro value = 0 }
-        while = {
-            count = cargo_sr_dark_matter
-            FROM = { owner = { add_resource = { sr_dark_matter = 1 }}}
-        }
-        set_variable = { which = cargo_sr_dark_matter value = 0 }
-        while = {
-            count = cargo_sr_living_metal
-            FROM = { owner = { add_resource = { sr_living_metal = 1 }}}
-        }
-        set_variable = { which = cargo_sr_living_metal value = 0 }
-
-        while = {
-            count = cargo_food
-            FROM = { owner = { add_resource = { food = 1 }}}
-        }
-        set_variable = { which = cargo_food value = 0 }
-        while = {
-            count = cargo_consumer_goods
-            FROM = { owner = { add_resource = { consumer_goods = 1 }}}
-        }
-        set_variable = { which = cargo_consumer_goods value = 0 }    
-    #}
-    # else = {
-    #     while = {
-    #         count = cargo_minerals
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_minerals value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_minerals value = 0 }
-    #     while = {
-    #         count = cargo_alloys
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_alloys value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_alloys value = 0 }
-    #     while = {
-    #         count = cargo_exotic_gases
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_exotic_gases value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_exotic_gases value = 0 }
-    #     while = {
-    #         count = cargo_rare_crystals
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_rare_crystals value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_rare_crystals value = 0 }
-    #     while = {
-    #         count = cargo_volatile_motes
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_volatile_motes value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_volatile_motes value = 0 }
-    #     while = {
-    #         count = cargo_sr_zro
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_sr_zro value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_sr_zro value = 0 }
-    #     while = {
-    #         count = cargo_sr_dark_matter
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_sr_dark_matter value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_sr_dark_matter value = 0 }
-    #     while = {
-    #         count = cargo_sr_living_metal
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_sr_living_metal value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_sr_living_metal value = 0 }
-
-    #     while = {
-    #         count = cargo_food
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_food value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_food value = 0 }
-    #     while = {
-    #         count = cargo_consumer_goods
-    #         FROMFROM = { change_variable = { which = iicso_stockpile_consumer_goods value = 1 }}
-    #     }
-    #     set_variable = { which = cargo_consumer_goods value = 0 }
-    # }
+    deposit_resource_into_account = { RESOURCE = minerals }
+    deposit_resource_into_account = { RESOURCE = alloys }
+    deposit_resource_into_account = { RESOURCE = exotic_gases }
+    deposit_resource_into_account = { RESOURCE = rare_crystals }
+    deposit_resource_into_account = { RESOURCE = volatile_motes }
+    deposit_resource_into_account = { RESOURCE = sr_zro }
+    deposit_resource_into_account = { RESOURCE = sr_dark_matter }
+    deposit_resource_into_account = { RESOURCE = sr_living_metal }
+    deposit_resource_into_account = { RESOURCE = food }
+    deposit_resource_into_account = { RESOURCE = consumer_goods }
+    deposit_resource_into_account = { RESOURCE = energy }
     remove_fleet_flag = enroute_to_home
     if = {
         limit = {
             OR = {
-                has_fleet_flag = kill_switch
+                #has_fleet_flag = kill_switch
                 has_fleet_flag = station_freighter
                 has_fleet_flag = system_freighter
                 has_fleet_flag = hub_freighter
-                has_fleet_flag = colony_freighter
             }
         }
         fleet_event = {
@@ -135,13 +29,50 @@ deposit_cargo_at_colony = {
             random = 10
         }
     }
-    # else = {
-    #     fleet_event = {
-    #         id = iicso.402
-    #         days = 10
-    #         random = 10
-    #     }
+    else = {
+        fleet_event = {
+            id = iicso.402
+            days = 10
+            random = 10
+        }
+    }
+}
+
+deposit_cargo_at_starbase = {
+    deposit_resource_into_stockpile = { RESOURCE = minerals }
+    deposit_resource_into_stockpile = { RESOURCE = alloys }
+    deposit_resource_into_stockpile = { RESOURCE = exotic_gases }
+    deposit_resource_into_stockpile = { RESOURCE = rare_crystals }
+    deposit_resource_into_stockpile = { RESOURCE = volatile_motes }
+    deposit_resource_into_stockpile = { RESOURCE = sr_zro }
+    deposit_resource_into_stockpile = { RESOURCE = sr_dark_matter }
+    deposit_resource_into_stockpile = { RESOURCE = sr_living_metal }
+    deposit_resource_into_stockpile = { RESOURCE = food }
+    deposit_resource_into_stockpile = { RESOURCE = consumer_goods }
+    deposit_resource_into_stockpile = { RESOURCE = energy }
+
+    # fleet_event = {
+    #     id = iicso.504
+    #     days = 5
+    #     random = 10
     # }
+    delete_fleet = THIS
+}
+
+deposit_resource_into_account = {
+    while = {
+        count = cargo_$RESOURCE$
+        FROM = { owner = { add_resource = { $RESOURCE$ = 1 }}}
+    }
+    set_variable = { which = cargo_$RESOURCE$ value = 0 }
+}
+
+deposit_resource_into_stockpile = {
+    while = {
+        count = cargo_$RESOURCE$
+        FROM = { change_variable = { which = iicso_stockpile_$RESOURCE$ value = 1 }}
+    }
+    set_variable = { which = cargo_$RESOURCE$ value = 0 }
 }
 
 calculate_empty_cargo = {
@@ -155,13 +86,20 @@ calculate_empty_cargo = {
                     has_ship_flag = medium_cargo_ship
                     has_ship_flag = small_cargo_ship
                     has_ship_flag = civilian_miner
+                    has_ship_flag = civilian_gas_miner
                 }
             }
             if = {
                 limit = { has_ship_flag = large_cargo_ship }
                 PREVPREV = { change_variable = { which = empty_cargo value = @large_cargo_capacity }}
             } else_if = {
-                limit = { OR = { has_ship_flag = medium_cargo_ship has_ship_flag = civilian_miner }}
+                limit = {
+                    OR = {
+                        has_ship_flag = medium_cargo_ship
+                        has_ship_flag = civilian_miner
+                        has_ship_flag = civilian_gas_miner
+                    }
+                }
                 PREVPREV = { change_variable = { which = empty_cargo value = @medium_cargo_capacity }}
             } else_if = {
                 limit = { has_ship_flag = small_cargo_ship }
@@ -180,6 +118,7 @@ calculate_empty_cargo = {
 
     subtract_variable = { which = empty_cargo value = cargo_food }
     subtract_variable = { which = empty_cargo value = cargo_consumer_goods }
+    subtract_variable = { which = empty_cargo value = cargo_energy }
 }
 
 miner_arrival = {
@@ -192,7 +131,6 @@ miner_arrival = {
 }
 
 add_cargo_to_miner = {
-
     if = {
         limit = { has_fleet_flag = civilian_miner }
         random_list = {
@@ -314,6 +252,7 @@ create_station_freighter_ships = {
         change_variable = { which = total_stockpile value = iicso_stockpile_sr_living_metal }
         change_variable = { which = total_stockpile value = iicso_stockpile_food }
         change_variable = { which = total_stockpile value = iicso_stockpile_consumer_goods }
+        change_variable = { which = total_stockpile value = iicso_stockpile_energy }
     }
     while = {
         limit = {
@@ -330,6 +269,7 @@ create_station_freighter_ships = {
                     
                     check_variable = { which = iicso_stockpile_food value > 0 }
                     check_variable = { which = iicso_stockpile_consumer_goods value > 0 }
+                    check_variable = { which = iicso_stockpile_energy value > 0 }
                 }
             }
         }
@@ -466,6 +406,18 @@ create_station_freighter_ships = {
             PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
         }
 
+        while = {
+            limit = {
+                check_variable = { which = cargo_load value > 0 }
+                PREVPREV = { check_variable = { which = iicso_stockpile_energy value > 0 }}
+            }
+            change_variable = { which = cargo_load value = -1 }
+            change_variable = { which = cargo_energy value = 1 }
+            change_variable = { which = ship_cargo_energy value = 1 }
+            PREVPREV = { change_variable = { which = iicso_stockpile_energy value = -1 }}
+            PREVPREV = { change_variable = { which = total_stockpile value = -1 }}
+        }
+
         set_variable = { which = cargo_load value = 0 }
 
         if = {
@@ -480,8 +432,7 @@ create_station_freighter_ships = {
                     } AND = {
                         has_fleet_flag = small_cargo_ship
                         check_variable = { which = ship_cargo_minerals value > @min_small_cargo_capacity }
-                    }
-                    AND = {
+                    } AND = {
                         check_variable = { which = ship_cargo_minerals value > 0 }
                         check_variable = { which = ship_cargo_alloys value = 0 }
                         check_variable = { which = ship_cargo_exotic_gases value = 0 }
@@ -493,6 +444,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -523,6 +475,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -553,6 +506,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -583,6 +537,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -613,6 +568,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -643,6 +599,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -673,6 +630,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -703,6 +661,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -733,6 +692,7 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value > 0 }
                         check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
@@ -763,10 +723,42 @@ create_station_freighter_ships = {
                         
                         check_variable = { which = ship_cargo_food value = 0 }
                         check_variable = { which = ship_cargo_consumer_goods value > 0 }
+                        check_variable = { which = ship_cargo_energy value = 0 }
                     }
                 }
             }
             set_fleet_flag = consumer_goods_ship
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    AND = {
+                        has_fleet_flag = large_cargo_ship
+                        check_variable = { which = ship_cargo_energy value > @min_large_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = medium_cargo_ship
+                        check_variable = { which = ship_cargo_energy value > @min_medium_cargo_capacity }
+                    } AND = {
+                        has_fleet_flag = small_cargo_ship
+                        check_variable = { which = ship_cargo_energy value > @min_small_cargo_capacity }
+                    }
+                    AND = {
+                        check_variable = { which = ship_cargo_minerals value = 0 }
+                        check_variable = { which = ship_cargo_alloys value = 0 }
+                        check_variable = { which = ship_cargo_exotic_gases value = 0 }
+                        check_variable = { which = ship_cargo_rare_crystals value = 0 }
+                        check_variable = { which = ship_cargo_volatile_motes value = 0 }
+                        check_variable = { which = ship_cargo_sr_zro value = 0 }
+                        check_variable = { which = ship_cargo_sr_dark_matter value = 0 }
+                        check_variable = { which = ship_cargo_sr_living_metal value = 0 }
+                        
+                        check_variable = { which = ship_cargo_food value = 0 }
+                        check_variable = { which = ship_cargo_consumer_goods value = 0 }
+                        check_variable = { which = ship_cargo_energy value > 0 }
+                    }
+                }
+            }
+            set_fleet_flag = energy_ship
         }
         else = {
             set_fleet_flag = mixed_cargo_ship
@@ -893,6 +885,9 @@ create_station_freighter_ships = {
             limit = { has_fleet_flag = consumer_goods_ship }
             last_created_ship = { set_name = "Consumer Goods Transport" }
         } else_if = {
+            limit = { has_fleet_flag = energy_ship }
+            last_created_ship = { set_name = "Energy Transport" }
+        } else_if = {
             limit = { has_fleet_flag = mixed_cargo_ship }
             last_created_ship = { set_name = "Mixed Cargo Transport" }
         }
@@ -918,6 +913,7 @@ create_station_freighter_ships = {
         remove_fleet_flag = sr_living_metal_ship
         remove_fleet_flag = food_ship
         remove_fleet_flag = consumer_goods_ship
+        remove_fleet_flag = energy_ship
 
         remove_fleet_flag = large_cargo_ship
         remove_fleet_flag = medium_cargo_ship
@@ -933,67 +929,8 @@ create_station_freighter_ships = {
         set_variable = { which = ship_cargo_sr_living_metal value = 0 }
         set_variable = { which = ship_cargo_food value = 0 }
         set_variable = { which = ship_cargo_consumer_goods value = 0 }
+        set_variable = { which = ship_cargo_energy value = 0 }
     }
-}
-
-deposit_cargo_at_starbase = {
-    while = {
-        count = cargo_minerals
-        FROM = { change_variable = { which = iicso_stockpile_minerals value = 1 }}
-    }
-    set_variable = { which = cargo_minerals value = 0 }
-    while = {
-        count = cargo_alloys
-        FROM = { change_variable = { which = iicso_stockpile_alloys value = 1 }}
-    }
-    set_variable = { which = cargo_alloys value = 0 }
-    while = {
-        count = cargo_exotic_gases
-        FROM = { change_variable = { which = iicso_stockpile_exotic_gases value = 1 }}
-    }
-    set_variable = { which = cargo_exotic_gases value = 0 }
-    while = {
-        count = cargo_rare_crystals
-        FROM = { change_variable = { which = iicso_stockpile_rare_crystals value = 1 }}
-    }
-    set_variable = { which = cargo_rare_crystals value = 0 }
-    while = {
-        count = cargo_volatile_motes
-        FROM = { change_variable = { which = iicso_stockpile_volatile_motes value = 1 }}
-    }
-    set_variable = { which = cargo_volatile_motes value = 0 }
-    while = {
-        count = cargo_sr_zro
-        FROM = { change_variable = { which = iicso_stockpile_sr_zro value = 1 }}
-    }
-    set_variable = { which = cargo_sr_zro value = 0 }
-    while = {
-        count = cargo_sr_dark_matter
-        FROM = { change_variable = { which = iicso_stockpile_sr_dark_matter value = 1 }}
-    }
-    set_variable = { which = cargo_sr_dark_matter value = 0 }
-    while = {
-        count = cargo_sr_living_metal
-        FROM = { change_variable = { which = iicso_stockpile_sr_living_metal value = 1 }}
-    }
-    set_variable = { which = cargo_sr_living_metal value = 0 }
-    while = {
-        count = cargo_food
-        FROM = { change_variable = { which = iicso_stockpile_food value = 1 }}
-    }
-    set_variable = { which = cargo_food value = 0 }
-    while = {
-        count = cargo_consumer_goods
-        FROM = { change_variable = { which = iicso_stockpile_consumer_goods value = 1 }}
-    }
-    set_variable = { which = cargo_consumer_goods value = 0 }
-
-    # fleet_event = {
-    #     id = iicso.504
-    #     days = 5
-    #     random = 10
-    # }
-    delete_fleet = THIS
 }
 
 set_planet_resources = {
