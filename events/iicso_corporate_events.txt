@@ -196,7 +196,7 @@ country_event = {
 
 
 
-#gives corporations 1/4 of mining stations
+#gives corporations 1/5 of mining stations
 #fired every six months by annual gatekeeper
 country_event = {
     id = iicso.910
@@ -223,7 +223,7 @@ country_event = {
 				change_variable = { which = iicso_corp_station_count value = 1 }
 			}
 		}
-		divide_variable = { which = iicso_corp_station_cap value = 4 }
+		divide_variable = { which = iicso_corp_station_cap value = 5 }
 		#remove remainder
 		set_variable = { which = iicso_corp_station_cap_temp value = iicso_corp_station_cap }
 		while = {

@@ -1,3 +1,19 @@
+destroy_fleet_delayed = {
+    fleet_event = {
+        id = iicso.106
+        days = 5
+        random = 10
+    }
+}
+
+delete_fleet_delayed = {
+    fleet_event = {
+        id = iicso.107
+        days = 5
+        random = 10
+    }
+}
+
 #called in auto move arrival effects
 #THIS is fleet, FROM is planet
 deposit_cargo_at_colony = {
@@ -23,11 +39,7 @@ deposit_cargo_at_colony = {
                 has_fleet_flag = hub_freighter
             }
         }
-        fleet_event = {
-            id = iicso.504
-            days = 5
-            random = 10
-        }
+        delete_fleet_delayed = yes
     }
     else = {
         fleet_event = {
@@ -51,12 +63,7 @@ deposit_cargo_at_starbase = {
     deposit_resource_into_stockpile = { RESOURCE = consumer_goods }
     deposit_resource_into_stockpile = { RESOURCE = energy }
 
-    # fleet_event = {
-    #     id = iicso.504
-    #     days = 5
-    #     random = 10
-    # }
-    delete_fleet = THIS
+    delete_fleet_delayed = yes
 }
 
 deposit_resource_into_account = {
@@ -123,8 +130,8 @@ calculate_empty_cargo = {
 
 miner_arrival = {
     if = {
-        limit = { has_fleet_flag = enroute_to_mine }
-        remove_fleet_flag = enroute_to_mine
+        limit = { has_fleet_flag = enroute_to_mining_target }
+        remove_fleet_flag = enroute_to_mining_target
         set_fleet_flag = mining_in_progress@orbit
         #log = "Miner arrived at mining target [orbit.GetName]"
     }
@@ -216,7 +223,7 @@ trader_arrival = {
 
 trader_arrival_home = {
     FROM = { add_modifier = { modifier = trader_has_arrived days = 360 }}
-    delete_fleet = THIS
+    delete_fleet_delayed = yes
 }
 
 create_station_freighter_ships_add_resource = {
@@ -695,6 +702,69 @@ set_planet_resources = {
     else_if = {
         limit = { any_deposit = { is_deposit_type = d_energy_10 }}
         set_variable = { which = iicso_orbital_energy value = 10 }
+    }
+
+    if = {
+        limit = { exists = space_owner }
+        space_owner = {
+            if = {
+                limit = { has_modifier = cosmic_ray_catalysis }
+                ROOT = { change_variable = { which = iicso_orbital_energy_mult value = 0.1 }}
+            }
+            if = {
+                limit = { has_modifier = drone_mining_techniques }
+                ROOT = { change_variable = { which = iicso_orbital_minerals_mult value = 0.1 }}
+            }
+            if = {
+                limit = { has_technology = tech_space_mining_1 }
+                ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
+            }
+            if = {
+                limit = { has_technology = tech_space_mining_2 }
+                ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
+            }
+            if = {
+                limit = { has_technology = tech_space_mining_3 }
+                ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
+            }
+            if = {
+                limit = { has_technology = tech_space_mining_4 }
+                ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
+            }
+            if = {
+                limit = { has_technology = tech_space_mining_5 }
+                ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
+            }
+            if = {
+                limit = { has_tradition = tr_prosperity_adopt } #not sure if this works for swapped machine and hive mind trads
+                ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
+            }
+            if = {
+                limit = { ruler = { has_trait = trait_ruler_space_miner } }
+                ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
+            }
+        }
+
+        change_variable = { which = iicso_orbital_minerals_mult value = 1 }
+        change_variable = { which = iicso_orbital_energy_mult value = 1 }
+        change_variable = { which = iicso_orbital_produces_mult value = 1 }
+
+        multiply_variable = { which = iicso_orbital_minerals value = iicso_orbital_produces_mult }
+        multiply_variable = { which = iicso_orbital_alloys value = iicso_orbital_produces_mult }
+        multiply_variable = { which = iicso_orbital_exotic_gases value = iicso_orbital_produces_mult }
+        multiply_variable = { which = iicso_orbital_rare_crystals value = iicso_orbital_produces_mult }
+        multiply_variable = { which = iicso_orbital_volatile_motes value = iicso_orbital_produces_mult }
+        multiply_variable = { which = iicso_orbital_sr_zro value = iicso_orbital_produces_mult }
+        multiply_variable = { which = iicso_orbital_sr_dark_matter value = iicso_orbital_produces_mult }
+        multiply_variable = { which = iicso_orbital_sr_living_metal value = iicso_orbital_produces_mult }
+        multiply_variable = { which = iicso_orbital_energy value = iicso_orbital_produces_mult }
+        
+        multiply_variable = { which = iicso_orbital_minerals value = iicso_orbital_minerals_mult }
+        multiply_variable = { which = iicso_orbital_energy value = iicso_orbital_energy_mult }
+        
+        set_variable = { which = iicso_orbital_minerals_mult value = 0 }
+        set_variable = { which = iicso_orbital_energy_mult value = 0 }
+        set_variable = { which = iicso_orbital_produces_mult value = 0 }
     }
 }
 

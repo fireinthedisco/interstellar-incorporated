@@ -57,7 +57,10 @@ planet_event = {
         #log = "mineral count triggered on planet [THIS.GetName] in empire [THIS.solar_system.space_owner.GetName]"
         #first find how many resources the mining station produces
         set_planet_resources = yes
-        set_planet_flag = iicso_resources_set
+        set_timed_planet_flag = {
+            flag = iicso_resources_set
+            days = 360
+        }
         #log = "planet [THIS.GetName] has [THIS.iicso_orbital_minerals] minerals"
 
         if = {
@@ -176,6 +179,170 @@ country_event = {
         #         auto_move_to_planet = { target = event_target:closest_colony clear_auto_move_on_arrival = yes }
         #     }
         # }
+    }
+}
+
+country_event = {
+    id = iicso.104
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        OR = {
+            is_country_type = iicso_civilian_country
+            is_country_type = iicso_corporate_country
+        }
+    }
+
+    immediate = {
+        every_owned_fleet = {
+            limit = { NOT = { has_fleet_flag = orders_received }}
+            if = {
+                limit = { check_variable = { which = orders_renewed value > 2 }}
+                #detroy
+                fleet_event = {
+                    id = iicso.106
+                    days = 1
+                    random = 89
+                }
+            }
+            else = {
+                fleet_event = {
+                    id = iicso.105
+                    days = 1
+                    random = 89
+                }
+            }
+        }
+    }
+}
+
+fleet_event = {
+    id = iicso.105
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        exists = THIS
+    }
+
+    immediate = {
+        change_variable = { which = orders_renewed value = 1 }
+        set_timed_fleet_flag = {
+            flag = orders_received
+            days = 360
+        }
+        remove_auto_move_target = yes
+        if = {
+            limit = { has_fleet_flag = enroute_to_home }
+            random_planet = {
+                limit = { ROOT = { has_fleet_flag = fleet_home@PREV }}
+                ROOT = {
+                    if = {
+                        limit = { has_fleet_flag = trader_fleet }
+                        auto_move_to_planet = {
+                            target = PREV
+                            clear_auto_move_on_arrival = no
+                            arrival_effect = trader_arrival_home
+                        }
+                    }
+                    else_if = {
+                        limit = {
+                            OR = {
+                                has_fleet_flag = civilian_miner
+                                has_fleet_flag = civilian_gas_miner
+                            }
+                        }
+                        auto_move_to_planet = {
+                            target = PREV
+                            clear_auto_move_on_arrival = no
+                            arrival_effect = deposit_cargo_at_colony
+                        }
+                    }
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    has_fleet_flag = enroute_to_trade_target
+                    has_fleet_flag = enroute_to_colony
+                    has_fleet_flag = enroute_to_starbase
+                    has_fleet_flag = enroute_to_mining_target
+                }
+            }
+            random_planet = {
+                limit = { ROOT = { has_fleet_flag = fleet_destination@PREV }}
+                ROOT = {
+                    if = {
+                        limit = { has_fleet_flag = enroute_to_trade_target }
+                        auto_move_to_planet = {
+                            target = PREV
+                            clear_auto_move_on_arrival = no
+                            arrival_effect = trader_arrival
+                        }
+                    }
+                    else_if = {
+                        limit = { has_fleet_flag = enroute_to_colony }
+                        auto_move_to_planet = {
+                            target = PREV
+                            clear_auto_move_on_arrival = no
+                            arrival_effect = deposit_cargo_at_colony
+                        }
+                    }
+                    else_if = {
+                        limit = { has_fleet_flag = enroute_to_starbase }
+                        auto_move_to_planet = {
+                            target = PREV
+                            clear_auto_move_on_arrival = no
+                            arrival_effect = deposit_cargo_at_starbase
+                        }
+                    }
+                    else_if = {
+                        limit = { has_fleet_flag = enroute_to_mining_target }
+                        auto_move_to_planet = {
+                            target = PREV
+                            clear_auto_move_on_arrival = no
+                            arrival_effect = miner_arrival
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#destroy fleet (with death anims), for when fleets get stuck somewhere and their time expires
+fleet_event = {
+    id = iicso.106
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        exists = THIS
+    }
+
+    immediate = {
+        destroy_fleet = THIS
+    }
+}
+
+#delete fleet (no death anims), for when fleets arrive safely and need to be removed
+fleet_event = {
+    id = iicso.107
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        exists = THIS
+    }
+
+    immediate = {
+        delete_fleet = THIS
     }
 }
 
@@ -318,7 +485,6 @@ event = {
 
     immediate = {
         #log = "yearly pulse gate event triggered"
-        #quarterly events
         
         every_country = {
             limit = {
@@ -338,6 +504,36 @@ event = {
             }
         }
         
+        #quarterly events
+
+        every_country = {
+            limit = {
+                OR = {
+                    is_country_type = iicso_civilian_country
+                    is_country_type = iicso_corporate_country
+                }
+            }
+            country_event = {
+                id = iicso.104
+                days = 1
+                random = 89
+            }
+            country_event = {
+                id = iicso.104
+                days = 91
+                random = 89
+            }
+            country_event = {
+                id = iicso.104
+                days = 181
+                random = 89
+            }
+            country_event = {
+                id = iicso.104
+                days = 271
+                random = 89
+            }
+        }
 
         #semiannual events
 

@@ -342,17 +342,3 @@ fleet_event = {
         }
     }
 }
-
-#called by effect deposit_cargo_at_colony
-#literally just kills the fleet (but can be called with delay)
-fleet_event = {
-    id = iicso.504
-    is_triggered_only = yes
-    hide_window = yes
-
-    trigger = { has_global_flag = iicso_active }
-
-    immediate = {
-        delete_fleet = THIS
-    }
-}
