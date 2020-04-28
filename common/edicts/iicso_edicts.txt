@@ -56,6 +56,25 @@ iicso_deactivate = {
 				set_variable = { which = iicso_orbital_sr_zro value = 0 }
 				set_variable = { which = iicso_orbital_sr_dark_matter value = 0 }
 				set_variable = { which = iicso_orbital_sr_living_metal value = 0 }
+				set_variable = { which = iicso_orbital_energy value = 0 }
+			}
+
+			every_planet = {
+				limit = {
+					has_stockpile = yes
+				}
+				set_variable = { which = iicso_stockpile_minerals value = 0 }
+				set_variable = { which = iicso_stockpile_alloys value = 0 }
+				set_variable = { which = iicso_stockpile_exotic_gases value = 0 }
+				set_variable = { which = iicso_stockpile_rare_crystals value = 0 }
+				set_variable = { which = iicso_stockpile_volatile_motes value = 0 }
+				set_variable = { which = iicso_stockpile_sr_zro value = 0 }
+				set_variable = { which = iicso_stockpile_sr_dark_matter value = 0 }
+				set_variable = { which = iicso_stockpile_sr_living_metal value = 0 }
+		
+				set_variable = { which = iicso_stockpile_food value = 0 }
+				set_variable = { which = iicso_stockpile_consumer_goods value = 0 }
+				set_variable = { which = iicso_stockpile_energy value = 0 }
 			}
 		}
 	}

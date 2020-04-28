@@ -1,7 +1,8 @@
 # Find out if iicso.211 works whatsoever - supposed to fix hostilities towards civ factions after war end
-# Empire with indiscriminate civ hostility still shouldn't be hostile to ally civs (check if hostile to own as well)
+# Empires with indiscriminate civ hostility don't become neutral to civs on NAP or defense pact signed
 # If you use resource calc again, sr_ has not been added for the strategic resources
-# Add energy to remove starbase income and set planet resources
+# How can I get corporations to keep the name list of the species they're created from?
+# Empires that are a vassal, when civ country created, civ country uses wrong overlord for name
 
 
 # Dynamic generation:

@@ -1,0 +1,18 @@
+opinion_destroyed_civilian_ship = {
+	opinion = {
+		base = -1
+		modifier = {
+			add = -4
+			NOT = { is_at_war_with = FROM }
+		}
+	}
+
+	min = -200
+
+	accumulative = yes
+
+	decay = {
+		base = 2
+	}
+}
+

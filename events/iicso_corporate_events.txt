@@ -12,7 +12,7 @@ event = {
 
 	trigger = {
 		has_global_flag = iicso_active
-		NOT = { has_global_flag = spawned_corporations }
+		#NOT = { has_global_flag = spawned_corporations }
 	}
 	immediate = {
 		#log = "Spawning test corporations..."
@@ -35,7 +35,7 @@ event = {
 	}
 }
 
-#sends events to countries randomly within 5 years to spawn corps, triggered by 5 year pulse (currently monthly)
+#sends events to countries randomly within 5 years to spawn corps, triggered by 5 year pulse
 country_event = {
 	id = iicso.900
 	hide_window = yes
@@ -48,13 +48,14 @@ country_event = {
 			has_policy_flag = weak_corporate_freedom
 			has_policy_flag = strong_corporate_freedom
 			has_policy_flag = pseudonational_corporations
-		}	}
+		}
+	}
 
 	immediate = {
 		country_event = {
 			id = iicso.901
 			days = 1
-			random = 29
+			random = 1799
 		}
 	}
 }
@@ -62,48 +63,71 @@ country_event = {
 #creates corporations for empires under their corp limit, fired by iicso.900
 country_event = {
 	id = iicso.901
-	title = "iicso.901.name"
-	desc = "iisco.901.desc"
-	picture = GFX_evt_atmospheric_flight
+	hide_window = yes
 	is_triggered_only = yes
 
-	trigger = { has_global_flag = iicso_active }
+	trigger = {
+		has_global_flag = iicso_active
+		is_country_type = default
+		OR = {
+			has_policy_flag = weak_corporate_freedom
+			has_policy_flag = strong_corporate_freedom
+			has_policy_flag = pseudonational_corporations
+		}
+	}
 
 	immediate = {
-		hidden_effect = {
-			#one corporation per empire per every 30 systems they own (minimum 2)
-			every_system_within_border = {
-				change_variable = { which = iicso_corp_cap value = 1 }
-			}
-			log = "[THIS.GetName] has [THIS.iicso_corp_cap] systems"
-			divide_variable = { which = iicso_corp_cap value = 30 }
+		#one corp at 5, 2 at 20, 3 at 50, 1 per 50 systems after that (so 4 at 100)
+		every_system_within_border = {
+			ROOT = { change_variable = { which = iicso_corp_cap value = 1 }}
+		}
+		#log = "[THIS.GetName] has [THIS.iicso_corp_cap] systems"
+		if = {
+			limit = { check_variable = { which = iicso_corp_cap value < 5 }}
+			set_variable = { which = iicso_corp_cap value = 0 }
+		} else_if = {
+			limit = { check_variable = { which = iicso_corp_cap value < 20 }}
+			set_variable = { which = iicso_corp_cap value = 1 }
+		} else_if = {
+			limit = { check_variable = { which = iicso_corp_cap value < 50 }}
+			set_variable = { which = iicso_corp_cap value = 2 }
+		} else = {
+			change_variable = { which = iicso_corp_cap value = -50 }
+			divide_variable = { which = iicso_corp_cap value = 50 }
 			#remove remainder
 			set_variable = { which = iicso_corp_cap_temp value = iicso_corp_cap }
 			while = {
-				limit = { check_variable = { which = iicso_corp_cap_temp value > 1 }}
+				limit = { check_variable = { which = iicso_corp_cap_temp value >= 1 }}
 				change_variable = { which = iicso_corp_cap_temp value = -1 }
 			}
 			subtract_variable = { which = iicso_corp_cap value = iicso_corp_cap_temp }
+			change_variable = { which = iicso_corp_cap value = 3 }
 			set_variable = { which = iicso_corp_cap_temp value = 0 }
-			log = "[THIS.GetName] has corporation cap of [THIS.iicso_corp_cap]"
+		}
+		#log = "[THIS.GetName] has corporation cap of [THIS.iicso_corp_cap]"
 
-			every_country = {
-				limit = { has_country_flag = iicso_corporation_of@PREV }
-				ROOT = { change_variable = { which = iicso_corp_count value = 1 }}
-			}
+		every_country = {
+			limit = { has_country_flag = iicso_corporation_of@PREV }
+			ROOT = { change_variable = { which = iicso_corp_count value = 1 }}
+		}
+		#log = "[THIS.GetName] has [THIS.iicso_corp_count] corporations"
+
+		if = {
+			limit = { check_variable = { which = iicso_corp_count value < iicso_corp_cap }}
 
 			if = {
+				limit = { NOT = { has_country_flag = Story7 }}
+				set_country_flag = Story7
+				set_country_flag = avoiding_first_contact
+			}
+
+			random_owned_pop = {
 				limit = {
-					OR = {
-						check_variable = { which = iicso_corp_count value < 2 }
-						check_variable = { which = iicso_corp_count value < iicso_corp_cap }
-					}
+					has_citizenship_type = { country = PREV type = citizenship_full }
 				}
-				random_owned_pop = {
-					limit = {
-						has_citizenship_type = citizenship_full
-					}
-					species = {
+				species = {
+					# random_country = {
+					# 	limit = { owner_species = { is_same_value = PREVPREV }}
 						create_country = {
 							name = random
 							type = iicso_corporate_country
@@ -111,97 +135,69 @@ country_event = {
 							auto_delete = no
 		
 							flag = random
-							name_list = THIS
+							name_list = ROOT #I would like this to be species name list
 							species = THIS
-						}
-					}
-				}
-					
-				establish_communications_no_message = last_created_country
-				set_country_flag = iicso_corporation_is@last_created_country
 
-				last_created_country = {
-					#log = "test: [THIS.GetName] is a corporation. Overlord is [THIS.overlord.GetName]"
-					set_subject_of = {
-						who = PREV
-						subject_type = iicso_corporate_subject
-					}
-					set_country_flag = iicso_corporate_country
-					set_country_flag = iicso_corporation_of@PREV
-					copy_techs_from = { target = PREV }
-					#log = "[THIS.GetName] is corporation of [PREV.GetName]"
-
-					#share comms with every country who already has comms with parent country
-					every_country = {
-						limit = {
-							has_communications = PREVPREV
-							NOT = { has_country_flag = iicso_corporation_is@PREV }
-						}
-						establish_communications_no_message = PREV
-
-						#only be hostile to civs if hostile to all, or at war with parent and hostile to enemy civs
-						if = {
-							limit = {
-								OR = {
-									has_policy_flag = hostile_to_all_civilians
-									AND = {
-										has_policy_flag = hostile_to_enemy_civilians
-										is_at_war_with = PREVPREV
-									}
+							effect = {
+								ROOT = {
+									establish_communications_no_message = PREV
+									set_country_flag = iicso_corporation_is@PREV
 								}
+								save_event_target_as = last_created_corp
+								set_subject_of = {
+									who = ROOT
+									subject_type = iicso_corporate_subject
+								}
+								set_country_flag = iicso_corporate_country
+								set_country_flag = iicso_corporation_of@ROOT
+								copy_techs_from = { target = ROOT }
+								every_country = {
+									limit = {
+										has_communications = ROOT
+										NOT = { has_country_flag = iicso_corporation_is@PREV }
+									}
+									establish_communications_no_message = PREV
+								}
+								#log = "test: [THIS.GetName] is a corporation. Overlord is [THIS.overlord.GetName]"
+								#log = "[THIS.GetName] is corporation of [ROOT.GetName]"
 							}
-							set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
 						}
-					}
+					# }
 				}
-				#log = "[THIS.GetName] is corporate overlord of [last_created_country.GetName]"
-
-				if = {
-					limit = { NOT = { has_country_flag = Story7 }}
-					set_country_flag = Story7
-					set_country_flag = avoiding_first_contact
-				}
-
-				if = {
-					limit = { has_country_flag = avoiding_first_contact }
-					remove_country_flag = Story7
-					remove_country_flag = avoiding_first_contact
-				}
-
 			}
 
-			country_event = { id = iicso.902 }
+			if = {
+				limit = { has_country_flag = avoiding_first_contact }
+				remove_country_flag = Story7
+				remove_country_flag = avoiding_first_contact
+			}
 
-			set_variable = { which = iicso_corp_cap value = 0 }
-			set_variable = { which = iicso_corp_count value = 0 }
+			country_event = { id = iicso.902 } #notify country of corp creation
 		}
-	}
 
+
+		set_variable = { which = iicso_corp_cap value = 0 }
+		set_variable = { which = iicso_corp_count value = 0 }
+	}
+}
+
+#notifies empire that a corporation has been created, triggered by iicso.901
+country_event = {
+	id = iicso.902
+	title = "iicso.902.name"
+	desc = "iisco.902.desc"
+	picture = GFX_evt_atmospheric_flight
+	is_triggered_only = yes
 
 	option = {
 		name = "OK"
 	}
 }
 
-#notifies empire that a corporation has been created, triggered by iicso.901
-# country_event = {
-# 	id = iicso.902
-# 	title = "iicso.902.name"
-# 	is_triggered_only = yes
-
-# 	desc = {
-# 		text = iicso.902.desc
-# 	}
-
-# 	option = {
-# 		name = "OK"
-# 	}
-
-# }
 
 
-
-#test event, gives corporations all your mining stations
+#gives corporations 1/4 of mining stations
+#fired every six months by annual gatekeeper
 country_event = {
     id = iicso.910
     is_triggered_only = yes
@@ -219,13 +215,36 @@ country_event = {
 
     immediate = {
 		#log = "iicso.910 triggered"
-		random_planet_within_border = {
-			limit = { has_mining_station = yes }
-			mining_station = {
-				random_country = {
-					limit = { has_country_flag = iicso_corporation_of@ROOT }
-					PREVPREV = {
-						set_owner = PREV
+		every_planet_within_border = {
+			limit = { has_mining_station = yes}
+			ROOT = { change_variable = { which = iicso_corp_station_cap value = 1 }}
+			if = {
+				limit = { mining_station = { owner = { is_country_type = iicso_corporate_country }}}
+				change_variable = { which = iicso_corp_station_count value = 1 }
+			}
+		}
+		divide_variable = { which = iicso_corp_station_cap value = 4 }
+		#remove remainder
+		set_variable = { which = iicso_corp_station_cap_temp value = iicso_corp_station_cap }
+		while = {
+			limit = { check_variable = { which = iicso_corp_station_cap_temp value >= 1 }}
+			change_variable = { which = iicso_corp_station_cap_temp value = -1 }
+		}
+		subtract_variable = { which = iicso_corp_station_cap value = iicso_corp_station_cap_temp }
+		set_variable = { which = iicso_corp_station_cap_temp value = 0 }
+
+		if = {
+			limit = {
+				check_variable = { which = iicso_corp_station_count value < iicso_corp_station_cap }
+			}
+			random_planet_within_border = {
+				limit = { has_mining_station = yes }
+				mining_station = {
+					random_country = {
+						limit = { has_country_flag = iicso_corporation_of@ROOT }
+						PREV = {
+							set_owner = PREV
+						}
 					}
 				}
 			}

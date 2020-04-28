@@ -25,8 +25,6 @@ on_monthly_pulse = {
 # this = country
 on_monthly_pulse_country = {
 	events = {
-		iicso.900
-		iicso.910
 	}
 }
 
@@ -46,7 +44,7 @@ on_five_year_pulse = {
 # this = country
 on_five_year_pulse_country = {
 	events = {
-		#iicso.900
+		iicso.900
 	}
 }
 
@@ -55,7 +53,38 @@ on_five_year_pulse_country = {
 # From = Country which communications were established with
 on_post_communications_established = {
 	events = {
-		iicso.201
+		iicso.201 #establish comms with civs
+	}
+}
+
+#This = Federation leader
+#From = Joining member
+on_join_federation = {
+	events = {
+		iicso.220 #remove civs/corps from federation
+		#iicso.221 #for indiscriminate civ hostility empire, removes hostility to allies
+	}
+}
+
+#This = Federation leader
+#From = Leaving member
+on_leave_federation = {
+	events = {
+		#iicso.222 #for indiscriminate civ hostility empire, add hostility to former allies civs
+	}
+}
+
+on_join_alliance = {
+}
+
+on_leave_alliance = {
+}
+
+# This = subject
+# From = subject's overlord
+on_becoming_subject = {
+	events = {
+		
 	}
 }
 
@@ -128,7 +157,7 @@ on_fleet_destroyed_victim = {
 # From = War
 on_war_beginning = {
 	events = {
-		iicso.210 #set hostile to civilians for those with appropriate policy
+		#iicso.210 #set hostile to civilians for those with appropriate policy
 	}
 }
 
@@ -136,7 +165,7 @@ on_war_beginning = {
 # From = opponent war leader
 on_entering_war = {
 	events = {
-		iicso.210
+		#iicso.210
 	}
 }
 
@@ -145,7 +174,7 @@ on_entering_war = {
 # From = Main Winner
 on_war_ended = {
 	events = {
-		iicso.211 #unset hostile to civilians for those with appropriate policy
+		#iicso.211 #unset hostile to civilians for those with appropriate policy
 	}
 }
 
@@ -155,6 +184,17 @@ on_war_ended = {
 on_entering_system_fleet = {
 	events = {
 		#iicso.503 #civilians recheck closest valid destination colony
-		#civilian ships flee if enemies present
+		iicso.111 #civilian ships flee if enemies present
+		iicso.112 #civilan ships flee if enemy arrives
+	}
+}
+
+# This = owner of ship 1 (destroyed)
+# From = owner of ship 2 (combatant)
+# FromFrom = ship 1
+# FromFromFrom = ship 2
+on_ship_destroyed_victim = {
+	events = {
+		iicso.110
 	}
 }

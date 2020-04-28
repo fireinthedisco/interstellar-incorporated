@@ -6,6 +6,8 @@ empire_name_parts_list = {
 	key = "civilian_empire_names_hivemind"
 	parts = {
 		"Carrier Drones" = 10
+		"Carrier Swarm" = 10
+		"Carrier Brood" = 10
 	}
 }
 

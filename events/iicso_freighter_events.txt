@@ -1,6 +1,7 @@
 namespace = iicso
 
 #called by yearly pulse gate event (semi-annually)
+#sends event to planets with stockpiles randomly throughout the half-year
 country_event = {
     id = iicso.500
     is_triggered_only = yes
@@ -35,6 +36,7 @@ country_event = {
 }
 
 #called by iicso.500, calls itself
+#spawns freighters type depending on origin
 planet_event = {
     id = iicso.501
     is_triggered_only = yes
@@ -47,6 +49,7 @@ planet_event = {
         if = {
             limit = {
                 solar_system = {
+                    exists = starbase
                     starbase = {
                         controller = { is_same_value = PREV.owner }
                     }
@@ -54,16 +57,18 @@ planet_event = {
             }
             if = {
                 limit = { has_sufficient_stockpile = yes }
-                if = { #if the station is owned by parent empire, fleet is owned by civilian vessels country
-                    limit = { mining_station = { owner = { is_same_value = { ROOT.space_owner }}}}
+                if = { #if mining station is owned by corp, fleet is corp
+                    limit = {
+                        exists = mining_station
+                        mining_station = { owner = { is_country_type = iicso_corporate_country }}
+                    }
+                    mining_station = { owner = { save_event_target_as = iicso_fleet_owner }}
+                }
+                else = { #otherwise, fleet is owned by civilian vessels country
                     random_country = {
                         limit = { has_country_flag = iicso_faction_of@ROOT.space_owner }
                         save_event_target_as = iicso_fleet_owner
                     }
-                }
-                else_if = { #if fleet is owned by a corp, fleet is owned by corp
-                    limit = { mining_station = { owner = { is_country_type = iicso_corporate_country }}}
-                    mining_station = { owner = { save_event_target_as = iicso_fleet_owner }}
                 }
     
                 if = {
@@ -108,12 +113,10 @@ planet_event = {
                         }
                     }
                 }
-                clear_event_target = iicso_fleet_owner
                 last_created_fleet = {
-                    set_fleet_stance = evasive
                     set_timed_fleet_flag = {
                         flag = orders_received
-                        days = 90
+                        days = 360
                     }
                     if = {
                         limit = {
@@ -149,7 +152,8 @@ planet_event = {
     }
 }
 
-#called by iicso.501, #fleet auto move arrival (deactivated)
+#called by iicso.501
+#station freighter fleet finds destination within its system
 fleet_event = {
     id = iicso.502
     is_triggered_only = yes
@@ -187,9 +191,10 @@ fleet_event = {
                     ROOT = {
                         set_timed_fleet_flag = {
                             flag = orders_received
-                            days = 120
+                            days = 360
                         }
-                        set_fleet_flag = enroute_to_colony@PREV
+                        set_fleet_flag = fleet_destination@PREV
+                        set_fleet_flag = enroute_to_colony
                         auto_move_to_planet = {
                             target = PREV
                             clear_auto_move_on_arrival = no
@@ -204,9 +209,10 @@ fleet_event = {
                     ROOT = {
                         set_timed_fleet_flag = {
                             flag = orders_received
-                            days = 120
+                            days = 360
                         }
-                        set_fleet_flag = enroute_to_starbase@PREV
+                        set_fleet_flag = fleet_destination@PREV
+                        set_fleet_flag = enroute_to_starbase
                         auto_move_to_planet = {
                             target = PREV
                             clear_auto_move_on_arrival = no
@@ -219,7 +225,8 @@ fleet_event = {
     }
 }
 
-#called by iicso.501, #on entering system fleet
+#called by iicso.501
+#freighters find destination outside system
 fleet_event = {
     id = iicso.503
     is_triggered_only = yes
@@ -304,14 +311,15 @@ fleet_event = {
                         ROOT = {
                             set_timed_fleet_flag = {
                                 flag = orders_received
-                                days = 120
+                                days = 360
                             }
 
                             if = {
                                 limit = {
                                     PREV = { is_primary_star = yes }
                                 }
-                                set_fleet_flag = enroute_to_starbase@PREV
+                                set_fleet_flag = fleet_destination@PREV
+                                set_fleet_flag = enroute_to_starbase
                                 auto_move_to_planet = {
                                     target = PREV
                                     clear_auto_move_on_arrival = no
@@ -319,7 +327,8 @@ fleet_event = {
                                 }
                             }
                             else = {
-                                set_fleet_flag = enroute_to_colony@PREV
+                                set_fleet_flag = fleet_destination@PREV
+                                set_fleet_flag = enroute_to_colony
                                 auto_move_to_planet = {
                                     target = PREV
                                     clear_auto_move_on_arrival = no
@@ -335,6 +344,7 @@ fleet_event = {
 }
 
 #called by effect deposit_cargo_at_colony
+#literally just kills the fleet (but can be called with delay)
 fleet_event = {
     id = iicso.504
     is_triggered_only = yes

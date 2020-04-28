@@ -196,8 +196,14 @@ add_cargo_to_miner = {
 
 trader_arrival = {
     FROM = { add_modifier = { modifier = trader_has_arrived days = 360 }}
+    remove_fleet_flag = enroute_to_trade_target
+    set_fleet_flag = enroute_to_home
+    set_timed_fleet_flag = {
+        flag = orders_received
+        days = 360
+    }
     random_planet = {
-        limit = { PREV = { has_fleet_flag = trader_home@PREV }}
+        limit = { PREV = { has_fleet_flag = fleet_home@PREV }}
         PREV = {
             auto_move_to_planet = {
                 target = PREV
@@ -648,6 +654,48 @@ set_planet_resources = {
         limit = { any_deposit = { is_deposit_type = d_living_metal_deposit }}
         set_variable = { which = iicso_orbital_sr_living_metal value = 1 }
     }
+
+    
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_1 }}
+        set_variable = { which = iicso_orbital_energy value = 1 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_2 }}
+        set_variable = { which = iicso_orbital_energy value = 2 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_3 }}
+        set_variable = { which = iicso_orbital_energy value = 3 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_4 }}
+        set_variable = { which = iicso_orbital_energy value = 4 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_5 }}
+        set_variable = { which = iicso_orbital_energy value = 5 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_6 }}
+        set_variable = { which = iicso_orbital_energy value = 6 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_7 }}
+        set_variable = { which = iicso_orbital_energy value = 7 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_8 }}
+        set_variable = { which = iicso_orbital_energy value = 8 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_9 }}
+        set_variable = { which = iicso_orbital_energy value = 9 }
+    }
+    else_if = {
+        limit = { any_deposit = { is_deposit_type = d_energy_10 }}
+        set_variable = { which = iicso_orbital_energy value = 10 }
+    }
 }
 
 
@@ -674,6 +722,7 @@ remove_mining_station_income = {
         remove_mining_station_income_resource = { RESOURCE = sr_zro }
         remove_mining_station_income_resource = { RESOURCE = sr_dark_matter }
         remove_mining_station_income_resource = { RESOURCE = sr_living_metal }
+        remove_mining_station_income_resource = { RESOURCE = energy }
         #log = "removing [THIS.orbit.iicso_orbital_minerals] minerals from empire total"
     }
 }

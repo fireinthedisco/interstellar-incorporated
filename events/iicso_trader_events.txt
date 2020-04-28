@@ -27,7 +27,7 @@ event = {
             }
             every_owned_planet = {
                 #log = "[THIS.GetName] for empire [THIS.owner.GetName] is rolling for traders!"
-                PREV = { change_variable = { which = planets_traders_rolled value = 1 }}
+                #PREV = { change_variable = { which = planets_traders_rolled value = 1 }}
                 random_list = {
                     25 = {
                         #log = "[THIS.GetName] has elected to send a trader this year!"
@@ -36,7 +36,7 @@ event = {
                             days = 1
                             random = 359
                         }
-                        PREV = { change_variable = { which = planets_traders_rolled_succ value = 1 }}
+                        #PREV = { change_variable = { which = planets_traders_rolled_succ value = 1 }}
                     }
                     75 = {}
                 }
@@ -47,6 +47,7 @@ event = {
 }
 
 #called by iicso.700
+#finds trade target and creates trader
 planet_event = {
     id = iicso.701
     is_triggered_only = yes
@@ -128,17 +129,17 @@ planet_event = {
                     effect = {
                         set_owner = PREV
                         set_location = ROOT
-                        set_fleet_flag = trader_home@ROOT
-                        set_fleet_flag = trader_destination@PREVPREV
+                        set_fleet_flag = fleet_home@ROOT
+                        set_fleet_flag = fleet_destination@PREVPREV
+                        set_fleet_flag = enroute_to_trade_target
                         set_fleet_flag = trader_fleet
                         create_ship = { name = random design = random_existing_design random_existing_design = z_iicso_freighter_armed }
-                        set_fleet_stance = evasive
                     }
                 }
                 last_created_fleet = {
                     set_timed_fleet_flag = {
                         flag = orders_received
-                        days = 120
+                        days = 360
                     }
                     auto_move_to_planet = {
                         target = PREVPREV

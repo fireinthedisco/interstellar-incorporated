@@ -94,6 +94,7 @@ event = {
                     is_country_type = default
                     is_country_type = fallen_empire
                     is_country_type = awakened_fallen_empire
+                    is_country_type = iicso_corporate_country
                 }
             }
             remove_mining_station_income = yes
@@ -200,6 +201,113 @@ country_event = {
 #     }
 # }
 
+#on ship destroyed victim, THIS is owner of ship, FROM is owner of destroying ship
+#add opinion modifier against destroyer
+country_event = {
+    id = iicso.110
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        OR = {
+            is_country_type = iicso_civilian_country
+            is_country_type = iicso_corporate_country
+        }
+    }
+
+    immediate = {
+        random_country = {
+            limit = {
+                OR = {
+                    has_country_Flag = iicso_faction_is@ROOT
+                    has_country_Flag = iicso_corporation_is@ROOT
+                }
+            }
+            add_opinion_modifier = {
+                who = FROM
+                modifier = opinion_destroyed_civilian_ship
+            }
+        }
+    }
+}
+
+#called on fleet enter system, if hostiles present civs go evasive, else go passive
+fleet_event = {
+    id = iicso.111
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        owner = {
+            OR = {
+                is_country_type = iicso_civilian_country
+                is_country_type = iicso_corporate_country
+            }
+        }
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                solar_system = {
+                    any_fleet_in_system = {
+                        owner = {
+                            is_hostile_to = ROOT.owner
+                        }
+                    }
+                }
+            }
+            set_fleet_stance = evasive
+        }
+        else = {
+            set_fleet_stance = passive
+        }
+    }
+}
+
+#called on fleet enter system, if fleet is hostile to local civs, they flee
+fleet_event = {
+    id = iicso.112
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        solar_system = {
+            any_fleet_in_system = {
+                exists = owner
+                owner = {    
+                    OR = {
+                        is_country_type = iicso_civilian_country
+                        is_country_type = iicso_corporate_country
+                    }
+                    ROOT.owner = { is_hostile_to = PREV }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        solar_system = {
+            every_fleet_in_system = {
+                limit = {
+                    exists = owner
+                    owner = {
+                        OR = {
+                            is_country_type = iicso_civilian_country
+                            is_country_type = iicso_corporate_country
+                        }
+                        ROOT.owner = { is_hostile_to = PREV}
+                    }
+                }
+                set_fleet_stance = evasive
+            }
+        }
+    }
+}
+
 #yearly pulse gate event (yearly pulse, on game start)
 event = {
     id = iicso.121
@@ -212,6 +320,23 @@ event = {
         #log = "yearly pulse gate event triggered"
         #quarterly events
         
+        every_country = {
+            limit = {
+                NOT = {
+                    has_country_flag = iicso_checking_hostility_status
+                }
+                OR = {
+                    has_policy_flag = neutral_to_civilians
+                    has_policy_flag = hostile_to_enemy_civilians
+                    has_policy_flag = hostile_to_all_civilians
+                }
+            }
+            country_event = {
+                id = iicso.202
+                days = 1
+                random = 359
+            }
+        }
         
 
         #semiannual events
@@ -228,6 +353,7 @@ event = {
                 days = 180
             }
         }
+        #mining ships
         every_country = {
             limit = {
                 OR = {
@@ -244,11 +370,33 @@ event = {
                 days = 180
             }
         }
+
+        #corp takes over mining station
+        every_country = {
+            limit = {
+                is_country_type = default
+                OR = {
+                    has_policy_flag = weak_corporate_freedom
+                    has_policy_flag = strong_corporate_freedom
+                    has_policy_flag = pseudonational_corporations
+                }
+            }
+            country_event = {
+                id = iicso.910
+                days = 1
+                random = 179
+            }
+            country_event = {
+                id = iicso.910
+                days = 181
+                random = 179
+            }
+        }
     }
 }
 
 #########################################################
-################ 2xx. Faction Spawning ##################
+############### 2xx. Faction Management #################
 #########################################################
 
 #spawns civilian trader faction for each empire
@@ -315,18 +463,18 @@ event = {
                         establish_communications_no_message = PREV
 
                         #only be hostile to civs if hostile to all, or at war with parent and hostile to enemy civs
-                        if = {
-                            limit = {
-                                OR = {
-                                    has_policy_flag = hostile_to_all_civilians
-                                    AND = {
-                                        has_policy_flag = hostile_to_enemy_civilians
-                                        is_at_war_with = PREVPREV
-                                    }
-                                }
-                            }
-                            set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
-                        }
+                        # if = {
+                        #     limit = {
+                        #         OR = {
+                        #             has_policy_flag = hostile_to_all_civilians
+                        #             AND = {
+                        #                 has_policy_flag = hostile_to_enemy_civilians
+                        #                 is_at_war_with = PREVPREV
+                        #             }
+                        #         }
+                        #     }
+                        #     set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+                        # }
                     }
                 }
                 #log = "[THIS.GetName] is economy overlord of [last_created_country.GetName]"
@@ -347,41 +495,58 @@ event = {
 
         #reestablish vassalhood (important if parent country is vassalised and later becomes free, for example)
         every_country = {
-            limit = { has_country_flag = iicso_civilian_country }
-
-            random_country = {
-                limit = { has_country_flag = iicso_faction_is@PREV }
-                
-                save_event_target_as = parent_empire
+            limit = {
+                OR = {
+                    has_country_flag = iicso_civilian_country
+                    has_country_flag = iicso_corporate_country
+                }
             }
-            copy_techs_from = { target = event_target:parent_empire }
-            if = {
+            random_country = {
                 limit = {
                     OR = {
-                        is_subject = no
-                        overlord = { NOT = { has_country_flag = iicso_faction_is@PREV }}
-                    }
-                    any_country = {
                         has_country_flag = iicso_faction_is@PREV
-                        is_subject = no
+                        has_country_flag = iicso_corporation_is@PREV
                     }
                 }
-                event_target:parent_empire = {
-                    PREV = {
+                PREV = {
+                    copy_techs_from = { target = PREV }
+                    if = {
+                        limit = {
+                            #is_country_Type = iicso_civilian_country
+                            OR = {
+                                is_subject = no
+                                overlord = {
+                                    NOR = {
+                                        has_country_flag = iicso_faction_is@PREV
+                                        has_country_flag = iicso_corporation_is@PREV
+                                    }
+                                }
+                            }
+                            PREV = {
+                                has_country_flag = iicso_faction_is@PREV
+                                is_subject = no
+                            }
+                        }
                         set_subject_of = {
                             who = PREV
                             subject_type = iicso_civilian_subject
                         }
                     }
+                    if = {
+                        limit = {
+                            NOT = {
+                                any_country = {
+                                    OR = {
+                                        has_country_flag = iicso_faction_is@PREV
+                                        has_country_flag = iicso_corporation_is@PREV
+                                    }
+                                }
+                            }
+                        }
+                        destroy_country = yes
+                    }
                 }
             }
-
-            #delete civ faction if parent empire dies
-            if = {
-                limit = { NOT = { exists = event_target:parent_empire }}
-                destroy_country = yes
-            }
-
         }
     }
 }
@@ -395,117 +560,293 @@ country_event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
-        random_country = {
-            limit = { has_country_flag = iicso_faction_of@ROOT }
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = iicso_faction_of@ROOT
+                    has_country_flag = iicso_corporation_of@ROOT
+                }
+            }
             establish_communications_no_message = FROM
-            FROM = {
-                if = {
-                    limit = { has_policy_flag = hostile_to_all_civilians }
-                    set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+            # FROM = {
+            #     if = {
+            #         limit = {
+            #             has_policy_flag = hostile_to_all_civilians
+            #         }
+            #         set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+            #     }
+            # }
+        }
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = iicso_faction_of@FROM
+                    has_country_flag = iicso_corporation_of@FROM
+                }
+            }
+            establish_communications_no_message = ROOT
+            # ROOT = {
+            #     if = {
+            #         limit = { has_policy_flag = hostile_to_all_civilians }
+            #         set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+            #     }
+            # }
+        }
+    }
+}
+
+#sets correct faction hositilies based on policy
+#called by annual gatekeeper, fires itself quarterly
+country_event = {
+    id = iicso.202
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+		OR = {
+            has_policy_flag = neutral_to_civilians
+            has_policy_flag = hostile_to_enemy_civilians
+            has_policy_flag = hostile_to_all_civilians
+		}
+    }
+
+    immediate = {
+        if = {
+            limit = { NOT = { has_country_flag = iicso_checking_hostility_status }}
+            set_timed_country_flag = {
+                flag = iicso_checking_hostility_status
+                days = 90
+            }
+        }
+        if = {
+            limit = { has_policy_flag = neutral_to_civilians }
+            every_country = {
+                limit = {
+                    OR = {
+                        is_country_type = iicso_civilian_country
+                        is_country_type = iicso_corporate_country
+                    }
+                }
+                ROOT = {
+                    set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
                 }
             }
         }
-        random_country = {
-            limit = { has_country_flag = iicso_faction_of@FROM }
-            establish_communications_no_message = ROOT
-            ROOT = {
-                if = {
-                    limit = { has_policy_flag = hostile_to_all_civilians }
-                    set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+        else_if = {
+            limit = { has_policy_flag = hostile_to_enemy_civilians }
+            every_country = {
+                limit = {
+                    has_communications = ROOT
+                    is_at_war_with = ROOT
+                    OR = {
+                        is_country_type = default
+                        is_country_type = awakened_fallen_empire
+                    }
+                }
+                every_country = {
+                    limit = {
+                        OR = {
+                            has_country_flag = iicso_faction_of@PREV
+                            has_country_flag = iicso_corporation_of@PREV
+                        }
+                    }
+                    ROOT = {
+                        set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+                    }
                 }
             }
+            every_country = {
+                limit = {
+                    has_communications = ROOT
+                    NOT = { is_at_war_with = ROOT }
+                    OR = {
+                        is_country_type = default
+                        is_country_type = awakened_fallen_empire
+                    }
+                }
+                every_country = {
+                    limit = {
+                        OR = {
+                            has_country_flag = iicso_faction_of@PREV
+                            has_country_flag = iicso_corporation_of@PREV
+                        }
+                    }
+                    ROOT = {
+                        set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+                    }
+                }
+            }
+        }
+        else_if = {
+            limit = { has_policy_flag = hostile_to_all_civilians }
+            every_country = {
+                limit = {
+                    has_communications = ROOT
+                    OR = {
+                        is_country_type = default
+                        is_country_type = awakened_fallen_empire
+                    }
+                    NOR = {
+                        is_in_federation_with = ROOT
+                        has_defensive_pact = ROOT
+                        has_non_aggression_pact = ROOT
+                        is_same_value = ROOT
+                        is_overlord_to = ROOT
+                        has_overlord = ROOT
+                    }
+                }
+                every_country = {
+                    limit = {
+                        OR = {
+                            has_country_flag = iicso_faction_of@PREV
+                            has_country_flag = iicso_corporation_of@PREV
+                        }
+                    }
+                    ROOT = {
+                        set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+                    }
+                }
+            }
+            every_country = {
+                limit = {
+                    has_communications = ROOT
+                    OR = {
+                        is_country_type = default
+                        is_country_type = awakened_fallen_empire
+                    }
+                    OR = {
+                        is_in_federation_with = ROOT
+                        has_defensive_pact = ROOT
+                        has_non_aggression_pact = ROOT
+                        is_same_value = ROOT
+                        is_overlord_to = ROOT
+                        has_overlord = ROOT
+                    }
+                }
+                every_country = {
+                    limit = {
+                        OR = {
+                            has_country_flag = iicso_faction_of@PREV
+                            has_country_flag = iicso_corporation_of@PREV
+                        }
+                    }
+                    ROOT = {
+                        set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+                    }
+                }
+            }
+        }
+        country_event = {
+            id = iicso.202
+            days = 90
         }
     }
 }
 
 #sets country with appropriate policy hostile to enemy civilians on war start
 #called from on war beginning, on war entered
-country_event = {
-    id = iicso.210
-    is_triggered_only = yes
-    hide_window = yes
+# country_event = {
+#     id = iicso.210
+#     is_triggered_only = yes
+#     hide_window = yes
 
-    trigger = {
-        has_global_flag = iicso_active
-        has_policy_flag = hostile_to_enemy_civilians
-    }
+#     trigger = {
+#         has_global_flag = iicso_active
+#         has_policy_flag = hostile_to_enemy_civilians
+#     }
 
-    immediate = {
-        every_country = {
-            limit = { is_at_war_with = PREV }
-            random_country = {
-                limit = { has_country_flag = iicso_faction_of@PREV }
-                PREVPREV = {
-                    set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
-                }
-            }
-        }
-    }
-}
+#     immediate = {
+#         every_country = {
+#             limit = { is_at_war_with = ROOT }
+#             every_country = {
+#                 limit = {
+#                     OR = {
+#                         has_country_flag = iicso_faction_of@PREV
+#                         has_country_flag = iicso_corporation_of@PREV
+#                     }
+#                 }
+#                 ROOT = {
+#                     set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+#                 }
+#             }
+#         }
+#     }
+# }
 
 #on war end sets countries with appropriate policy back to neutral with former enemy civilian factions
 #does this even work??
-country_event = {
-    id = iicso.211
-    is_triggered_only = yes
-    hide_window = yes
+# country_event = {
+#     id = iicso.211
+#     is_triggered_only = yes
+#     hide_window = yes
 
-    trigger = { has_global_flag = iicso_active }
+#     trigger = { has_global_flag = iicso_active }
 
-    immediate = {
-        #log = "a war has ended"
+#     immediate = {
+#         #log = "a war has ended"
 
-        every_war_defender = {
-            enemy = FROM
-            limit = { has_policy_flag = hostile_to_enemy_civilians }
-            ROOT = {
-                every_war_attacker = {
-                    enemy = FROM
-                    random_country = {
-                        limit = { has_country_flag = iicso_faction_of@PREV }
-                        PREVPREVPREV = {
-                            set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
-                        }
-                    }
-                }
-            }
-        }
+#         every_war_defender = {
+#             enemy = FROM
+#             limit = { has_policy_flag = hostile_to_enemy_civilians }
+#             ROOT = {
+#                 every_war_attacker = {
+#                     enemy = FROM
+#                     every_country = {
+#                         limit = {
+#                             OR = {
+#                                 has_country_flag = iicso_faction_of@PREV
+#                                 has_country_flag = iicso_corporation_of@PREV
+#                             }
+#                         }
+#                         PREVPREVPREV = {
+#                             set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+#                         }
+#                     }
+#                 }
+#             }
+#         }
 
-        every_war_attacker = {
-            enemy = FROM
-            limit = { has_policy_flag = hostile_to_enemy_civilians }
-            ROOT = {
-                every_war_defender = {
-                    enemy = FROM
-                    random_country = {
-                        limit = { has_country_flag = iicso_faction_of@PREV }
-                        PREVPREVPREV = {
-                            set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
-                        }
-                    }
-                }
-            }
-        }
+#         every_war_attacker = {
+#             enemy = FROM
+#             limit = { has_policy_flag = hostile_to_enemy_civilians }
+#             ROOT = {
+#                 every_war_defender = {
+#                     enemy = FROM
+#                     every_country = {
+#                         limit = {
+#                             OR = {
+#                                 has_country_flag = iicso_faction_of@PREV
+#                                 has_country_flag = iicso_corporation_of@PREV
+#                             }
+#                         }
+#                         PREVPREVPREV = {
+#                             set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+#                         }
+#                     }
+#                 }
+#             }
+#         }
 
-        # every_country = {
-        #     limit = { has_policy_flag = hostile_to_enemy_civilians }
-        #     log = "war ended, [THIS.GetName] hostile only to enemy civilians"
-        #     every_country = {
-        #         limit = {
-        #             any_country = {
-        #                 has_country_flag = iicso_faction_is@PREV
-        #                 NOT = { is_at_war_with = PREVPREV }
-        #             }
-        #             has_communications = PREV
-        #         }
-        #         log = "war ended, [THIS.GetName] is not at war with [PREV.GetName]"
-        #         PREV = { 
-        #             set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
-        #         }
-        #     }
-        # }
-    }
-}
+#         # every_country = {
+#         #     limit = { has_policy_flag = hostile_to_enemy_civilians }
+#         #     log = "war ended, [THIS.GetName] hostile only to enemy civilians"
+#         #     every_country = {
+#         #         limit = {
+#         #             any_country = {
+#         #                 has_country_flag = iicso_faction_is@PREV
+#         #                 NOT = { is_at_war_with = PREVPREV }
+#         #             }
+#         #             has_communications = PREV
+#         #         }
+#         #         log = "war ended, [THIS.GetName] is not at war with [PREV.GetName]"
+#         #         PREV = { 
+#         #             set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+#         #         }
+#         #     }
+#         # }
+#     }
+# }
 
 #needs to trigger event after war has cleared out
 #???
@@ -522,8 +863,105 @@ country_event = {
 #     }
 # }
 
+#remove civilian factions from federation, called from on join federation
+country_event = {
+    id = iicso.220
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = { has_global_flag = iicso_active }
+
+    immediate = {
+        FROM = {
+            if = {
+                limit = {
+                    OR = {
+                        is_country_type = iicso_civilian_country
+                        is_country_type = iicso_corporate_country
+                    }
+                }
+                leave_alliance = { override_requirements = yes }
+            }
+            else = {
+                every_country = {
+                    limit = {
+                        OR = {
+                            has_country_flag = iicso_faction_of@FROM
+                            has_country_flag = iicso_corporation_of@FROM
+                        }
+                    }
+                    leave_alliance = { override_requirements = yes }
+                }
+            }
+        }
+    }
+}
+
+#on join federation with indiscriminate civ hostility, removes hostility to allies' civs
+# country_event = {
+#     id = iicso.221
+#     is_triggered_only = yes
+#     hide_window = yes
+
+#     trigger = {
+#         has_global_flag = iicso_active
+#         FROM = { has_policy_Flag = hostile_to_all_civilians }
+#     }
+
+#     immediate = {
+#         every_country = {
+#             limit = {
+#                 any_country = {
+#                     is_in_federation_with = FROM
+#                     OR = {
+#                         has_country_flag = iicso_faction_is@PREV
+#                         has_country_flag = iicso_corporation_is@PREV
+#                     }
+#                 }
+#             }
+#             FROM = {
+#                 set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
+#             }
+#         }
+#     }
+# }
+
+#on leave federation with indiscriminate civ hostility, adds hostility to civs back
+# country_event = {
+#     id = iicso.222
+#     is_triggered_only = yes
+#     hide_window = yes
+
+#     trigger = {
+#         has_global_flag = iicso_active
+#         FROM = { has_policy_Flag = hostile_to_all_civilians }
+#     }
+
+#     immediate = {
+#         every_country = {
+#             limit = {
+#                 any_country = {
+#                     NOR = {
+#                         is_in_federation_with = PREVPREV
+#                         has_defensive_pact = PREVPREV
+#                         has_non_aggression_pact = PREVPREV
+#                         is_same_value = PREVPREV
+#                     }
+#                     OR = {
+#                         has_country_flag = iicso_faction_is@PREV
+#                         has_country_flag = iicso_corporation_is@PREV
+#                     }
+#                 }
+#             }
+#             FROM = {
+#                 set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+#             }
+#         }
+#     }
+# }
 
 
+# counts number of civ ships in the game
 # event = {
 #     id = iicso.6000
 #     is_triggered_only = yes

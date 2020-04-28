@@ -3,7 +3,6 @@ civilian_hostility = {
 	potential = {
 		OR = {
 			is_country_type = default
-			is_country_type = fallen_empire
 			is_country_type = awakened_fallen_empire
 		}
 	}
@@ -29,34 +28,35 @@ civilian_hostility = {
 			}	
 		}
 
-		on_enabled = {
-			hidden_effect = {
-				every_country = {
-					limit = {
-						any_country = {
-							OR = {
-								has_country_flag = iicso_faction_is@PREV
-								has_country_flag = iicso_corporation_is@PREV
-							}
-						}
-						has_communications = PREV
-						PREV = {
-							NOR = {
-								has_country_flag = iicso_faction_is@PREV
-								has_country_flag = iicso_corporation_is@PREV
-							}
-						}
-					}
-					PREV = {
-						set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no } 
-					}
-				}
-			}
-		}
+		# on_enabled = {
+		# 	hidden_effect = {
+		# 		every_country = {
+		# 			limit = {
+		# 				any_country = {
+		# 					OR = {
+		# 						has_country_flag = iicso_faction_is@PREV
+		# 						has_country_flag = iicso_corporation_is@PREV
+		# 					}
+		# 				}
+		# 				has_communications = PREV
+		# 				PREV = {
+		# 					NOR = {
+		# 						has_country_flag = iicso_faction_is@PREV
+		# 						has_country_flag = iicso_corporation_is@PREV
+		# 					}
+		# 				}
+		# 			}
+		# 			PREV = {
+		# 				set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no } 
+		# 			}
+		# 		}
+		# 	}
+		# }
 		
 		AI_weight = {
+			weight = 1
 			modifier = {
-				factor = 5
+				factor = 10
 				OR = {
 					has_ethic = "ethic_fanatic_pacifist"
 					has_ethic = "ethic_pacifist"
@@ -80,48 +80,32 @@ civilian_hostility = {
 				has_ethic = "ethic_fanatic_pacifist"
 				has_ethic = "ethic_pacifist"
 				has_valid_civic = "civic_fanatic_purifiers"
+				has_valid_civic = "civic_hive_devouring_swarm"
+				has_valid_civic = "civic_machine_terminator"
 			}
 		}
 
-		on_enabled = {
-			hidden_effect = {
-				every_country = {
-					limit = { is_at_war_with = PREV }
-					random_country = {
-						limit = {
-							OR = {
-								has_country_flag = iicso_faction_of@PREV
-								has_country_flag = iicso_corporation_of@PREV
-							}
-						}
-						PREVPREV = {
-							set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
-						}					
-					}
-				}
-			}
-		}
-
-		on_disabled = {
-			hidden_effect = {
-				every_country = {
-					limit = { is_at_war_with = PREV }
-					every_country = {
-						limit = {
-							OR = {
-								has_country_flag = iicso_faction_of@PREV
-								has_country_flag = iicso_corporation_of@PREV
-							}
-						}
-						PREVPREV = {
-							set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
-						}					
-					}
-				}
-			}
-		}
+		# on_enabled = {
+		# 	hidden_effect = {
+		# 		every_country = {
+		# 			limit = { is_at_war_with = PREV }
+		# 			every_country = {
+		# 				limit = {
+		# 					OR = {
+		# 						has_country_flag = iicso_faction_of@PREV
+		# 						has_country_flag = iicso_corporation_of@PREV
+		# 					}
+		# 				}
+		# 				PREVPREV = {
+		# 					set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
+		# 				}					
+		# 			}
+		# 		}
+		# 	}
+		# }
 		
 		AI_weight = {
+			weight = 1
 			modifier = {
 				factor = 2
 				OR = {
@@ -152,57 +136,33 @@ civilian_hostility = {
 			}
 		}
 
-		on_enabled = {
-			hidden_effect = {
-				every_country = {
-					limit = {
-						any_country = {
-							OR = {
-								has_country_flag = iicso_faction_is@PREV
-								has_country_flag = iicso_corporation_is@PREV
-							}
-						}
-						has_communications = PREV
-						PREV = {
-							NOR = {
-								has_country_flag = iicso_faction_is@PREV
-								has_country_flag = iicso_corporation_is@PREV
-							}
-						}
-					}
-					PREV = {
-						set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no } 
-					}
-				}
-			}
-		}
-
-		on_disabled = {
-			hidden_effect = {
-				every_country = {
-					limit = {
-						any_country = {
-							OR = {
-								has_country_flag = iicso_faction_is@PREV
-								has_country_flag = iicso_corporation_is@PREV
-							}
-						}
-						has_communications = PREV
-						PREV = {
-							NOR = {
-								has_country_flag = iicso_faction_is@PREV
-								has_country_flag = iicso_corporation_is@PREV
-							}
-						}
-					}
-					PREV = {
-						set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no } 
-					}
-				}
-			}
-		}
+		# on_enabled = {
+		# 	hidden_effect = {
+		# 		every_country = {
+		# 			limit = {
+		# 				any_country = {
+		# 					NOR = {
+		# 						is_in_federation_with = PREVPREV
+		# 						has_defensive_pact = PREVPREV
+		# 						has_non_aggression_pact = PREVPREV
+		# 						is_same_value = PREVPREV
+		# 					}
+		# 					OR = {
+		# 						has_country_flag = iicso_faction_is@PREV
+		# 						has_country_flag = iicso_corporation_is@PREV
+		# 					}
+		# 				}
+		# 				has_communications = PREV
+		# 			}
+		# 			PREV = {
+		# 				set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no } 
+		# 			}
+		# 		}
+		# 	}
+		# }
 		
 		AI_weight = {
+			weight = 1
 			modifier = {
 				factor = 10
 				OR = {
@@ -219,6 +179,10 @@ civilian_hostility = {
 					has_ai_personality_behaviour = purger
 					has_ai_personality = "xenophobic_isolationists"
 				}
+			}
+			modifier = {
+				factor = 0.5
+				is_galactic_community_member = yes
 			}
 			modifier = {
 				factor = 0
@@ -293,6 +257,7 @@ civilian_armament = {
 		}
 		
 		AI_weight = {
+			weight = 1
 			modifier = {
 				factor = 2
 				OR = {
@@ -371,6 +336,27 @@ corporate_freedom = {
 		policy_flags = {
 			nationalized_corporations
 		}
+		
+		AI_weight = {
+			weight = 1
+		}
+
+		on_enabled = {
+			hidden_effect = {
+				every_country = {
+					limit = {
+						has_country_flag = iicso_corporation_of@PREV
+					}
+					every_mining_station = {
+						limit = {
+							owner = { is_same_value = PREV }
+						}
+						set_owner = PREVPREV
+					}
+					destroy_country = yes
+				}
+			}
+		}
 	}
 
 	option = {
@@ -382,6 +368,10 @@ corporate_freedom = {
 
 		policy_flags = {
 			weak_corporate_freedom
+		}
+
+		AI_weight = {
+			weight = 10
 		}
 	}
 
