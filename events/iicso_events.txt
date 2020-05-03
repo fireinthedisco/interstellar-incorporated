@@ -400,6 +400,7 @@ country_event = {
 }
 
 #called on fleet enter system, if hostiles present civs go evasive, else go passive
+#THIS is fleet entering, FROM is system
 fleet_event = {
     id = iicso.111
     is_triggered_only = yes
@@ -418,8 +419,9 @@ fleet_event = {
     immediate = {
         if = {
             limit = {
-                solar_system = {
+                FROM = {
                     any_fleet_in_system = {
+                        exists = owner
                         owner = {
                             is_hostile_to = ROOT.owner
                         }
@@ -435,6 +437,7 @@ fleet_event = {
 }
 
 #called on fleet enter system, if fleet is hostile to local civs, they flee
+#THIS is fleet entering, FROM is system
 fleet_event = {
     id = iicso.112
     is_triggered_only = yes
@@ -442,7 +445,7 @@ fleet_event = {
 
     trigger = {
         has_global_flag = iicso_active
-        solar_system = {
+        FROM = {
             any_fleet_in_system = {
                 exists = owner
                 owner = {    
@@ -457,7 +460,7 @@ fleet_event = {
     }
 
     immediate = {
-        solar_system = {
+        FROM = {
             every_fleet_in_system = {
                 limit = {
                     exists = owner
@@ -474,6 +477,51 @@ fleet_event = {
         }
     }
 }
+
+# fleet_event = {
+#     id = iicso.113
+#     is_triggered_only = yes
+#     hide_window = yes
+
+#     trigger = {
+#         has_global_flag = iicso_active
+#         exists = THIS
+#         owner = {
+#             OR = {
+#                 is_country_type = iicso_civilian_country
+#                 is_country_type = iicso_corporate_country
+#             }
+#         }
+#     }
+
+#     immediate = {
+#         fleet_event = {
+#             id = iicso.114
+#             days = 20
+#             random = 10
+#         }
+#     }
+# }
+
+# fleet_event = {
+#     id = iicso.114
+#     is_triggered_only = yes
+#     hide_window = yes
+
+#     trigger = {
+#         has_global_flag = iicso_active
+#         exists = THIS
+#         is_in_combat = yes
+#     }
+
+#     immediate = {
+#         random_system = {
+#             limit = {
+
+#             }
+#         }
+#     }
+# }
 
 #yearly pulse gate event (yearly pulse, on game start)
 event = {

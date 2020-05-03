@@ -740,7 +740,10 @@ set_planet_resources = {
                 ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
             }
             if = {
-                limit = { ruler = { has_trait = trait_ruler_space_miner } }
+                limit = {
+                    exists = ruler
+                    ruler = { has_trait = trait_ruler_space_miner }
+                }
                 ROOT = { change_variable = { which = iicso_orbital_produces_mult value = 0.1 }}
             }
         }

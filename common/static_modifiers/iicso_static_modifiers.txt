@@ -1,3 +1,8 @@
 trader_has_arrived = {
 	trade_value_add = 10
 }
+
+civilian_fleeing = {
+	ship_speed_mult = 40
+	ship_windup_mult = -0.99
+}
