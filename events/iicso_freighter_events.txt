@@ -10,7 +10,6 @@ country_event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
-        #log = "iicso.500 triggered, sending event to mining stations/hubs"
         every_planet = {
             limit = {
                 NOT = { has_planet_flag = running_freighters }

@@ -18,7 +18,6 @@ event = {
     }
 
     immediate = {
-        #log = "initial event triggered"
         set_global_flag = iicso_active
 
         every_planet = {
@@ -109,6 +108,7 @@ event = {
 
 
 #on mining station destroyed; this - owner of station, fromfrom - station
+#clears stockpile from station
 country_event = {
     id = iicso.103
     is_triggered_only = yes
@@ -182,6 +182,8 @@ country_event = {
     }
 }
 
+#finds stalled civ ships, sends them to iicso.105 to reissue orders or iicso.106 to queue deletion
+#triggered by annual pulse gatekeeper, on quarterly basis
 country_event = {
     id = iicso.104
     is_triggered_only = yes
@@ -196,8 +198,35 @@ country_event = {
     }
 
     immediate = {
+        every_owned_fleet = { #TEMPORARY CLEANUP v0.3b
+            limit = {
+                NOR = {
+                    has_fleet_flag = hub_freighter
+                    has_fleet_flag = system_freighter
+                    has_fleet_flag = station_freighter
+                    has_fleet_flag = trader_fleet
+                    has_fleet_flag = civilian_miner
+                    has_fleet_flag = civilian_gas_miner
+                }
+            }
+            remove_fleet_flag = orders_received
+            set_variable = { which = orders_renewed value = 0 }
+        } #TEMPORARY CLEANUP v0.3b
         every_owned_fleet = {
-            limit = { NOT = { has_fleet_flag = orders_received }}
+            limit = {
+                OR = {
+                    has_fleet_flag = hub_freighter
+                    has_fleet_flag = system_freighter
+                    has_fleet_flag = station_freighter
+                    has_fleet_flag = trader_fleet
+                    has_fleet_flag = civilian_miner
+                    has_fleet_flag = civilian_gas_miner
+                }
+                NOR = {
+                    has_fleet_flag = orders_received
+                    has_fleet_flag = mining_in_progress
+                }
+            }
             if = {
                 limit = { check_variable = { which = orders_renewed value > 2 }}
                 #detroy
@@ -218,6 +247,8 @@ country_event = {
     }
 }
 
+#reissues orders to stalled civ ships
+#called by iicso.104
 fleet_event = {
     id = iicso.105
     is_triggered_only = yes
@@ -341,7 +372,7 @@ fleet_event = {
         exists = THIS
     }
 
-    immediate = {
+    immediate = {   
         delete_fleet = THIS
     }
 }
@@ -383,7 +414,7 @@ country_event = {
         }
     }
 
-    immediate = {
+    immediate = {   
         random_country = {
             limit = {
                 OR = {
@@ -1108,6 +1139,7 @@ country_event = {
 # }
 
 #remove civilian factions from federation, called from on join federation
+#THIS is federation leader, FROM is joining empire
 country_event = {
     id = iicso.220
     is_triggered_only = yes

@@ -203,8 +203,9 @@ on_ship_destroyed_victim = {
 # From = owner of fleet 2
 # FromFrom = fleet 1
 # FromFromFrom = fleet 2
-# on_entering_battle = {
-# 	events = {
-# 		iicso.113
-# 	}
-# }
+on_entering_battle = {
+	events = {
+		#iicso.113
+		iicso.410
+	}
+}

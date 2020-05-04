@@ -132,7 +132,7 @@ miner_arrival = {
     if = {
         limit = { has_fleet_flag = enroute_to_mining_target }
         remove_fleet_flag = enroute_to_mining_target
-        set_fleet_flag = mining_in_progress@orbit
+        set_fleet_flag = mining_in_progress
         #log = "Miner arrived at mining target [orbit.GetName]"
     }
 }

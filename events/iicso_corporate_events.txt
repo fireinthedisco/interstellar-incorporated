@@ -214,13 +214,16 @@ country_event = {
 	}
 
     immediate = {
-		#log = "iicso.910 triggered"
+		
 		every_planet_within_border = {
 			limit = { has_mining_station = yes}
 			ROOT = { change_variable = { which = iicso_corp_station_cap value = 1 }}
 			if = {
 				limit = { mining_station = { owner = { is_country_type = iicso_corporate_country }}}
-				change_variable = { which = iicso_corp_station_count value = 1 }
+				#TEMPORARY CLEANUP v0.3b
+				set_variable = { which = iicso_corp_station_count value = 0 }
+				#TEMPORARY CLEANUP v0.3b
+				ROOT = { change_variable = { which = iicso_corp_station_count value = 1 }}
 			}
 		}
 		divide_variable = { which = iicso_corp_station_cap value = 5 }
@@ -233,6 +236,7 @@ country_event = {
 		subtract_variable = { which = iicso_corp_station_cap value = iicso_corp_station_cap_temp }
 		set_variable = { which = iicso_corp_station_cap_temp value = 0 }
 
+		log = "[THIS.GetName] has [THIS.iicso_corp_station_count] corporate stations and a cap of [THIS.iicso_corp_station_cap]"
 		if = {
 			limit = {
 				check_variable = { which = iicso_corp_station_count value < iicso_corp_station_cap }

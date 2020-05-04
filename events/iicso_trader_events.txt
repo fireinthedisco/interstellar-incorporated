@@ -56,6 +56,7 @@ planet_event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        
         #log = "[THIS.GetName] in [THIS.Owner.GetName] is searching for a trader target..."
         random_planet = {
             limit = {
