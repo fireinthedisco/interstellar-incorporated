@@ -21,36 +21,30 @@ event = {
         set_global_flag = iicso_active
 
         every_planet = {
-            limit = { is_colony = no }
-
-            if = { #immediately set up all planets inside of empires
-                limit = { solar_system = { exists = space_owner }}
-                set_planet_flag = iicso_initialsetup_ownedsystem
-                planet_event = {
-                    id = iicso.101
-                    days = 1
-                    random = 29
-                }
+            limit = {
+                has_mining_station = yes
+                NOT = { has_planet_flag = iicso_resources_set }
             }
-            else = { #and take care of the rest over the course of the year
-                planet_event = {
-                    id = iicso.101
-                    days = 1
-                    random = 359
-                }
+            planet_event = {
+                id = iicso.101
+                days = 1
+                random = 359
             }
         }
     }
 }
 
 #determines number of resources on each planet; called again every year
-#called from iicso.100, calls itself
+#called from iicso.100, calls itself, called by iicso.108 (mining station built)
 planet_event = {
     id = iicso.101
     is_triggered_only = yes
     hide_window = yes
 
-    trigger = { has_global_flag = iicso_active }
+    trigger = {
+        has_global_flag = iicso_active
+        has_mining_station = yes
+    }
 
     immediate = {
         #log = "mineral count triggered on planet [THIS.GetName] in empire [THIS.solar_system.space_owner.GetName]"
@@ -62,20 +56,9 @@ planet_event = {
         }
         #log = "planet [THIS.GetName] has [THIS.iicso_orbital_minerals] minerals"
 
-        if = {
-            limit = { has_planet_flag = iicso_initialsetup_ownedsystem }
-            remove_planet_flag = iicso_initialsetup_ownedsystem
-            planet_event = {
-                id = iicso.101
-                days = 1
-                random = 359
-            }
-        }
-        else = {
-            planet_event = { #check both again a year from now (staggered across the year for different stations, since we triggered it staggered first time)
-                id = iicso.101
-                days = 360
-            }
+        planet_event = {
+            id = iicso.101
+            days = 360
         }
     }
 }
@@ -374,6 +357,24 @@ fleet_event = {
 
     immediate = {   
         delete_fleet = THIS
+    }
+}
+
+#called on mining station built, initiates orbital resource count
+#THIS is construction ship, FROM is the planet
+ship_event = {
+    id = iicso.108
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        FROM = {
+            planet_event = {
+                id = iicso.101
+                days = 1
+                random = 359
+            }
+        }
     }
 }
 
@@ -1238,34 +1239,53 @@ country_event = {
 
 
 # counts number of civ ships in the game
-# event = {
-#     id = iicso.6000
-#     is_triggered_only = yes
-#     hide_window = yes
+event = {
+    id = iicso.6000
+    is_triggered_only = yes
+    hide_window = yes
 
-#     immediate = {
-#         random_country = {
-#             limit = {
-#                 OR = {
-#                     has_country_flag = counting_country
-#                     NOT = { any_country = { has_country_flag = counting_country }}
-#                 }
-#             }
-#             set_country_flag = counting_country
-#             save_event_target_as = player_country
-#             set_variable = { which = civilian_ship_count value = 0 }
-#         }
-#         every_country = {
-#             limit = { has_country_flag = iicso_civilian_country }
-#             every_owned_ship = {
-#                 event_target:player_country = { change_variable = { which = civilian_ship_count value = 1 }}
-#             }
-#         }
-#         event_target:player_country = {
-#             if = {
-#                 limit = { check_variable = { which = civilian_ship_count value > 0 }} 
-#                 log = "[THIS.GetName] says there are [THIS.civilian_ship_count] civilian ships"
-#             }
-#         }
-#     }
-# }
+    immediate = {
+        random_country = {
+            limit = {
+                OR = {
+                    has_country_flag = counting_country
+                    NOT = { any_country = { has_country_flag = counting_country }}
+                }
+            }
+            set_country_flag = counting_country
+            every_country = {
+                if = {
+                    limit = {
+                        OR = {
+                            has_country_flag = iicso_civilian_country
+                            has_country_flag = iicso_corporate_country
+                        }
+                    }
+                    every_owned_ship = {
+                        PREVPREV = { change_variable = { which = iicso_ship_count value = 1 }}
+                    }
+                    every_owned_fleet = {
+                        PREVPREV = { change_variable = { which = iicso_fleet_count value = 1 }}
+                    }
+                }
+                every_owned_planet = {
+                    limit = { is_colony = yes }
+                    PREVPREV = {
+                        change_variable = { which = iicso_colony_count value = 1 }
+                    }
+                }
+                every_owned_pop = {
+                    PREVPREV = {
+                        change_variable = { which = iicso_pop_count value = 1 }
+                    }
+                }
+            }
+            log = "[THIS.iicso_ship_count] civilian ships in [THIS.iicso_fleet_count] fleets. [THIS.iicso_colony_count] colonies with [THIS.iicso_pop_count] pops."
+            
+            set_variable = { which = iicso_ship_count value = 0 }
+            set_variable = { which = iicso_fleet_count value = 0 }
+            set_variable = { which = iicso_colony_count value = 0 }
+            set_variable = { which = iicso_pop_count value = 0 }
+        }
+    }
+}

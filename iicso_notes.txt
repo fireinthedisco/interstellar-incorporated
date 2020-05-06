@@ -24,7 +24,6 @@
 
 # Added markers, objects:
 # 	global_flag iicso_active
-# 	planet_flag iicso_initialsetup_ownedsystem
 # 	planet_flag iicso_resources_set
 # 	planet stockpile flags
 # 	civ countries with iicso_civilian_country flags

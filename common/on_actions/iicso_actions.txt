@@ -18,7 +18,6 @@ on_monthly_pulse = {
 		#iicso.406
 		#iicso.1000
 		#iicso.600
-		#iicso.6000
 	}
 }
 
@@ -117,6 +116,15 @@ on_building_starbase_outpost = {
 	}
 }
 
+# This = construction ship
+# From = planet it is built on
+# Fires when construction is complete,
+# immediately before station is created
+on_building_mining_station = {
+	events = {
+		iicso.108
+	}
+}
 
 
 # A planet has been colonized.
