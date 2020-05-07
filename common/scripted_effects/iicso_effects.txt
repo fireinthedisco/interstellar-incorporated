@@ -775,13 +775,23 @@ set_planet_resources = {
 #THIS = mining_station
 remove_mining_station_income_resource = {
     set_variable = { which = iicso_orbital_$RESOURCE$ value = orbit }
+
+    change_variable = { which = iicso_orbital_$RESOURCE$ value = iicso_orbital_$RESOURCE$_owed }
+    set_variable = { which = iicso_orbital_$RESOURCE$_owed value = 0 }
+
+    set_variable = { which = iicso_orbital_$RESOURCE$_temp value = iicso_orbital_$RESOURCE$ }
+
     while = {
         count = iicso_orbital_$RESOURCE$
         owner = { add_resource = { $RESOURCE$ = -1 }}
-        orbit = {
-            change_variable = { which = iicso_stockpile_$RESOURCE$ value = 1 }
-        }
+        orbit = { change_variable = { which = iicso_stockpile_$RESOURCE$ value = 1 }}
+        change_variable = { which = iicso_orbital_$RESOURCE$_temp value = -1 }
     }
+
+    set_variable = { which = iicso_orbital_$RESOURCE$_owed value = iicso_orbital_$RESOURCE$_temp }
+
+    set_variable = { which = iicso_orbital_$RESOURCE$ value = 0 }
+    set_variable = { which = iicso_orbital_$RESOURCE$_temp value = 0 }
 }
 
 #THIS = country

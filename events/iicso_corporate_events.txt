@@ -144,11 +144,12 @@ country_event = {
 									set_country_flag = iicso_corporation_is@PREV
 								}
 								save_event_target_as = last_created_corp
-								set_subject_of = {
-									who = ROOT
-									subject_type = iicso_corporate_subject
-								}
-								set_country_flag = iicso_corporate_country
+								# set_subject_of = {
+								# 	who = ROOT
+								# 	subject_type = iicso_corporate_subject
+								# }
+								set_faction_hostility = { target = ROOT set_hostile = no set_neutral = no set_friendly = yes }
+								ROOT = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }}
 								set_country_flag = iicso_corporation_of@ROOT
 								copy_techs_from = { target = ROOT }
 								every_country = {
@@ -186,7 +187,7 @@ country_event = {
 	id = iicso.902
 	title = "iicso.902.name"
 	desc = "iisco.902.desc"
-	picture = GFX_evt_atmospheric_flight
+	picture = GFX_evt_busy_spaceport
 	is_triggered_only = yes
 
 	option = {
@@ -216,7 +217,7 @@ country_event = {
     immediate = {
 		
 		every_planet_within_border = {
-			limit = { has_mining_station = yes}
+			limit = { has_mining_station = yes }
 			ROOT = { change_variable = { which = iicso_corp_station_cap value = 1 }}
 			if = {
 				limit = { mining_station = { owner = { is_country_type = iicso_corporate_country }}}
@@ -226,6 +227,7 @@ country_event = {
 				ROOT = { change_variable = { which = iicso_corp_station_count value = 1 }}
 			}
 		}
+
 		divide_variable = { which = iicso_corp_station_cap value = 5 }
 		#remove remainder
 		set_variable = { which = iicso_corp_station_cap_temp value = iicso_corp_station_cap }
@@ -253,5 +255,7 @@ country_event = {
 				}
 			}
 		}
+		set_variable = { which = iicso_corp_station_count value = 0 }
+		set_variable = { which = iicso_corp_station_cap value = 0 }
     }
 }

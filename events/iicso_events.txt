@@ -25,11 +25,8 @@ event = {
                 has_mining_station = yes
                 NOT = { has_planet_flag = iicso_resources_set }
             }
-            planet_event = {
-                id = iicso.101
-                days = 1
-                random = 359
-            }
+            set_planet_flag = iicso_initial_resource_count
+            planet_event = { id = iicso.101 }
         }
     }
 }
@@ -56,9 +53,20 @@ planet_event = {
         }
         #log = "planet [THIS.GetName] has [THIS.iicso_orbital_minerals] minerals"
 
-        planet_event = {
-            id = iicso.101
-            days = 360
+        if = {
+            limit = { has_planet_flag = iicso_initial_resource_count }
+            remove_planet_flag = iicso_initial_resource_count
+            planet_event = {
+                id = iicso.101
+                days = 1
+                random = 359
+            }
+        }
+        else = {
+            planet_event = {
+                id = iicso.101
+                days = 360
+            }
         }
     }
 }
@@ -369,10 +377,10 @@ ship_event = {
 
     immediate = {
         FROM = {
+            set_planet_flag = iicso_initial_resource_count
             planet_event = {
                 id = iicso.101
                 days = 1
-                random = 359
             }
         }
     }
@@ -695,14 +703,7 @@ event = {
             }
 
             if = {
-                limit = {
-                    NOT = {
-                        any_country = {
-                            has_country_flag = iicso_faction_of@PREV
-                            has_country_flag = iicso_civilian_country
-                        }
-                    }
-                }
+                limit = { NOT = { any_country = { has_country_flag = iicso_faction_of@PREV }}}
 
                 create_country = {
                     name = THIS
@@ -720,11 +721,13 @@ event = {
 
                 last_created_country = {
                     #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
-                    set_subject_of = {
-                        who = PREV
-                        subject_type = iicso_civilian_subject
-                    }
-                    set_country_flag = iicso_civilian_country
+                    # set_subject_of = {
+                    #     who = PREV
+                    #     subject_type = iicso_civilian_subject
+                    # }
+                    
+                    set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }
+                    PREV = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }}
                     set_country_flag = iicso_faction_of@PREV
                     copy_techs_from = { target = PREV }
                     set_name = random
@@ -773,8 +776,8 @@ event = {
         every_country = {
             limit = {
                 OR = {
-                    has_country_flag = iicso_civilian_country
-                    has_country_flag = iicso_corporate_country
+                    is_country_type = iicso_civilian_country
+                    is_country_type = iicso_corporate_country
                 }
             }
             random_country = {
@@ -786,28 +789,28 @@ event = {
                 }
                 PREV = {
                     copy_techs_from = { target = PREV }
-                    if = {
-                        limit = {
-                            #is_country_Type = iicso_civilian_country
-                            OR = {
-                                is_subject = no
-                                overlord = {
-                                    NOR = {
-                                        has_country_flag = iicso_faction_is@PREV
-                                        has_country_flag = iicso_corporation_is@PREV
-                                    }
-                                }
-                            }
-                            PREV = {
-                                has_country_flag = iicso_faction_is@PREV
-                                is_subject = no
-                            }
-                        }
-                        set_subject_of = {
-                            who = PREV
-                            subject_type = iicso_civilian_subject
-                        }
-                    }
+                    # if = {
+                    #     limit = {
+                    #         #is_country_Type = iicso_civilian_country
+                    #         OR = {
+                    #             is_subject = no
+                    #             overlord = {
+                    #                 NOR = {
+                    #                     has_country_flag = iicso_faction_is@PREV
+                    #                     has_country_flag = iicso_corporation_is@PREV
+                    #                 }
+                    #             }
+                    #         }
+                    #         PREV = {
+                    #             has_country_flag = iicso_faction_is@PREV
+                    #             is_subject = no
+                    #         }
+                    #     }
+                    #     set_subject_of = {
+                    #         who = PREV
+                    #         subject_type = iicso_civilian_subject
+                    #     }
+                    # }
                     if = {
                         limit = {
                             NOT = {
@@ -903,10 +906,12 @@ country_event = {
                         is_country_type = iicso_civilian_country
                         is_country_type = iicso_corporate_country
                     }
+                    NOR = {
+                        has_country_flag = iicso_faction_of@ROOT
+                        has_country_flag = iicso_corporation_of@ROOT
+                    }
                 }
-                ROOT = {
-                    set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
-                }
+                ROOT = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }}
             }
         }
         else_if = {
@@ -927,9 +932,7 @@ country_event = {
                             has_country_flag = iicso_corporation_of@PREV
                         }
                     }
-                    ROOT = {
-                        set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
-                    }
+                    ROOT = { set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }}
                 }
             }
             every_country = {
@@ -948,9 +951,7 @@ country_event = {
                             has_country_flag = iicso_corporation_of@PREV
                         }
                     }
-                    ROOT = {
-                        set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
-                    }
+                    ROOT = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }}
                 }
             }
         }
@@ -979,9 +980,7 @@ country_event = {
                             has_country_flag = iicso_corporation_of@PREV
                         }
                     }
-                    ROOT = {
-                        set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }
-                    }
+                    ROOT = { set_faction_hostility = { target = PREV set_hostile = yes set_neutral = no set_friendly = no }}
                 }
             }
             every_country = {
@@ -1007,11 +1006,18 @@ country_event = {
                             has_country_flag = iicso_corporation_of@PREV
                         }
                     }
-                    ROOT = {
-                        set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }
-                    }
+                    ROOT = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = yes set_friendly = no }}
                 }
             }
+        }
+        every_country = {
+            limit = {
+                OR = {
+                    has_country_flag = iicso_faction_of@ROOT
+                    has_country_flag = iicso_corporation_of@ROOT
+                }
+            }
+            ROOT = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }}
         }
         country_event = {
             id = iicso.202
@@ -1257,8 +1263,8 @@ event = {
                 if = {
                     limit = {
                         OR = {
-                            has_country_flag = iicso_civilian_country
-                            has_country_flag = iicso_corporate_country
+                            is_country_type = iicso_civilian_country
+                            is_country_type = iicso_corporate_country
                         }
                     }
                     every_owned_ship = {

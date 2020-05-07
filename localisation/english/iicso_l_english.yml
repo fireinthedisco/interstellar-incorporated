@@ -117,7 +117,7 @@ pseudonational_corporations_name:0 "Pseudonational Corporations"
 pseudonational_corporations_desc:1 "This policy option has not yet been implemented."
 
 edict_iicso_deactivate:0 "Deactivate Interstellar Incorporated: A Civilian Space Odyssey"
-edict_iicso_deactivate_desc:0 "This edict should remove everything added by II:CSO, and prevent the mod from reinitializing for 60 days. If you wish to remove the mod entirely, once the edict has finished removing II:CSO content, save your game, exit, and deactivate the mod in your game launcher or mod organizer. If you are using this edict to reset II:CSO due to a bug, update, or otherwise, simply let your game continue. After the 60-day edict expires, the mod will begin reinitializing on the next start of month."
+edict_iicso_deactivate_desc:0 "This edict should remove everything added by IICSO, and prevent the mod from reinitializing for 60 days. If you wish to remove the mod entirely, once the edict has finished removing IICSO content, allow a few days to pass, then save your game, exit, and deactivate the mod in your game launcher or mod organizer. If you are using this edict to reset IICSO due to a bug, update, or otherwise, simply let your game continue. After the 60-day window passes, the mod will begin reinitializing on the next start of month."
 
 iicso.902.name:0 "A Prominent Corporation Rises"
  iisco.902.desc:0 "A new corporation has risen to prominence in our country's private sector, having acquired a number of spacebourne assets and extending their influence to the stars. According to the corporate registry, the firm is called [last_created_corp.GetName]."

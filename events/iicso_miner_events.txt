@@ -263,7 +263,7 @@ event = {
     immediate = {
         
         every_country = {
-            limit = { has_country_flag = iicso_civilian_country }
+            limit = { is_country_type = iicso_civilian_country }
             every_owned_fleet = {
                 limit = {
                     OR = {
@@ -329,7 +329,7 @@ event = {
 
 #     immediate = {
 #         every_country = {
-#             limit = { has_country_flag = iicso_civilian_country }
+#             limit = { is_country_type = iicso_civilian_country }
 #             every_owned_fleet = {
 #                 limit = { NOT = { has_fleet_flag = orders_received }}
 #                 if = {

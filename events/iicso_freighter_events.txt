@@ -76,6 +76,7 @@ planet_event = {
                             is_primary_star = yes
                             solar_system = {
                                 starbase = { has_starbase_module = trading_hub }
+                                NOT = { any_system_planet = { is_colony = yes }}
                             }
                         }
                     }
@@ -90,7 +91,12 @@ planet_event = {
                     }
                 }
                 else_if = {
-                    limit = { ROOT = { is_primary_star = yes }}
+                    limit = {
+                        ROOT = {
+                            is_primary_star = yes
+                            solar_system = { NOT = { any_system_planet = { is_colony = yes }}}
+                        }
+                    }
                     create_fleet = {
                         name = system_freighter_fleet
                         effect = {
@@ -119,8 +125,9 @@ planet_event = {
                     }
                     if = {
                         limit = {
-                            ROOT = {
-                                is_primary_star = yes
+                            OR = {
+                                has_fleet_flag = hub_freighter
+                                has_fleet_flag = system_freighter
                             }
                         }
                         fleet_event = {
@@ -248,7 +255,17 @@ fleet_event = {
                 }
             }
             ROOT = {
-                closest_system = {
+                solar_system = {
+                    every_neighbor_system = {
+                        limit = {
+                            exists = space_owner
+                            space_owner = { is_same_value = PREVPREVPREVPREV }
+                            starbase = { controller = { is_same_value = PREVPREV.space_owner }}
+                        }
+                        set_star_flag = iicso_checking_route@ROOT
+                    }
+                }
+                closest_system = { #find closest system with either a colony or a trade hub
                     limit = {
                         exists = space_owner
                         space_owner = { is_same_value = PREVPREVPREV }
@@ -272,71 +289,82 @@ fleet_event = {
                             }
                         }
                     }
-                    random_system_planet = {
-                        limit = {
-                            OR = {
-                                AND = {
+                    if = { #if that system is a neighbor of freighter's location
+                        limit = { has_star_flag = iicso_checking_route@ROOT }
+                        if = {
+                            limit = {
+                                any_system_planet = {
                                     is_colony = yes
                                     NOT = { has_orbital_bombardment = yes }
                                     controller = { is_same_value = PREV.owner }
                                 }
-                                AND = {
-                                    is_primary_star = yes
-                                    solar_system = {
-                                        starbase = {
-                                            has_starbase_module = trading_hub
-                                            controller = { is_same_value = PREV.owner }
-                                        }
-                                    }
-                                }
                             }
-                        }
-                        weights = {
-                            base = 1
-                            modifier = {
-                                add = -1
-                                is_primary_star = yes
-                                solar_system = {
-                                    any_system_planet = {
-                                        is_colony = yes
-                                        exists = owner
-                                        owner = { is_same_value = PREVPREVPREVPREV }
-                                        NOT = { has_orbital_bombardment = yes }
-                                        controller = { is_same_value = PREV.owner }
-                                    }
-                                }
-                            }
-                        }
-                        ROOT = {
-                            set_timed_fleet_flag = {
-                                flag = orders_received
-                                days = 360
-                            }
-
-                            if = {
+                            random_system_planet = {
                                 limit = {
-                                    PREV = { is_primary_star = yes }
+                                    is_colony = yes
+                                    NOT = { has_orbital_bombardment = yes }
+                                    controller = { is_same_value = PREV.owner }
                                 }
-                                set_fleet_flag = fleet_destination@PREV
-                                set_fleet_flag = enroute_to_starbase
-                                auto_move_to_planet = {
-                                    target = PREV
-                                    clear_auto_move_on_arrival = no
-                                    arrival_effect = deposit_cargo_at_starbase
+                                ROOT = { #then go to the colony, if there's a colony
+                                    set_fleet_flag = fleet_destination@PREV
+                                    set_fleet_flag = enroute_to_colony
+                                    auto_move_to_planet = {
+                                        target = PREV
+                                        clear_auto_move_on_arrival = no
+                                        arrival_effect = deposit_cargo_at_colony
+                                    }
                                 }
                             }
-                            else = {
-                                set_fleet_flag = fleet_destination@PREV
-                                set_fleet_flag = enroute_to_colony
-                                auto_move_to_planet = {
-                                    target = PREV
-                                    clear_auto_move_on_arrival = no
-                                    arrival_effect = deposit_cargo_at_colony
+                        }
+                        else_if = {
+                            limit = {
+                                starbase = {
+                                    has_starbase_module = trading_hub
+                                    controller = { is_same_value = PREV.owner }
+                                }
+                            }
+                            random_system_planet = {
+                                limit = { is_primary_star = yes }
+                                ROOT = { #otherwise go to the trade hub
+                                    set_fleet_flag = fleet_destination@PREV
+                                    set_fleet_flag = enroute_to_starbase
+                                    auto_move_to_planet = {
+                                        target = PREV
+                                        clear_auto_move_on_arrival = no
+                                        arrival_effect = deposit_cargo_at_starbase
+                                    }                                    
                                 }
                             }
                         }
                     }
+                    else = { #if target doesn't neighbor freighter system
+                        closest_system = { #find closest system to target which does neighbor freighter
+                            limit = { has_star_flag = iicso_checking_route@ROOT }
+                            random_system_planet = {
+                                limit = { is_primary_star = yes }
+                                ROOT = { #and send freighter to its starbase
+                                    set_fleet_flag = fleet_destination@PREV
+                                    set_fleet_flag = enroute_to_starbase
+                                    auto_move_to_planet = {
+                                        target = PREV
+                                        clear_auto_move_on_arrival = no
+                                        arrival_effect = deposit_cargo_at_starbase
+                                    }                                    
+                                }
+                            }
+                        }
+                    }
+                    ROOT = {
+                        set_timed_fleet_flag = {
+                            flag = orders_received
+                            days = 360
+                        }
+                    }
                 }
+            }
+            every_system_within_border = {
+                limit = { has_star_flag = iicso_checking_route@ROOT }
+                remove_star_flag = iicso_checking_route@ROOT
             }
         }
     }

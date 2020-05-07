@@ -1,5 +1,5 @@
 iicso_deactivate = {
-	length = 1
+	length = 60
 	resources = {
 		category = edicts
 	}
@@ -9,7 +9,7 @@ iicso_deactivate = {
 	}
 
 	allow = {
-		has_global_flag = iicso_active
+		always = yes
 	}
 
 	effect = {
@@ -38,7 +38,14 @@ iicso_deactivate = {
 					remove_country_flag = iicso_corporation_is@PREV
 				}
 				every_owned_fleet = {
-					delete_fleet = THIS
+					if = {
+						limit = {
+							is_ship_size = mining_station
+							exists = space_owner
+						}
+						set_owner = space_owner
+					}
+					else = { delete_fleet = THIS }
 				}
 				destroy_country = yes
 			}
