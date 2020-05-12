@@ -1259,6 +1259,9 @@ event = {
                 }
             }
             set_country_flag = counting_country
+            every_system = {
+                PREV = { change_variable = { which = iicso_system_count value = 1 }}
+            }
             every_country = {
                 if = {
                     limit = {
@@ -1286,12 +1289,13 @@ event = {
                     }
                 }
             }
-            log = "[THIS.iicso_ship_count] civilian ships in [THIS.iicso_fleet_count] fleets. [THIS.iicso_colony_count] colonies with [THIS.iicso_pop_count] pops."
+            log = "[THIS.iicso_ship_count] civilian ships in [THIS.iicso_fleet_count] fleets. [THIS.iicso_colony_count] colonies with [THIS.iicso_pop_count] pops in [THIS.iicso_system_count] star galaxy."
             
             set_variable = { which = iicso_ship_count value = 0 }
             set_variable = { which = iicso_fleet_count value = 0 }
             set_variable = { which = iicso_colony_count value = 0 }
             set_variable = { which = iicso_pop_count value = 0 }
+            set_variable = { which = iicso_system_count value = 0 }
         }
     }
 }

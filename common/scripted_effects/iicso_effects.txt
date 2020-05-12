@@ -84,34 +84,31 @@ deposit_resource_into_stockpile = {
 
 calculate_empty_cargo = {
     set_variable = { which = empty_cargo value = 0 }
-    owner = {
-        every_owned_ship = {
+    every_owned_ship = { #every ship in fleet
+        limit = {
+            OR = {
+                has_ship_flag = large_cargo_ship
+                has_ship_flag = medium_cargo_ship
+                has_ship_flag = small_cargo_ship
+                has_ship_flag = civilian_miner
+                has_ship_flag = civilian_gas_miner
+            }
+        }
+        if = {
+            limit = { has_ship_flag = large_cargo_ship }
+            PREVPREV = { change_variable = { which = empty_cargo value = @large_cargo_capacity }}
+        } else_if = {
             limit = {
-                fleet = { is_same_value = PREVPREVPREV }
                 OR = {
-                    has_ship_flag = large_cargo_ship
                     has_ship_flag = medium_cargo_ship
-                    has_ship_flag = small_cargo_ship
                     has_ship_flag = civilian_miner
                     has_ship_flag = civilian_gas_miner
                 }
             }
-            if = {
-                limit = { has_ship_flag = large_cargo_ship }
-                PREVPREV = { change_variable = { which = empty_cargo value = @large_cargo_capacity }}
-            } else_if = {
-                limit = {
-                    OR = {
-                        has_ship_flag = medium_cargo_ship
-                        has_ship_flag = civilian_miner
-                        has_ship_flag = civilian_gas_miner
-                    }
-                }
-                PREVPREV = { change_variable = { which = empty_cargo value = @medium_cargo_capacity }}
-            } else_if = {
-                limit = { has_ship_flag = small_cargo_ship }
-                PREVPREV = { change_variable = { which = empty_cargo value = @small_cargo_capacity }}
-            }
+            PREVPREV = { change_variable = { which = empty_cargo value = @medium_cargo_capacity }}
+        } else_if = {
+            limit = { has_ship_flag = small_cargo_ship }
+            PREVPREV = { change_variable = { which = empty_cargo value = @small_cargo_capacity }}
         }
     }
     subtract_variable = { which = empty_cargo value = cargo_minerals }
