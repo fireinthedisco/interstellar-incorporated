@@ -1,4 +1,4 @@
-name="Interstellar Incorporated - A Civilian Space Odyssey v0.3.1 alpha"
+name="Interstellar Incorporated - A Civilian Space Odyssey v0.3.1a alpha"
 tags={
 	"Economy"
 	"Gameplay"

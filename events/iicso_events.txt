@@ -18,6 +18,8 @@ event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.100 triggered (iicso setup)" }
         set_global_flag = iicso_active
 
         every_planet = {
@@ -44,6 +46,8 @@ planet_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.101 triggered at [THIS.GetName] (planet: resource count)" }
         #log = "mineral count triggered on planet [THIS.GetName] in empire [THIS.solar_system.space_owner.GetName]"
         #first find how many resources the mining station produces
         set_planet_resources = yes
@@ -81,6 +85,8 @@ event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.102 triggered (station/starbase resource handler)" }
         every_country = {
             limit = {
                 OR = {
@@ -106,6 +112,8 @@ country_event = {
     hide_window = yes
 
     trigger = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.103 triggered at [THIS.GetName] (country: on min station destroy: resource clearer)" }
         has_global_flag = iicso_active
         FROMFROM = {
             solar_system = {
@@ -189,6 +197,8 @@ country_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.104 triggered at [THIS.GetName] (country: stalled ship handler)" }
         every_owned_fleet = { #TEMPORARY CLEANUP v0.3b
             limit = {
                 NOR = {
@@ -251,6 +261,8 @@ fleet_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.105 triggered at [THIS.GetName] (fleet: stalled ship order issuer)" }
         change_variable = { which = orders_renewed value = 1 }
         set_timed_fleet_flag = {
             flag = orders_received
@@ -348,6 +360,8 @@ fleet_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.106 triggered at [THIS.GetName] (fleet: fleet destroyer)" }
         destroy_fleet = THIS
     }
 }
@@ -363,7 +377,9 @@ fleet_event = {
         exists = THIS
     }
 
-    immediate = {   
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.107 triggered at [THIS.GetName] (fleet: fleet deleter)" }
         delete_fleet = THIS
     }
 }
@@ -376,6 +392,8 @@ ship_event = {
     hide_window = yes
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.108 triggered at [THIS.GetName] (ship: new mining station resource count handler)" }
         FROM = {
             set_planet_flag = iicso_initial_resource_count
             planet_event = {
@@ -423,7 +441,9 @@ country_event = {
         }
     }
 
-    immediate = {   
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.110 triggered at [THIS.GetName] (country: destroyed civ ship opinion modifier)" }
         random_country = {
             limit = {
                 OR = {
@@ -457,6 +477,8 @@ fleet_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.111 triggered at [THIS.GetName] (fleet: civ on enter system evasive/passive handler)" }
         if = {
             limit = {
                 FROM = {
@@ -500,6 +522,8 @@ fleet_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.112 triggered at [THIS.GetName] (fleet: hostile on enter system evasive/passive handler)" }
         FROM = {
             every_fleet_in_system = {
                 limit = {
@@ -572,6 +596,8 @@ event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.121 triggered (annual gatekeeper)" }
         #log = "yearly pulse gate event triggered"
         
         every_country = {
@@ -693,6 +719,8 @@ event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.200 triggered (civilian faction setup)" }
         every_country = {
 			limit = {
 				OR = {
@@ -839,6 +867,8 @@ country_event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.201 triggered at [THIS.GetName] (country: on comms est. comms handler)" }
         every_country = {
             limit = {
                 OR = {
@@ -891,6 +921,8 @@ country_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.202 triggered at [THIS.GetName] (country: civ hostility manager)" }
         if = {
             limit = { NOT = { has_country_flag = iicso_checking_hostility_status }}
             set_timed_country_flag = {
@@ -1147,38 +1179,38 @@ country_event = {
 
 #remove civilian factions from federation, called from on join federation
 #THIS is federation leader, FROM is joining empire
-country_event = {
-    id = iicso.220
-    is_triggered_only = yes
-    hide_window = yes
+# country_event = {
+#     id = iicso.220
+#     is_triggered_only = yes
+#     hide_window = yes
 
-    trigger = { has_global_flag = iicso_active }
+#     trigger = { has_global_flag = iicso_active }
 
-    immediate = {
-        FROM = {
-            if = {
-                limit = {
-                    OR = {
-                        is_country_type = iicso_civilian_country
-                        is_country_type = iicso_corporate_country
-                    }
-                }
-                leave_alliance = { override_requirements = yes }
-            }
-            else = {
-                every_country = {
-                    limit = {
-                        OR = {
-                            has_country_flag = iicso_faction_of@FROM
-                            has_country_flag = iicso_corporation_of@FROM
-                        }
-                    }
-                    leave_alliance = { override_requirements = yes }
-                }
-            }
-        }
-    }
-}
+#     immediate = {
+#         FROM = {
+#             if = {
+#                 limit = {
+#                     OR = {
+#                         is_country_type = iicso_civilian_country
+#                         is_country_type = iicso_corporate_country
+#                     }
+#                 }
+#                 leave_alliance = { override_requirements = yes }
+#             }
+#             else = {
+#                 every_country = {
+#                     limit = {
+#                         OR = {
+#                             has_country_flag = iicso_faction_of@FROM
+#                             has_country_flag = iicso_corporation_of@FROM
+#                         }
+#                     }
+#                     leave_alliance = { override_requirements = yes }
+#                 }
+#             }
+#         }
+#     }
+# }
 
 #on join federation with indiscriminate civ hostility, removes hostility to allies' civs
 # country_event = {
@@ -1251,6 +1283,8 @@ event = {
     hide_window = yes
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.9000 triggered (civ fleet counter)" }
         random_country = {
             limit = {
                 OR = {

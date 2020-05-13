@@ -13,6 +13,8 @@ country_event = {
 
     trigger = { has_global_flag = iicso_active }
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.400 triggered at [THIS.GetName] (country: miner spawner handler)" }
         
         every_owned_planet = {
             limit = { NOT = { is_under_colonization = yes }}
@@ -35,6 +37,8 @@ planet_event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.401 triggered at [THIS.GetName] (planet: miner spawner)" }
         
         #1 miner per 15 pops on planet
         every_owned_pop = {
@@ -163,6 +167,8 @@ fleet_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.402 triggered at [THIS.GetName] (fleet: miner navigator)" }
         
         remove_fleet_flag = enroute_to_mining_target
         remove_fleet_flag = pending_mine_target
@@ -261,6 +267,8 @@ event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.403 triggered (miner resource handler)" }
         
         every_country = {
             limit = { is_country_type = iicso_civilian_country }
@@ -433,6 +441,8 @@ country_event = {
     hide_window = yes
 
     trigger = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.410 triggered at [THIS.GetName] (country: miner on attack flag remover)" }
         has_global_flag = iicso_active
         OR = {
             FROMFROM = {

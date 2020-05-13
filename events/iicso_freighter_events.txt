@@ -10,6 +10,8 @@ country_event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.500 triggered at [THIS.GetName] (country: freighter spawner handler)" }
         every_planet = {
             limit = {
                 NOT = { has_planet_flag = running_freighters }
@@ -44,6 +46,8 @@ planet_event = {
     trigger = { has_global_flag = iicso_active }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.501 triggered at [THIS.GetName] (planet: freighter spawner)" }
         #log = "system freighters triggered at [THIS.GetName] for empire [THIS.solar_system.space_owner.GetName]"
         if = {
             limit = {
@@ -171,6 +175,8 @@ fleet_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.502 triggered at [THIS.GetName] (fleet: freighter in-system navigator)" }
         solar_system = {
             if = {
                 limit = {
@@ -247,6 +253,8 @@ fleet_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.503 triggered at [THIS.GetName] (fleet: freighter out-system navigator)" }
         random_country = {
             limit = {
                 OR = {

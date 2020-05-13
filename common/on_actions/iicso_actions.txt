@@ -60,7 +60,7 @@ on_post_communications_established = {
 #From = Joining member
 on_join_federation = {
 	events = {
-		iicso.220 #remove civs/corps from federation
+		#iicso.220 #remove civs/corps from federation
 		#iicso.221 #for indiscriminate civ hostility empire, removes hostility to allies
 	}
 }

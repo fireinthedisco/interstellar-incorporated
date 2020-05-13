@@ -118,6 +118,8 @@ pseudonational_corporations_desc:1 "This policy option has not yet been implemen
 
 edict_iicso_deactivate:0 "Deactivate Interstellar Incorporated: A Civilian Space Odyssey"
 edict_iicso_deactivate_desc:0 "This edict should remove everything added by IICSO, and prevent the mod from reinitializing for 60 days. If you wish to remove the mod entirely, once the edict has finished removing IICSO content, allow a few days to pass, then save your game, exit, and deactivate the mod in your game launcher or mod organizer. If you are using this edict to reset IICSO due to a bug, update, or otherwise, simply let your game continue. After the 60-day window passes, the mod will begin reinitializing on the next start of month."
+edict_iicso_debug_mode:0 "IICSO Debug Mode Toggle"
+edict_iicso_debug_mode_desc:0 "This edict will toggle you between debug mode on and off for Interstellar Incorporated: A Civilian Space Odyssey. In debug mode, a very large amount of information will be dumped to your game.log as you run the game, which may help pinpoint certain bugs or crashes."
 
 iicso.902.name:0 "A Prominent Corporation Rises"
  iisco.902.desc:0 "A new corporation has risen to prominence in our country's private sector, having acquired a number of spacebourne assets and extending their influence to the stars. According to the corporate registry, the firm is called [last_created_corp.GetName]."

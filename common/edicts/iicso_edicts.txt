@@ -1,5 +1,6 @@
 iicso_deactivate = {
 	length = 60
+	icon = "GFX_edict_type_policy"
 	resources = {
 		category = edicts
 	}
@@ -16,6 +17,7 @@ iicso_deactivate = {
 		custom_tooltip = remove.iicso.tooltip
 		hidden_effect = {
 			remove_global_flag = iicso_active
+			remove_global_flag = iicso_debug_mode
 			set_timed_global_flag = {
 				flag = iicso_deactivated
 				days = 60
@@ -82,6 +84,39 @@ iicso_deactivate = {
 				set_variable = { which = iicso_stockpile_food value = 0 }
 				set_variable = { which = iicso_stockpile_consumer_goods value = 0 }
 				set_variable = { which = iicso_stockpile_energy value = 0 }
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+iicso_debug_mode = {
+	length = 1
+	icon = "GFX_edict_type_policy"
+	resources = {
+		category = edicts
+	}
+
+	potential = {
+		NOT = { is_ai = yes }
+	}
+
+	allow = {
+		always = yes
+	}
+
+	effect = {
+		custom_tooltip = debug.iicso.tooltip
+		hidden_effect = {
+			if = {
+				limit = { NOT = { has_global_flag = iicso_debug_mode }}
+				set_global_flag = iicso_debug_mode
+			}
+			else = {
+				remove_global_flag = iicso_debug_mode
 			}
 		}
 	}

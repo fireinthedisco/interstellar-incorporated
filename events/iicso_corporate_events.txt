@@ -4,7 +4,7 @@
 
 namespace = iicso
 
-#test event (spawns a lot of corporations)
+#test event (spawns a lot of corporations) (inactive)
 event = {
 	id = iicso.9000
 	hide_window = yes
@@ -15,7 +15,8 @@ event = {
 		#NOT = { has_global_flag = spawned_corporations }
 	}
 	immediate = {
-		#log = "Spawning test corporations..."
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.9000 triggered (corp test spawner)" }
 		#set_global_flag = spawned_corporations
 		
 		while = {
@@ -30,7 +31,7 @@ event = {
 				name_list = random
 				species = random
 			}
-			log = "[last_created_country.GetName] has been spawned as a corporation!"
+			#log = "[last_created_country.GetName] has been spawned as a corporation!"
 		}
 	}
 }
@@ -52,6 +53,8 @@ country_event = {
 	}
 
 	immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.900 triggered at [THIS.GetName] (country: corp spawner gatekeeper)" }
 		country_event = {
 			id = iicso.901
 			days = 1
@@ -77,6 +80,8 @@ country_event = {
 	}
 
 	immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.901 triggered at [THIS.GetName] (country: corp spawner)" }
 		#one corp at 5, 2 at 20, 3 at 50, 1 per 50 systems after that (so 4 at 100)
 		every_system_within_border = {
 			ROOT = { change_variable = { which = iicso_corp_cap value = 1 }}
@@ -190,6 +195,11 @@ country_event = {
 	picture = GFX_evt_busy_spaceport
 	is_triggered_only = yes
 
+	immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.902 triggered at [THIS.GetName] (country: corp spawner message event)" }
+	}
+
 	option = {
 		name = "OK"
 	}
@@ -215,6 +225,8 @@ country_event = {
 	}
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.910 triggered at [THIS.GetName] (country: corp station distributor)" }
 		
 		every_planet_within_border = {
 			limit = { has_mining_station = yes }
@@ -238,7 +250,7 @@ country_event = {
 		subtract_variable = { which = iicso_corp_station_cap value = iicso_corp_station_cap_temp }
 		set_variable = { which = iicso_corp_station_cap_temp value = 0 }
 
-		log = "[THIS.GetName] has [THIS.iicso_corp_station_count] corporate stations and a cap of [THIS.iicso_corp_station_cap]"
+		#log = "[THIS.GetName] has [THIS.iicso_corp_station_count] corporate stations and a cap of [THIS.iicso_corp_station_cap]"
 		if = {
 			limit = {
 				check_variable = { which = iicso_corp_station_count value < iicso_corp_station_cap }
