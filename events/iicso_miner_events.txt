@@ -441,8 +441,6 @@ country_event = {
     hide_window = yes
 
     trigger = {
-        if = { limit = { has_global_flag = iicso_debug_mode }
-			log = "iicso.410 triggered at [THIS.GetName] (country: miner on attack flag remover)" }
         has_global_flag = iicso_active
         OR = {
             FROMFROM = {
@@ -461,6 +459,8 @@ country_event = {
     }
 
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+			log = "iicso.410 triggered at [THIS.GetName] (country: miner on attack flag remover)" }
         if = {
             limit = {
                 FROMFROM = {

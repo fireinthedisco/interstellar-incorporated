@@ -96,7 +96,7 @@ calculate_empty_cargo = {
         }
         if = {
             limit = { has_ship_flag = large_cargo_ship }
-            PREVPREV = { change_variable = { which = empty_cargo value = @large_cargo_capacity }}
+            PREV = { change_variable = { which = empty_cargo value = @large_cargo_capacity }}
         } else_if = {
             limit = {
                 OR = {
@@ -105,10 +105,10 @@ calculate_empty_cargo = {
                     has_ship_flag = civilian_gas_miner
                 }
             }
-            PREVPREV = { change_variable = { which = empty_cargo value = @medium_cargo_capacity }}
+            PREV = { change_variable = { which = empty_cargo value = @medium_cargo_capacity }}
         } else_if = {
             limit = { has_ship_flag = small_cargo_ship }
-            PREVPREV = { change_variable = { which = empty_cargo value = @small_cargo_capacity }}
+            PREV = { change_variable = { which = empty_cargo value = @small_cargo_capacity }}
         }
     }
     subtract_variable = { which = empty_cargo value = cargo_minerals }

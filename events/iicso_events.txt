@@ -391,6 +391,10 @@ ship_event = {
     is_triggered_only = yes
     hide_window = yes
 
+    trigger = {
+        has_global_flag = iicso_active
+    }
+
     immediate = {
         if = { limit = { has_global_flag = iicso_debug_mode }
 		    log = "iicso.108 triggered at [THIS.GetName] (ship: new mining station resource count handler)" }
@@ -539,6 +543,101 @@ fleet_event = {
                 set_fleet_stance = evasive
             }
         }
+    }
+}
+
+# This = owner of fleet 1
+# From = owner of fleet 2
+# FromFrom = fleet 1
+# FromFromFrom = fleet 2
+#called by on entering battle
+country_event = {
+    id = iicso.113
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        OR = {
+            FROMFROM = {
+                owner = {
+                    OR = {
+                        is_country_type = iicso_civilian_country
+                        is_country_type = iicso_corporate_country
+                    }
+                }
+            }
+            FROMFROMFROM = {
+                owner = {
+                    OR = {
+                        is_country_type = iicso_civilian_country
+                        is_country_type = iicso_corporate_country
+                    }
+                }
+            }
+        }
+    }
+
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.113 triggered at [THIS.GetName] (country: civ fleet retreat handler)" }
+        if = {
+            limit = {
+                FROMFROM = {
+                    owner = {
+                        OR = {
+                            is_country_type = iicso_civilian_country
+                            is_country_type = iicso_corporate_country
+                        }
+                    }
+                }
+            }
+            FROMFROM = {
+                fleet_event = {
+                    id = iicso.114
+                    days = 20
+                    random = 20
+                }
+            }
+        }
+        if = {
+            limit = {
+                FROMFROMFROM = {
+                    owner = {
+                        OR = {
+                            is_country_type = iicso_civilian_country
+                            is_country_type = iicso_corporate_country
+                        }
+                    }
+                }
+            }
+            FROMFROMFROM = {
+                fleet_event = {
+                    id = iicso.114
+                    days = 20
+                    random = 20
+                }
+            }
+        }
+    }
+}
+
+#called by iicso.113, engages emergency ftl
+fleet_event = {
+    id = iicso.114
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        exists = THIS
+        is_in_combat = yes
+    }
+
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.114 triggered at [THIS.GetName] (fleet: civ fleet retreat trigger)" }
+        order_forced_return = yes
     }
 }
 
@@ -808,6 +907,19 @@ event = {
                     is_country_type = iicso_corporate_country
                 }
             }
+            if = {
+                limit = {
+                    NOT = {
+                        any_country = {
+                            OR = {
+                                has_country_flag = iicso_faction_is@PREV
+                                has_country_flag = iicso_corporation_is@PREV
+                            }
+                        }
+                    }
+                }
+                destroy_country = yes
+            }
             random_country = {
                 limit = {
                     OR = {
@@ -817,41 +929,6 @@ event = {
                 }
                 PREV = {
                     copy_techs_from = { target = PREV }
-                    # if = {
-                    #     limit = {
-                    #         #is_country_Type = iicso_civilian_country
-                    #         OR = {
-                    #             is_subject = no
-                    #             overlord = {
-                    #                 NOR = {
-                    #                     has_country_flag = iicso_faction_is@PREV
-                    #                     has_country_flag = iicso_corporation_is@PREV
-                    #                 }
-                    #             }
-                    #         }
-                    #         PREV = {
-                    #             has_country_flag = iicso_faction_is@PREV
-                    #             is_subject = no
-                    #         }
-                    #     }
-                    #     set_subject_of = {
-                    #         who = PREV
-                    #         subject_type = iicso_civilian_subject
-                    #     }
-                    # }
-                    if = {
-                        limit = {
-                            NOT = {
-                                any_country = {
-                                    OR = {
-                                        has_country_flag = iicso_faction_is@PREV
-                                        has_country_flag = iicso_corporation_is@PREV
-                                    }
-                                }
-                            }
-                        }
-                        destroy_country = yes
-                    }
                 }
             }
         }

@@ -1,0 +1,84 @@
+#Civ component countries
+
+
+#Hive mind
+empire_name_parts_list = {
+	key = "civilian_empire_names_hivemind"
+	parts = {
+		"Carrier Drones" = 10
+		"Carrier Swarm" = 10
+		"Carrier Brood" = 10
+	}
+}
+
+#Machine
+empire_name_parts_list = {
+	key = "civilian_empire_names_machine"
+	parts = {
+		"Autonomous Transports" = 10
+		"Resource Distribution" = 10
+		"Resource Services" = 10
+	}
+}
+
+#Regular empires
+empire_name_parts_list = {
+	key = "civilian_empire_names_regular"
+	parts = {
+		"Civilian Vessels" = 10
+		"Civil Authority" = 10
+		"Trade Union" = 10
+		"Trade Council" = 10
+		"Trade Commission" = 10
+		"Business Bureau" = 10
+		"Commerce Guild" = 10
+		"Merchant Guild" = 10
+		"Private Sector" = 10
+	}
+}
+#Hivemind
+empire_name_format = {
+	random_weight = {
+		factor = 0
+		modifier = {
+			add = 1000
+			is_country_type = iicso_civilian_country
+			PREV = { has_authority = auth_hive_mind }
+		}
+	}
+	format = "[PREV.GetAdj] <civilian_empire_names_hivemind>"
+	noun = "[This.GetSpeciesName]"
+}
+
+#Machine
+empire_name_format = {
+	random_weight = {
+		factor = 0
+		modifier = {
+			add = 1000
+			is_country_type = iicso_civilian_country
+			PREV = { is_synthetic_empire = yes }
+		}
+	}
+	format = "[PREV.GetAdj] <civilian_empire_names_machine>"
+	noun = "[This.GetSpeciesName]"
+}
+
+#Regular empire
+empire_name_format = {
+	random_weight = {
+		factor = 0
+		modifier = {
+			add = 1000
+			is_country_type = iicso_civilian_country
+			PREV = {
+				NOR = {
+					is_synthetic_empire = yes
+					has_authority = auth_hive_mind
+				}
+			}
+		}
+	}
+	format = "[PREV.GetAdj] <civilian_empire_names_regular>"
+	noun = "[This.GetSpeciesName]"
+}

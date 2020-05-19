@@ -213,7 +213,7 @@ on_ship_destroyed_victim = {
 # FromFromFrom = fleet 2
 on_entering_battle = {
 	events = {
-		#iicso.113
+		iicso.113
 		iicso.410
 	}
 }

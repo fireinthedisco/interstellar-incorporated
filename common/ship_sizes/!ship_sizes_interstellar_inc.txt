@@ -8,7 +8,7 @@ z_iicso_freighter = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -26,7 +26,7 @@ z_iicso_freighter = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -47,7 +47,7 @@ z_iicso_freighter_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -64,7 +64,7 @@ z_iicso_freighter_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -85,7 +85,7 @@ z_iicso_freighter_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -103,7 +103,7 @@ z_iicso_freighter_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -124,7 +124,7 @@ z_iicso_double_freighter = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -142,7 +142,7 @@ z_iicso_double_freighter = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -163,7 +163,7 @@ z_iicso_double_freighter_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -180,7 +180,7 @@ z_iicso_double_freighter_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -201,7 +201,7 @@ z_iicso_double_freighter_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -219,7 +219,7 @@ z_iicso_double_freighter_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -240,7 +240,7 @@ z_iicso_half_freighter = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -258,7 +258,7 @@ z_iicso_half_freighter = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -279,7 +279,7 @@ z_iicso_half_freighter_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -296,7 +296,7 @@ z_iicso_half_freighter_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -317,7 +317,7 @@ z_iicso_half_freighter_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -335,7 +335,7 @@ z_iicso_half_freighter_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -358,7 +358,7 @@ z_iicso_tanker = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -376,7 +376,7 @@ z_iicso_tanker = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -397,7 +397,7 @@ z_iicso_tanker_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -414,7 +414,7 @@ z_iicso_tanker_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -435,7 +435,7 @@ z_iicso_tanker_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -453,7 +453,7 @@ z_iicso_tanker_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -474,7 +474,7 @@ z_iicso_double_tanker = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -492,7 +492,7 @@ z_iicso_double_tanker = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -513,7 +513,7 @@ z_iicso_double_tanker_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -530,7 +530,7 @@ z_iicso_double_tanker_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -551,7 +551,7 @@ z_iicso_double_tanker_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -569,7 +569,7 @@ z_iicso_double_tanker_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -590,7 +590,7 @@ z_iicso_half_tanker = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -608,7 +608,7 @@ z_iicso_half_tanker = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -629,7 +629,7 @@ z_iicso_half_tanker_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -646,7 +646,7 @@ z_iicso_half_tanker_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -667,7 +667,7 @@ z_iicso_half_tanker_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -685,7 +685,7 @@ z_iicso_half_tanker_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -709,7 +709,7 @@ z_iicso_tankerfreighter = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -727,7 +727,7 @@ z_iicso_tankerfreighter = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -748,7 +748,7 @@ z_iicso_tankerfreighter_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -765,7 +765,7 @@ z_iicso_tankerfreighter_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -786,7 +786,7 @@ z_iicso_tankerfreighter_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -804,7 +804,7 @@ z_iicso_tankerfreighter_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -825,7 +825,7 @@ z_iicso_double_tankerfreighter = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -843,7 +843,7 @@ z_iicso_double_tankerfreighter = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -864,7 +864,7 @@ z_iicso_double_tankerfreighter_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -881,7 +881,7 @@ z_iicso_double_tankerfreighter_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -902,7 +902,7 @@ z_iicso_double_tankerfreighter_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -920,7 +920,7 @@ z_iicso_double_tankerfreighter_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -941,7 +941,7 @@ z_iicso_half_tankerfreighter = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 0.5
@@ -959,7 +959,7 @@ z_iicso_half_tankerfreighter = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -980,7 +980,7 @@ z_iicso_half_tankerfreighter_unarmed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 	}
@@ -997,7 +997,7 @@ z_iicso_half_tankerfreighter_unarmed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -1018,7 +1018,7 @@ z_iicso_half_tankerfreighter_armed = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = 1
@@ -1036,7 +1036,7 @@ z_iicso_half_tankerfreighter_armed = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport
@@ -1067,7 +1067,7 @@ z_iicso_miner = {
 	acceleration = 0.3
 	rotation_speed = 0.2
 	collision_radius = 8
-	max_hitpoints = 2000
+	max_hitpoints = 500
 	modifier = {
 		ship_evasion_add = 15
 		ship_piracy_suppression_add = -10
@@ -1085,7 +1085,7 @@ z_iicso_miner = {
 	
 	
 	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
-	is_civilian = no
+	is_civilian = yes
 	is_designable = no
 	components_add_to_cost = no	
 	class = shipclass_transport

@@ -21,10 +21,10 @@ civilian_hostility = {
 
 		valid = {
 			NOR = {
-				has_ethic = "ethic_fanatic_militarist"
-				has_valid_civic = "civic_fanatic_purifiers"
-				has_valid_civic = "civic_hive_devouring_swarm"
-				has_valid_civic = "civic_machine_terminator"
+				has_ethic = ethic_fanatic_militarist
+				has_valid_civic = civic_fanatic_purifiers
+				has_valid_civic = civic_hive_devouring_swarm
+				has_valid_civic = civic_machine_terminator
 			}	
 		}
 
@@ -56,14 +56,25 @@ civilian_hostility = {
 		AI_weight = {
 			weight = 1
 			modifier = {
-				factor = 10
+				add = 10
 				OR = {
-					has_ethic = "ethic_fanatic_pacifist"
-					has_ethic = "ethic_pacifist"
-					has_ai_personality = "honorbound_warriors"
-					has_ai_personality = "democratic_crusaders"
-					has_ai_personality = "federation_builders"
+					has_ethic = ethic_fanatic_pacifist
+					has_ethic = ethic_pacifist
 				}
+			}
+			modifier = {
+				add = 5
+				OR = {
+					has_ethic = ethic_fanatic_xenophile
+					has_ethic = ethic_xenophile
+					has_ai_personality = honorbound_warriors
+					has_ai_personality = democratic_crusaders
+					has_ai_personality = federation_builders
+				}
+			}
+			modifier = {
+				factor = 2
+				is_galactic_community_member = yes
 			}
 		}
 	}
@@ -77,11 +88,11 @@ civilian_hostility = {
 		
 		valid = {
 			NOR = {
-				has_ethic = "ethic_fanatic_pacifist"
-				has_ethic = "ethic_pacifist"
-				has_valid_civic = "civic_fanatic_purifiers"
-				has_valid_civic = "civic_hive_devouring_swarm"
-				has_valid_civic = "civic_machine_terminator"
+				has_ethic = ethic_fanatic_pacifist
+				has_ethic = ethic_pacifist
+				has_valid_civic = civic_fanatic_purifiers
+				has_valid_civic = civic_hive_devouring_swarm
+				has_valid_civic = civic_machine_terminator
 			}
 		}
 
@@ -130,9 +141,9 @@ civilian_hostility = {
 		
 		valid = {
 			NOR = {
-				has_ethic = "ethic_pacifist"
-				has_ethic = "ethic_fanatic_pacifist"
-				has_valid_civic = "civic_inwards_perfection"
+				has_ethic = ethic_pacifist
+				has_ethic = ethic_fanatic_pacifist
+				has_valid_civic = civic_inwards_perfection
 			}
 		}
 
@@ -162,9 +173,9 @@ civilian_hostility = {
 		# }
 		
 		AI_weight = {
-			weight = 1
+			weight = 0
 			modifier = {
-				factor = 10
+				add = 10
 				OR = {
 					has_valid_civic = "civic_fanatic_purifiers"
 					has_valid_civic = "civic_hive_devouring_swarm"
@@ -172,24 +183,23 @@ civilian_hostility = {
 				}
 			}
 			modifier = {
-				factor = 5
+				add = 5
+				has_ethic = ethic_fanatic_xenophobe
+			}
+			modifier = {
+				add = 3
+				NOT = { has_ethic = ethic_fanatic_xenophobe }
 				OR = {
 					has_ai_personality_behaviour = conqueror
 					has_ai_personality_behaviour = subjugator
 					has_ai_personality_behaviour = purger
 					has_ai_personality = "xenophobic_isolationists"
+					has_ethic = ethic_xenophobe
 				}
 			}
 			modifier = {
-				factor = 0.5
+				add = -1
 				is_galactic_community_member = yes
-			}
-			modifier = {
-				factor = 0
-				OR = {
-					has_ethic = "ethic_pacifist"
-					has_ethic = "ethic_fanatic_pacifist"
-				}
 			}
 		}
 	}
