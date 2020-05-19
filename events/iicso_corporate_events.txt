@@ -137,7 +137,7 @@ country_event = {
 					# random_country = {
 					# 	limit = { owner_species = { is_same_value = PREVPREV }}
 						create_country = {
-							name = "Nice"
+							name = random
 							type = iicso_corporate_country
 							ignore_initial_colony_error = yes
 							auto_delete = no
@@ -170,6 +170,9 @@ country_event = {
 								#log = "test: [THIS.GetName] is a corporation. Overlord is [THIS.overlord.GetName]"
 								#log = "[THIS.GetName] is corporation of [ROOT.GetName]"
 							}
+						}
+						last_created_country = {
+							set_name = random
 						}
 					# }
 				}
