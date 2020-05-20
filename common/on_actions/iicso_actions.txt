@@ -122,7 +122,7 @@ on_building_starbase_outpost = {
 # immediately before station is created
 on_building_mining_station = {
 	events = {
-		iicso.108
+		iicso.104
 	}
 }
 
@@ -156,7 +156,7 @@ on_colony_destroyed = {
 # FromFromFrom = fleet 2
 on_fleet_destroyed_victim = {
 	events = {
-		iicso.103
+		iicso.105
 	}
 }
 

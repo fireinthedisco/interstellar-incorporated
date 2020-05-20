@@ -34,7 +34,7 @@ event = {
 }
 
 #determines number of resources on each planet; called again every year
-#called from iicso.100, calls itself, called by iicso.108 (mining station built)
+#called from iicso.100, calls itself, called by iicso.104 (mining station built)
 planet_event = {
     id = iicso.101
     is_triggered_only = yes
@@ -86,7 +86,7 @@ event = {
 
     immediate = {
         if = { limit = { has_global_flag = iicso_debug_mode }
-		    log = "iicso.102 triggered (station/starbase resource handler)" }
+		    log = "iicso.102 triggered (station/starbase/colony resource handler)" }
         every_country = {
             limit = {
                 OR = {
@@ -97,23 +97,90 @@ event = {
                 }
             }
             remove_mining_station_income = yes
-            remove_starbase_income = yes            
+            remove_starbase_income = yes
+            every_owned_planet = {
+                remove_colony_income = yes
+                random_list = {
+                    1 = { planet_event = { id = iicso.103 days = 5 }}
+                    1 = { planet_event = { id = iicso.103 days = 6 }}
+                    1 = { planet_event = { id = iicso.103 days = 7 }}
+                    1 = { planet_event = { id = iicso.103 days = 8 }}
+                    1 = { planet_event = { id = iicso.103 days = 9 }}
+                    1 = { planet_event = { id = iicso.103 days = 10 }}
+                    1 = { planet_event = { id = iicso.103 days = 11 }}
+                    1 = { planet_event = { id = iicso.103 days = 12 }}
+                    1 = { planet_event = { id = iicso.103 days = 13 }}
+                    1 = { planet_event = { id = iicso.103 days = 14 }}
+                    1 = { planet_event = { id = iicso.103 days = 15 }}
+                    1 = { planet_event = { id = iicso.103 days = 16 }}
+                    1 = { planet_event = { id = iicso.103 days = 17 }}
+                    1 = { planet_event = { id = iicso.103 days = 18 }}
+                    1 = { planet_event = { id = iicso.103 days = 19 }}
+                    1 = { planet_event = { id = iicso.103 days = 20 }}
+                    1 = { planet_event = { id = iicso.103 days = 21 }}
+                    1 = { planet_event = { id = iicso.103 days = 22 }}
+                    1 = { planet_event = { id = iicso.103 days = 23 }}
+                    1 = { planet_event = { id = iicso.103 days = 24 }}
+                    1 = { planet_event = { id = iicso.103 days = 25 }}
+                    1 = { planet_event = { id = iicso.103 days = 26 }}
+                    1 = { planet_event = { id = iicso.103 days = 27 }}
+                    1 = { planet_event = { id = iicso.103 days = 28 }}
+                    1 = { planet_event = { id = iicso.103 days = 29 }}
+                }
+            }
         }
     }
 }
 
-
-
-#on mining station destroyed; this - owner of station, fromfrom - station
-#clears stockpile from station
-country_event = {
+planet_event = {
     id = iicso.103
     is_triggered_only = yes
     hide_window = yes
 
     trigger = {
+        has_global_flag = iicso_active
+    }
+
+    immediate = {
         if = { limit = { has_global_flag = iicso_debug_mode }
-		    log = "iicso.103 triggered at [THIS.GetName] (country: on min station destroy: resource clearer)" }
+		    log = "iicso.113 triggered at [THIS.GetName] (planet: colony resource calculator)" }
+        calculate_colony_income = yes
+    }
+}
+
+#called on mining station built, initiates orbital resource count
+#THIS is construction ship, FROM is the planet
+ship_event = {
+    id = iicso.104
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+    }
+
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.104 triggered at [THIS.GetName] (ship: new mining station resource count handler)" }
+        FROM = {
+            set_planet_flag = iicso_initial_resource_count
+            planet_event = {
+                id = iicso.101
+                days = 1
+            }
+        }
+    }
+}
+
+
+#on mining station destroyed; this - owner of station, fromfrom - station
+#clears stockpile from station
+country_event = {
+    id = iicso.105
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
         has_global_flag = iicso_active
         FROMFROM = {
             solar_system = {
@@ -125,6 +192,8 @@ country_event = {
         }
     }
     immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.105 triggered at [THIS.GetName] (country: on min station destroy: resource clearer)" }
         FROMFROM = {
             orbit = {
                 set_variable = { which = iicso_stockpile_minerals value = 0 }
@@ -137,272 +206,6 @@ country_event = {
                 set_variable = { which = iicso_stockpile_sr_living_metal value = 0 }
                 set_variable = { which = iicso_stockpile_food value = 0 }
                 set_variable = { which = iicso_stockpile_consumer_goods value = 0 }
-            }
-        }
-        # random_country = {
-        #     limit = {
-        #         has_country_flag = iicso_faction_of@ROOT
-        #     }
-        #     every_owned_fleet = {
-        #         limit = {
-        #             has_fleet_flag = home_station@FROMFROM
-        #             has_fleet_flag = civilian_station_freighter
-        #         }
-
-        #         remove_fleet_flag = home_station@FROMFROM
-        #         set_fleet_flag = pending_reassignment
-        #         closest_system = {
-        #             limit = {
-        #                 any_system_planet = {
-        #                     is_colony = yes
-        #                     owner = { is_same_value = ROOT }
-        #                 }
-        #             }
-        #             random_system_planet = {
-        #                 limit = {
-        #                     is_colony = yes
-        #                     owner = { is_same_value = ROOT }
-        #                 }
-        #                 save_event_target_as = closest_colony
-        #             }
-        #         }
-
-        #         set_timed_fleet_flag = {
-        #             flag = orders_received
-        #             days = 120
-        #         }
-        #         remove_fleet_flag = enroute_to_station
-        #         set_fleet_flag = enroute_to_colony
-        #         set_fleet_flag = enroute_to_colony@event_target:closest_colony
-        #         remove_auto_move_target = yes
-        #         auto_move_to_planet = { target = event_target:closest_colony clear_auto_move_on_arrival = yes }
-        #     }
-        # }
-    }
-}
-
-#finds stalled civ ships, sends them to iicso.105 to reissue orders or iicso.106 to queue deletion
-#triggered by annual pulse gatekeeper, on quarterly basis
-country_event = {
-    id = iicso.104
-    is_triggered_only = yes
-    hide_window = yes
-
-    trigger = {
-        has_global_flag = iicso_active
-        OR = {
-            is_country_type = iicso_civilian_country
-            is_country_type = iicso_corporate_country
-        }
-    }
-
-    immediate = {
-        if = { limit = { has_global_flag = iicso_debug_mode }
-		    log = "iicso.104 triggered at [THIS.GetName] (country: stalled ship handler)" }
-        every_owned_fleet = { #TEMPORARY CLEANUP v0.3b
-            limit = {
-                NOR = {
-                    has_fleet_flag = hub_freighter
-                    has_fleet_flag = system_freighter
-                    has_fleet_flag = station_freighter
-                    has_fleet_flag = trader_fleet
-                    has_fleet_flag = civilian_miner
-                    has_fleet_flag = civilian_gas_miner
-                }
-            }
-            remove_fleet_flag = orders_received
-            set_variable = { which = orders_renewed value = 0 }
-        } #TEMPORARY CLEANUP v0.3b
-        every_owned_fleet = {
-            limit = {
-                OR = {
-                    has_fleet_flag = hub_freighter
-                    has_fleet_flag = system_freighter
-                    has_fleet_flag = station_freighter
-                    has_fleet_flag = trader_fleet
-                    has_fleet_flag = civilian_miner
-                    has_fleet_flag = civilian_gas_miner
-                }
-                NOR = {
-                    has_fleet_flag = orders_received
-                    has_fleet_flag = mining_in_progress
-                }
-            }
-            if = {
-                limit = { check_variable = { which = orders_renewed value > 2 }}
-                #detroy
-                fleet_event = {
-                    id = iicso.106
-                    days = 1
-                    random = 89
-                }
-            }
-            else = {
-                fleet_event = {
-                    id = iicso.105
-                    days = 1
-                    random = 89
-                }
-            }
-        }
-    }
-}
-
-#reissues orders to stalled civ ships
-#called by iicso.104
-fleet_event = {
-    id = iicso.105
-    is_triggered_only = yes
-    hide_window = yes
-
-    trigger = {
-        has_global_flag = iicso_active
-        exists = THIS
-    }
-
-    immediate = {
-        if = { limit = { has_global_flag = iicso_debug_mode }
-		    log = "iicso.105 triggered at [THIS.GetName] (fleet: stalled ship order issuer)" }
-        change_variable = { which = orders_renewed value = 1 }
-        set_timed_fleet_flag = {
-            flag = orders_received
-            days = 360
-        }
-        remove_auto_move_target = yes
-        if = {
-            limit = { has_fleet_flag = enroute_to_home }
-            random_planet = {
-                limit = { ROOT = { has_fleet_flag = fleet_home@PREV }}
-                ROOT = {
-                    if = {
-                        limit = { has_fleet_flag = trader_fleet }
-                        auto_move_to_planet = {
-                            target = PREV
-                            clear_auto_move_on_arrival = no
-                            arrival_effect = trader_arrival_home
-                        }
-                    }
-                    else_if = {
-                        limit = {
-                            OR = {
-                                has_fleet_flag = civilian_miner
-                                has_fleet_flag = civilian_gas_miner
-                            }
-                        }
-                        auto_move_to_planet = {
-                            target = PREV
-                            clear_auto_move_on_arrival = no
-                            arrival_effect = deposit_cargo_at_colony
-                        }
-                    }
-                }
-            }
-        }
-        else_if = {
-            limit = {
-                OR = {
-                    has_fleet_flag = enroute_to_trade_target
-                    has_fleet_flag = enroute_to_colony
-                    has_fleet_flag = enroute_to_starbase
-                    has_fleet_flag = enroute_to_mining_target
-                }
-            }
-            random_planet = {
-                limit = { ROOT = { has_fleet_flag = fleet_destination@PREV }}
-                ROOT = {
-                    if = {
-                        limit = { has_fleet_flag = enroute_to_trade_target }
-                        auto_move_to_planet = {
-                            target = PREV
-                            clear_auto_move_on_arrival = no
-                            arrival_effect = trader_arrival
-                        }
-                    }
-                    else_if = {
-                        limit = { has_fleet_flag = enroute_to_colony }
-                        auto_move_to_planet = {
-                            target = PREV
-                            clear_auto_move_on_arrival = no
-                            arrival_effect = deposit_cargo_at_colony
-                        }
-                    }
-                    else_if = {
-                        limit = { has_fleet_flag = enroute_to_starbase }
-                        auto_move_to_planet = {
-                            target = PREV
-                            clear_auto_move_on_arrival = no
-                            arrival_effect = deposit_cargo_at_starbase
-                        }
-                    }
-                    else_if = {
-                        limit = { has_fleet_flag = enroute_to_mining_target }
-                        auto_move_to_planet = {
-                            target = PREV
-                            clear_auto_move_on_arrival = no
-                            arrival_effect = miner_arrival
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-#destroy fleet (with death anims), for when fleets get stuck somewhere and their time expires
-fleet_event = {
-    id = iicso.106
-    is_triggered_only = yes
-    hide_window = yes
-
-    trigger = {
-        has_global_flag = iicso_active
-        exists = THIS
-    }
-
-    immediate = {
-        if = { limit = { has_global_flag = iicso_debug_mode }
-		    log = "iicso.106 triggered at [THIS.GetName] (fleet: fleet destroyer)" }
-        destroy_fleet = THIS
-    }
-}
-
-#delete fleet (no death anims), for when fleets arrive safely and need to be removed
-fleet_event = {
-    id = iicso.107
-    is_triggered_only = yes
-    hide_window = yes
-
-    trigger = {
-        has_global_flag = iicso_active
-        exists = THIS
-    }
-
-    immediate = {
-        if = { limit = { has_global_flag = iicso_debug_mode }
-		    log = "iicso.107 triggered at [THIS.GetName] (fleet: fleet deleter)" }
-        delete_fleet = THIS
-    }
-}
-
-#called on mining station built, initiates orbital resource count
-#THIS is construction ship, FROM is the planet
-ship_event = {
-    id = iicso.108
-    is_triggered_only = yes
-    hide_window = yes
-
-    trigger = {
-        has_global_flag = iicso_active
-    }
-
-    immediate = {
-        if = { limit = { has_global_flag = iicso_debug_mode }
-		    log = "iicso.108 triggered at [THIS.GetName] (ship: new mining station resource count handler)" }
-        FROM = {
-            set_planet_flag = iicso_initial_resource_count
-            planet_event = {
-                id = iicso.101
-                days = 1
             }
         }
     }
@@ -641,51 +444,6 @@ fleet_event = {
     }
 }
 
-# fleet_event = {
-#     id = iicso.113
-#     is_triggered_only = yes
-#     hide_window = yes
-
-#     trigger = {
-#         has_global_flag = iicso_active
-#         exists = THIS
-#         owner = {
-#             OR = {
-#                 is_country_type = iicso_civilian_country
-#                 is_country_type = iicso_corporate_country
-#             }
-#         }
-#     }
-
-#     immediate = {
-#         fleet_event = {
-#             id = iicso.114
-#             days = 20
-#             random = 10
-#         }
-#     }
-# }
-
-# fleet_event = {
-#     id = iicso.114
-#     is_triggered_only = yes
-#     hide_window = yes
-
-#     trigger = {
-#         has_global_flag = iicso_active
-#         exists = THIS
-#         is_in_combat = yes
-#     }
-
-#     immediate = {
-#         random_system = {
-#             limit = {
-
-#             }
-#         }
-#     }
-# }
-
 #yearly pulse gate event (yearly pulse, on game start)
 event = {
     id = iicso.121
@@ -727,22 +485,22 @@ event = {
                 }
             }
             country_event = {
-                id = iicso.104
+                id = iicso.130
                 days = 1
                 random = 89
             }
             country_event = {
-                id = iicso.104
+                id = iicso.130
                 days = 91
                 random = 89
             }
             country_event = {
-                id = iicso.104
+                id = iicso.130
                 days = 181
                 random = 89
             }
             country_event = {
-                id = iicso.104
+                id = iicso.130
                 days = 271
                 random = 89
             }
@@ -804,6 +562,226 @@ event = {
     }
 }
 
+
+
+#13x Fleet handling/stalling
+
+#finds stalled civ ships, sends them to iicso.131 to reissue orders or iicso.132 to queue deletion
+#triggered by annual pulse gatekeeper, on quarterly basis
+country_event = {
+    id = iicso.130
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        OR = {
+            is_country_type = iicso_civilian_country
+            is_country_type = iicso_corporate_country
+        }
+    }
+
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.130 triggered at [THIS.GetName] (country: stalled ship handler)" }
+        every_owned_fleet = {
+            limit = {
+                OR = {
+                    has_fleet_flag = hub_freighter
+                    has_fleet_flag = system_freighter
+                    has_fleet_flag = station_freighter
+                    has_fleet_flag = trader_fleet
+                    has_fleet_flag = civilian_miner
+                    has_fleet_flag = civilian_gas_miner
+                }
+                NOR = {
+                    has_fleet_flag = orders_received
+                    has_fleet_flag = mining_in_progress
+                }
+            }
+            save_event_target_as = iicso_checking_fleet
+            if = {
+                limit = { check_variable = { which = orders_renewed value > 2 }}
+                #destroy
+                ROOT = {
+                    country_event = {
+                        id = iicso.132
+                        days = 1
+                        random = 89
+                    }
+                }
+            }
+            else = {
+                ROOT = {
+                    country_event = {
+                        id = iicso.131
+                        days = 1
+                        random = 89
+                    }
+                }
+            }
+        }
+    }
+}
+
+#reissues orders to stalled civ ships
+#called by iicso.130
+country_event = {
+    id = iicso.131
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        exists = event_target:iicso_checking_fleet
+    }
+
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+            log = "iicso.131 triggered at [THIS.GetName] (fleet: stalled ship order issuer)" }
+        event_target:iicso_checking_fleet = {
+            change_variable = { which = orders_renewed value = 1 }
+            set_timed_fleet_flag = {
+                flag = orders_received
+                days = 360
+            }
+            remove_auto_move_target = yes
+            if = {
+                limit = { has_fleet_flag = enroute_to_home }
+                random_planet = {
+                    limit = { event_target:iicso_checking_fleet = { has_fleet_flag = fleet_home@PREV }}
+                    event_target:iicso_checking_fleet = {
+                        if = {
+                            limit = { has_fleet_flag = trader_fleet }
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = trader_arrival_home
+                            }
+                        }
+                        else_if = {
+                            limit = {
+                                OR = {
+                                    has_fleet_flag = civilian_miner
+                                    has_fleet_flag = civilian_gas_miner
+                                }
+                            }
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_colony
+                            }
+                        }
+                    }
+                }
+            }
+            else_if = {
+                limit = {
+                    OR = {
+                        has_fleet_flag = enroute_to_trade_target
+                        has_fleet_flag = enroute_to_colony
+                        has_fleet_flag = enroute_to_starbase
+                        has_fleet_flag = enroute_to_mining_target
+                    }
+                }
+                random_planet = {
+                    limit = { event_target:iicso_checking_fleet = { has_fleet_flag = fleet_destination@PREV }}
+                    event_target:iicso_checking_fleet = {
+                        if = {
+                            limit = { has_fleet_flag = enroute_to_trade_target }
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = trader_arrival
+                            }
+                        }
+                        else_if = {
+                            limit = { has_fleet_flag = enroute_to_colony }
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_colony
+                            }
+                        }
+                        else_if = {
+                            limit = { has_fleet_flag = enroute_to_starbase }
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = deposit_cargo_at_starbase
+                            }
+                        }
+                        else_if = {
+                            limit = { has_fleet_flag = enroute_to_mining_target }
+                            auto_move_to_planet = {
+                                target = PREV
+                                clear_auto_move_on_arrival = no
+                                arrival_effect = miner_arrival
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#checks if civ fleet still exists before deleting
+#called by iicso.130
+country_event = {
+    id = iicso.132
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        exists = event_target:iicso_checking_fleet
+    }
+
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.133 triggered at [THIS.GetName] (country: fleet destroyer handler)" }
+        event_target:iicso_checking_fleet = { fleet_event = { id = iicso.133 }}
+    }
+}
+
+
+#destroy fleet (with death anims), for when fleets get stuck somewhere and their time expires
+fleet_event = {
+    id = iicso.133
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        exists = THIS
+    }
+
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.133 triggered at [THIS.GetName] (fleet: fleet destroyer)" }
+        destroy_fleet = THIS
+    }
+}
+
+#delete fleet (no death anims), for when fleets arrive safely and need to be removed
+fleet_event = {
+    id = iicso.134
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        has_global_flag = iicso_active
+        exists = THIS
+    }
+
+    immediate = {
+        if = { limit = { has_global_flag = iicso_debug_mode }
+		    log = "iicso.134 triggered at [THIS.GetName] (fleet: fleet deleter)" }
+        delete_fleet = THIS
+    }
+}
+
 #########################################################
 ############### 2xx. Faction Management #################
 #########################################################
@@ -832,12 +810,20 @@ event = {
             if = {
                 limit = { NOT = { any_country = { has_country_flag = iicso_faction_of@PREV }}}
 
+                if = {
+                    limit = { NOT = { has_country_flag = Story7 }}
+                    set_country_flag = Story7
+                    set_country_flag = avoiding_first_contact
+                }
+
                 create_country = {
                     name = THIS
                     type = iicso_civilian_country
                     ignore_initial_colony_error = yes
                     auto_delete = no
-    
+
+                    authority = THIS
+                    ethos = THIS
                     flag = THIS
                     name_list = THIS
                     species = THIS
@@ -848,10 +834,6 @@ event = {
 
                 last_created_country = {
                     #log = "test: [THIS.GetName] is a civilian empire. Overlord is [THIS.overlord.GetName]"
-                    # set_subject_of = {
-                    #     who = PREV
-                    #     subject_type = iicso_civilian_subject
-                    # }
                     
                     set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }
                     PREV = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }}
@@ -884,12 +866,6 @@ event = {
                     }
                 }
                 #log = "[THIS.GetName] is economy overlord of [last_created_country.GetName]"
-
-                if = {
-                    limit = { NOT = { has_country_flag = Story7 }}
-                    set_country_flag = Story7
-                    set_country_flag = avoiding_first_contact
-                }
 
                 if = {
                     limit = { has_country_flag = avoiding_first_contact }

@@ -1,6 +1,6 @@
 destroy_fleet_delayed = {
     fleet_event = {
-        id = iicso.106
+        id = iicso.133
         days = 5
         random = 10
     }
@@ -8,7 +8,7 @@ destroy_fleet_delayed = {
 
 delete_fleet_delayed = {
     fleet_event = {
-        id = iicso.107
+        id = iicso.134
         days = 5
         random = 10
     }
@@ -865,4 +865,56 @@ remove_starbase_income = {
             }
         }
     }
+}
+
+calculate_colony_income_resource_large = {
+    SLEX_get_custom_parameter_advanced_4096 = {
+        CONDITION_NAME = planet_resource_compare
+        FIRST_KW = resource
+        SECOND_KW = $RESOURCE$
+        THIRD_KW = value
+        VARIABLE = iicso_net_$RESOURCE$
+    }
+}
+
+calculate_colony_income_resource = {
+    SLEX_get_custom_parameter_advanced = {
+        CONDITION_NAME = planet_resource_compare
+        FIRST_KW = resource
+        SECOND_KW = $RESOURCE$
+        THIRD_KW = value
+        VARIABLE = iicso_net_$RESOURCE$
+    }
+}
+
+calculate_colony_income = {
+    calculate_colony_income_resource_large = { RESOURCE = minerals }
+    calculate_colony_income_resource_large = { RESOURCE = energy }
+    calculate_colony_income_resource_large = { RESOURCE = food }
+    calculate_colony_income_resource = { RESOURCE = alloys }
+    calculate_colony_income_resource = { RESOURCE = consumer_goods }
+    calculate_colony_income_resource = { RESOURCE = exotic_gases }
+    calculate_colony_income_resource = { RESOURCE = rare_crystals }
+    calculate_colony_income_resource = { RESOURCE = volatile_motes }
+    calculate_colony_income_resource = { RESOURCE = sr_zro }
+    calculate_colony_income_resource = { RESOURCE = sr_dark_matter }
+    calculate_colony_income_resource = { RESOURCE = sr_living_metal }
+}
+
+remove_colony_income_resource = {
+    change_variable = { which = iicso_stockpile_$RESOURCE$ value = iicso_net_$RESOURCE$}
+}
+
+remove_colony_income = {
+    remove_colony_income_resource = { RESOURCE = minerals }
+    remove_colony_income_resource = { RESOURCE = energy }
+    remove_colony_income_resource = { RESOURCE = food }
+    remove_colony_income_resource = { RESOURCE = alloys }
+    remove_colony_income_resource = { RESOURCE = consumer_goods }
+    remove_colony_income_resource = { RESOURCE = exotic_gases }
+    remove_colony_income_resource = { RESOURCE = rare_crystals }
+    remove_colony_income_resource = { RESOURCE = volatile_motes }
+    remove_colony_income_resource = { RESOURCE = sr_zro }
+    remove_colony_income_resource = { RESOURCE = sr_dark_matter }
+    remove_colony_income_resource = { RESOURCE = sr_living_metal }
 }

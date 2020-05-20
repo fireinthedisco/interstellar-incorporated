@@ -25,7 +25,8 @@ empire_name_parts_list = {
 empire_name_parts_list = {
 	key = "civilian_empire_names_regular"
 	parts = {
-		"Civilian Vessels" = 10
+		"Civilian Vessels" = 20
+		"Commercial Vessels" = 20
 		"Civil Authority" = 10
 		"Trade Union" = 10
 		"Trade Council" = 10
@@ -43,11 +44,11 @@ empire_name_format = {
 		modifier = {
 			add = 1000
 			is_country_type = iicso_civilian_country
-			PREV = { has_authority = auth_hive_mind }
+			has_authority = auth_hive_mind
 		}
 	}
-	format = "[PREV.GetAdj] <civilian_empire_names_hivemind>"
-	noun = "[This.GetSpeciesName]"
+	format = "[THIS.GetSpeciesName] <civilian_empire_names_hivemind>"
+	noun = "[THIS.GetSpeciesName]"
 }
 
 #Machine
@@ -57,11 +58,11 @@ empire_name_format = {
 		modifier = {
 			add = 1000
 			is_country_type = iicso_civilian_country
-			PREV = { is_synthetic_empire = yes }
+			has_authority = auth_machine_intelligence
 		}
 	}
-	format = "[PREV.GetAdj] <civilian_empire_names_machine>"
-	noun = "[This.GetSpeciesName]"
+	format = "[THIS.GetSpeciesName] <civilian_empire_names_machine>"
+	noun = "[THIS.GetSpeciesName]"
 }
 
 #Regular empire
@@ -71,14 +72,12 @@ empire_name_format = {
 		modifier = {
 			add = 1000
 			is_country_type = iicso_civilian_country
-			PREV = {
-				NOR = {
-					is_synthetic_empire = yes
-					has_authority = auth_hive_mind
-				}
+			NOR = {
+				has_authority = auth_machine_intelligence
+				has_authority = auth_hive_mind
 			}
 		}
 	}
-	format = "[PREV.GetAdj] <civilian_empire_names_regular>"
-	noun = "[This.GetSpeciesName]"
+	format = "[THIS.GetSpeciesName] <civilian_empire_names_regular>"
+	noun = "[THIS.GetSpeciesName]"
 }

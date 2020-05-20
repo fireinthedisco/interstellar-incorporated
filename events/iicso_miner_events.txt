@@ -301,10 +301,10 @@ event = {
                 if = {
                     limit = { check_variable = { which = empty_cargo value = 0 }}
 
-                    every_planet = { #TEMPORARY CLEANUP v0.3b (change to random)
+                    random_planet = {
                         limit = { PREV = { has_fleet_flag = fleet_destination@PREV }}
                         PREV = { remove_fleet_flag = fleet_destination@PREV }
-                    } #TEMPORARY CLEANUP v0.3b (change to random)
+                    }
 
                     set_fleet_flag = enroute_to_home
                     remove_fleet_flag = mining_in_progress

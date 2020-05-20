@@ -123,6 +123,10 @@ planet_event = {
                     }
                 }
                 last_created_fleet = {
+                    add_modifier = {
+                        modifier = civilian_route_optimization
+                        days = -1
+                    }
                     set_timed_fleet_flag = {
                         flag = orders_received
                         days = 360

@@ -134,47 +134,39 @@ country_event = {
 					has_citizenship_type = { country = PREV type = citizenship_full }
 				}
 				species = {
-					# random_country = {
-					# 	limit = { owner_species = { is_same_value = PREVPREV }}
-						create_country = {
-							name = random
-							type = iicso_corporate_country
-							ignore_initial_colony_error = yes
-							auto_delete = no
-		
-							flag = random
-							name_list = ROOT #I would like this to be species name list
-							species = THIS
+					create_country = {
+						name = random
+						type = iicso_corporate_country
+						ignore_initial_colony_error = yes
+						auto_delete = no
+	
+						flag = random
+						species = THIS
 
-							effect = {
-								ROOT = {
-									establish_communications_no_message = PREV
-									set_country_flag = iicso_corporation_is@PREV
-								}
-								save_event_target_as = last_created_corp
-								# set_subject_of = {
-								# 	who = ROOT
-								# 	subject_type = iicso_corporate_subject
-								# }
-								set_faction_hostility = { target = ROOT set_hostile = no set_neutral = no set_friendly = yes }
-								ROOT = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }}
-								set_country_flag = iicso_corporation_of@ROOT
-								copy_techs_from = { target = ROOT }
-								every_country = {
-									limit = {
-										has_communications = ROOT
-										NOT = { has_country_flag = iicso_corporation_is@PREV }
-									}
-									establish_communications_no_message = PREV
-								}
-								#log = "test: [THIS.GetName] is a corporation. Overlord is [THIS.overlord.GetName]"
-								#log = "[THIS.GetName] is corporation of [ROOT.GetName]"
+						effect = {
+							ROOT = {
+								establish_communications_no_message = PREV
+								set_country_flag = iicso_corporation_is@PREV
 							}
+							save_event_target_as = last_created_corp
+							set_faction_hostility = { target = ROOT set_hostile = no set_neutral = no set_friendly = yes }
+							ROOT = { set_faction_hostility = { target = PREV set_hostile = no set_neutral = no set_friendly = yes }}
+							set_country_flag = iicso_corporation_of@ROOT
+							copy_techs_from = { target = ROOT }
+							every_country = {
+								limit = {
+									has_communications = ROOT
+									NOT = { has_country_flag = iicso_corporation_is@PREV }
+								}
+								establish_communications_no_message = PREV
+							}
+							#log = "test: [THIS.GetName] is a corporation. Overlord is [THIS.overlord.GetName]"
+							#log = "[THIS.GetName] is corporation of [ROOT.GetName]"
 						}
-						last_created_country = {
-							set_name = random
-						}
-					# }
+					}
+					last_created_country = {
+						set_name = random
+					}
 				}
 			}
 
@@ -239,9 +231,6 @@ country_event = {
 			ROOT = { change_variable = { which = iicso_corp_station_cap value = 1 }}
 			if = {
 				limit = { mining_station = { owner = { is_country_type = iicso_corporate_country }}}
-				#TEMPORARY CLEANUP v0.3b
-				set_variable = { which = iicso_corp_station_count value = 0 }
-				#TEMPORARY CLEANUP v0.3b
 				ROOT = { change_variable = { which = iicso_corp_station_count value = 1 }}
 			}
 		}
